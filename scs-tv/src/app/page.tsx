@@ -90,9 +90,9 @@ export default async function Home() {
         </section>
       </main>
       <footer className="flex gap-8 p-4 bg-gray-100">
-        <section className="w-1/5 bg-emerald-800 text-white p-4 rounded">
-          Volleyball
-        </section>
+        <section className="w-1/5 bg-emerald-800 text-white p-4 rounded font-bold">
+            Volleyball
+          </section>
         <aside className="w-4/5 p-4">
           Scores
         </aside>

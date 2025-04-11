@@ -13,7 +13,7 @@ export default async function Home() {
         <div className="flex-1">
           <h1 className="text-4xl font-bold text-green-600 tracking-wide">SCS News</h1>
         </div>
-        <aside className="flex items-end space-y-2 gap-8">
+        <aside className="flex items-end space-y-2 gap-8 font-bold">
           <div>
             {formatDate()}
           </div>
@@ -43,7 +43,7 @@ export default async function Home() {
           {/* <CalendarSection /> */}
         </aside>
         <section className="w-3/4 p-4 flex flex-col gap-8">
-          <div>
+          <div className="h-[30vh] overflow-y-auto">
             <h2 className="text-3xl font-bold text-green-600 tracking-wide">Announcements</h2>
             <ol>
               <li>
@@ -64,7 +64,7 @@ export default async function Home() {
               <ol>
                 <li>
                   <div>
-                    <h4>Track & Field</h4>
+                    <h4 className="text-sm font-bold text-green-600 tracking-wide font-bold uppercase">Track & Field</h4>
                     <h3>Devin destroys the competition… yet again</h3>
                     <p>Coming in first place in all four events he played in.</p>
                   </div>
@@ -89,11 +89,11 @@ export default async function Home() {
           </div>
         </section>
       </main>
-      <footer className="flex gap-8 p-4 bg-gray-100">
-        <section className="w-1/5 bg-emerald-800 text-white p-4 rounded font-bold">
+      <footer className="flex gap-8 p-4 bg-gray-100 border-t-4 border-emerald-800">
+        <section className="w-1/4 bg-emerald-800 text-white p-4 rounded font-bold">
             Volleyball
           </section>
-        <aside className="w-4/5 p-4">
+        <aside className="w-3/4 p-4">
           Scores
         </aside>
       </footer>

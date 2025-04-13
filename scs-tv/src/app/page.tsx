@@ -14,7 +14,7 @@ import { faPersonRunning } from "@fortawesome/free-solid-svg-icons/faPersonRunni
 
 
 export default async function Home() {
-  const weather = false; // await getWeather();
+  const weather = await getWeather(); // false;
   const announcements = await getAnnouncements();
 
   const schoolAnnouncements = announcements.filter(item => item.announcementType === "School") // filter by items where the announcementType is "School"

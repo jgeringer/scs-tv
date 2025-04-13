@@ -35,12 +35,12 @@ export default function FadingGallery({ items }: FadingGalleryProps) {
             index === currentIndex ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <Image
-            src={item.media.url}
+          {/* <Image
+            src={item.media.url?}
             alt={item.media.title}
             fill
             className="object-cover rounded-xl"
-          />
+          /> */}
           <div className="absolute bottom-0 left-0 w-full bg-emerald-800 bg-opacity-50 text-white text-center py-2 text-sm rounded-b-xl caption">
             {item.media.title}
           </div>

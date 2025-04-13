@@ -41,7 +41,7 @@ export default function FadingGallery({ items }: FadingGalleryProps) {
             fill
             className="object-cover rounded-xl"
           />
-          <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2 text-sm rounded-b-xl">
+          <div className="absolute bottom-0 left-0 w-full bg-emerald-800 bg-opacity-50 text-white text-center py-2 text-sm rounded-b-xl caption">
             {item.media.title}
           </div>
         </div>

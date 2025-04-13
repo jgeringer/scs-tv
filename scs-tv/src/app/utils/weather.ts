@@ -6,7 +6,7 @@ export async function getWeather() {
     const state = 'IL';
     const country = 'US';
     
-    return "No weather"
+    // return "No weather"
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${city},${state},${country}&units=imperial&appid=${API_KEY}`
     );

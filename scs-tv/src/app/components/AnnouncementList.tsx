@@ -50,13 +50,13 @@ export default function AnnouncementList({ announcements, headlineSize, type }: 
 
   if (isCarousel) {
     return (
-      <div className="overflow-hidden h-[18vh] border-b" ref={emblaRef}>
+      <div className="overflow-hidden h-[18vh]" ref={emblaRef}>
         <div className="flex gap-4">
           {announcements.map((announcement) => (
             <div key={announcement.id} className="min-w-full shrink-0">
-              <div className="pb-4">
-                <div className="uppercase font-bold text-sm tracking-wide">{announcement.eyebrowText}</div>
-                <h3 className={`${headlineSize === 'small' ? 'text-3xl' : 'text-6xl'} font-bold text-green-600 tracking-wide`}>
+              <div className="p-8 pt-4">
+                <div className="uppercase font-bold text-sm tracking-wide bg-gray-200">{announcement.eyebrowText}</div>
+                <h3 className={`${headlineSize === 'small' ? 'text-3xl' : 'text-6xl'} font-bold tracking-wide headline headline--shadow`}>
                   {announcement.headline}
                 </h3>
                 {announcement.description && (
@@ -112,9 +112,9 @@ export default function AnnouncementList({ announcements, headlineSize, type }: 
     return (
       <ol ref={listRef} className="space-y-6 h-[40vh] overflow-y-scroll scroll-smooth">
         {announcements.map((announcement) => (
-          <li key={announcement.id} className="border-b pb-4">
-            <div className="uppercase font-bold text-sm tracking-wide">{announcement.eyebrowText}</div>
-            <h3 className={`${headlineSize === 'small' ? 'text-2xl' : 'text-4xl'} font-bold text-green-600 tracking-wide`}>
+          <li key={announcement.id} className="border-b pb-8 pt-8">
+            <div className="uppercase font-bold text-sm tracking-wide text-gray-600">{announcement.eyebrowText}</div>
+            <h3 className={`${headlineSize === 'small' ? 'text-3xl' : 'text-4xl'} font-bold text-emerald-800 tracking-wide`}>
               {announcement.headline}
             </h3>
             {announcement.description && (

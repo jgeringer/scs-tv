@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { CalendarEvent, getCalendarEvents } from '../utils/calendar';
 import CalendarList from './CalendarList';
+import { faCalendar, faCalendarAlt, faSoccerBall } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function CalendarSection() {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
@@ -25,14 +27,17 @@ export default function CalendarSection() {
   }, []);
 
   return (
-    <div>
+    <>
       {loading ? (
         <div>Loading calendar events...</div>
       ) : error ? (
         <div className="text-red-500">{error}</div>
       ) : (
-        <CalendarList events={events} />
+        <div className="component rounded-2xl p-8 h-[100%] bottom-gradient overflow-hidden">
+          <h2 className="text-3xl font-bold text-white tracking-wide pb-4 eyebrow"><FontAwesomeIcon icon={faCalendar} width="32" /> Upcoming school events</h2>
+          <CalendarList events={events} />
+        </div>
       )}
-    </div>
+    </>
   );
 } 

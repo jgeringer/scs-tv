@@ -10,21 +10,19 @@ export default function CalendarList({ events }: CalendarListProps) {
   }
 
   return (
-    <ol className="space-y-2 max-h-[calc(100vh-340px)] overflow-y-auto pr-2">
+    <ol className="space-y-4 max-h-[calc(100vh-400px)] overflow-y-auto pr-2">
       {events.map((event) => {
         // Handle both dateTime and date fields
-        const startDate = event.start.dateTime 
+        const startDate = event.start.dateTime
           ? new Date(event.start.dateTime)
           : new Date(event.start.date + 'T00:00:00'); // Add time for all-day events
-        
-        const formattedDate = startDate.toLocaleDateString('en-US', {
-          weekday: 'short',
-          month: 'short',
-          day: 'numeric',
-        });
+
+        const day = startDate.toLocaleDateString('en-US', { day: 'numeric' });
+        const monthShort = startDate.toLocaleDateString('en-US', { month: 'short' });
+        const weekdayShort = startDate.toLocaleDateString('en-US', { weekday: 'short' });
 
         // Only show time if it's not an all-day event
-        const formattedTime = event.start.dateTime 
+        const formattedTime = event.start.dateTime
           ? startDate.toLocaleTimeString('en-US', {
               hour: 'numeric',
               minute: '2-digit',
@@ -32,19 +30,29 @@ export default function CalendarList({ events }: CalendarListProps) {
           : 'All Day';
 
         return (
-          <li key={event.id} className="border-b pb-2">
-            <div className="font-semibold text-xl">{event.summary}</div>
-            <div className="text-lg text-gray-600">
-              {formattedDate} {formattedTime !== 'All Day' && `at ${formattedTime}`}
+          <li key={event.id} className="flex border-b pb-4">
+            {/* Calendar Box */}
+            <div className="bg-white rounded-md p-2 w-20 flex flex-col items-center justify-center mr-4 float-left border text-gray-600">
+              <div className="text-xs font-semibold text-gray-600">{weekdayShort.toUpperCase()}</div>
+              <div className="text-2xl font-bold">{day}</div>
+              <div className="text-sm text-gray-600">{monthShort}</div>
             </div>
-            {event.location && (
-              <div className="text-sm text-gray-500">
-                {event.location}
+
+            {/* Event Details */}
+            <div className="flex-grow">
+              <div className="font-semibold text-xl">{event.summary}</div>
+              <div className="text-lg text-gray-600">
+                {formattedTime !== 'All Day' && `at ${formattedTime}`}
               </div>
-            )}
+              {event.location && (
+                <div className="text-sm text-gray-500">
+                  {event.location}
+                </div>
+              )}
+            </div>
           </li>
         );
       })}
     </ol>
   );
-} 
+}

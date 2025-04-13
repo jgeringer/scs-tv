@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef, use } from 'react';
 import type { SportsTicker } from '../utils/contentful';
 import { Game } from '../utils/contentful';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRunning, faSoccerBall, faTrophy, faVolleyball } from '@fortawesome/free-solid-svg-icons';
 
 interface SportsTickerProps {
   sportsTicker: SportsTicker;
@@ -36,8 +38,8 @@ export default function SportsTicker({ sportsTicker }: SportsTickerProps) {
   // If no games in the specified range, show a message
   if (allGames.length === 0) {
     return (
-      <div className="flex gap-8 p-4 bg-gray-100 border-t-4 border-emerald-800">
-        <section className="w-1/4 bg-emerald-800 text-white p-4 rounded font-bold">
+      <div className="flex gap-8 p-4 bg-gray-200">
+        <section className="w-1/4 bg-emerald-800 text-white p-1 rounded font-bold">
           No games scheduled in the past week or next three weeks
         </section>
         <aside className="w-3/4 p-4">
@@ -106,50 +108,77 @@ export default function SportsTicker({ sportsTicker }: SportsTickerProps) {
     return formattedDate; // Output: April 13, 2025 at 11am
   };
 
+  const renderSportsIcon = (teamName) => {
+    // Volleyball - 4th Grade - Girls
+    // Track and Field - Junior Varsity
+    // check the text that is before the "-"
+    if (teamName.startsWith("Volleyball")) {
+      return <FontAwesomeIcon icon={faVolleyball} className='mr-2' />
+    } else if (teamName.startsWith("Track") || teamName.startsWith("Cross")) {
+      return <FontAwesomeIcon icon={faRunning} className='mr-2' />
+    } else if (teamName.startsWith("Basketball")) {
+      return <FontAwesomeIcon icon={faRunning} className='mr-2' />
+    } else if (teamName.startsWith("Soccer")) {
+      return <FontAwesomeIcon icon={faSoccerBall} className='mr-2' />
+    }
+  }
+
+  console.log('currentGame:', currentGame)
+  console.log('currentGame.opponentScore:', currentGame.opponentScore)
+
   return (
-    <div className="flex gap-8 p-4 bg-gray-100 border-t-4 border-emerald-800">
+    <div className="flex gap-8 p-4 bg-ticker">
       <section
-        className={`w-1/4 bg-emerald-800 text-white p-4 rounded font-bold text-xl`}
+        className={`w-1/4 bg-emerald-800 text-white p-4 rounded-lg font-bold text-xl`}
       >
         <span>
+          {renderSportsIcon(currentGame.teamName)}
           {currentGame.teamName}
         </span>
     </section>
       <aside className="w-3/4 pl-4 pr-4 overflow-hidden content-center">
         <div
-          className={`transition-all duration-1000 text-black ${isAnimating ? 'transform -translate-x-full opacity-0' : 'transform translate-x-0 opacity-100'}`}
+          className={`transition-all duration-1000 text-white ${isAnimating ? 'transform -translate-x-full opacity-0' : 'transform translate-x-0 opacity-100'}`}
         >
           <div className="flex items-center gap-8">
             {currentGame.date && (
               <div className="text-gray-500 text-2xl">
+                {new Date(currentGame.date) > new Date() ? "Upcoming: " : ""}
                 {formatDateTime(currentGame.date)}
               </div>
             )}
 
             {currentGame.place && (
               <div className="flex items-center gap-2 text-2xl">
-                Final: <span className='bg-emerald-800 text-white p-2 rounded'>{renderPlaceText(currentGame.place)}</span>
+                Final: <span className='bg-emerald-800 text-white p-2 rounded'>
+                  <FontAwesomeIcon icon={faTrophy} width="32" />&nbsp;
+                 {renderPlaceText(currentGame.place)}</span>
               </div>
             )}
 
             {currentGame.opponent && (
               <div className="flex items-center gap-2 text-2xl">
+                {currentGame.scsScore > currentGame.opponentScore && (
+                  <span className='bg-emerald-800 text-white p-2 rounded'>W</span>
+                )}                
                 <span>{currentGame.scsScore && `Final - `}Celtics
                   {!!currentGame.scsScore && (
-                    <span className='text-emerald-800'>
+                    <span className='text-emerald-100'>
                       &nbsp;{currentGame.scsScore}</span>
                   )} {!!currentGame.location && (
                     <span>{!!currentGame.location ? 'vs ' : '@ '}</span>
                   )}
                   {currentGame.opponent}
                   {!!currentGame.opponentScore && (
-                    <span className='text-emerald-800'>
+                    <span className='text-emerald-100'>
                       &nbsp;{currentGame.opponentScore}</span>
                   )}
                 </span>
               </div>
             )}
 
+          </div>
+          <div>
           </div>
         </div>
       </aside>

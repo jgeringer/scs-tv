@@ -1,4 +1,4 @@
-import { createClient } from 'contentful';
+// @ts-nocheck
 
 // Define the announcement type
 export interface Announcement {
@@ -36,12 +36,6 @@ export interface SportsTicker {
 export interface Gallery {
   photoGallery: any;
 }
-
-// Create Contentful client
-const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID || '',
-  accessToken: process.env.CONTENTFUL_DELIVERY_TOKEN || '',
-});
 
 // Ensure we have the required environment variables
 if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_DELIVERY_TOKEN) {

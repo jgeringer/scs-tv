@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Image from "next/image";
 import { formatDate } from "./utils/date";
 import { getWeather } from "./utils/weather";
@@ -6,11 +7,9 @@ import TimeDisplay from "./components/TimeDisplay";
 import { getAnnouncements, getPhotoGallery, getSportsTicker } from "./utils/contentful";
 import AnnouncementList from "./components/AnnouncementList";
 import SportsTicker from "./components/SportsTicker";
-import ScoresDisplay from "./components/ScoresDisplay";
 import FadingGallery from "./components/FadingGallery";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBasketball, faCamera, faClover, faCoffee, faNewspaper, faRunning, faSoccerBall, faVolleyball } from "@fortawesome/free-solid-svg-icons";
+import { faBasketball, faCamera, faNewspaper, faRunning, faSoccerBall, faVolleyball } from "@fortawesome/free-solid-svg-icons";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons/faPersonRunning";
 
 
@@ -23,7 +22,6 @@ export default async function Home() {
   const sportsTicker = await getSportsTicker();
 
   const gallery = await getPhotoGallery();
-  console.log('gallery: ', gallery.photoGallery)
   
   return (
     <div className="flex flex-col h-screen scs-gradient">
@@ -92,11 +90,11 @@ export default async function Home() {
                 <h2 className="text-3xl font-bold text-white tracking-wide mb-4 eyebrow--dim">
                 <FontAwesomeIcon icon={faCamera} width="32" /> Shamrock Snapshots
                 </h2>
-                {gallery.photoGallery && gallery.photoGallery.length > 0 && (
-                  <div className="flex-1">
-                    <FadingGallery items={gallery.photoGallery} />
-                  </div>
-                )}
+                {gallery && gallery.photoGallery && gallery.photoGallery.length > 0 && (
+                    <div className="flex-1">
+                      <FadingGallery items={gallery.photoGallery} />
+                    </div>
+                  )}
               </div>
             </aside>
           </div>

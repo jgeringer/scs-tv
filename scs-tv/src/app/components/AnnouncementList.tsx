@@ -1,7 +1,6 @@
 'use client';
 
 import { Announcement } from '../utils/contentful';
-import Image from 'next/image';
 import ContentfulRichText from './ContentfulRichText';
 import useEmblaCarousel from 'embla-carousel-react';
 import { useEffect, useRef } from 'react';
@@ -17,32 +16,59 @@ export default function AnnouncementList({ announcements, headlineSize, type }: 
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const autoplayInterval = useRef<NodeJS.Timeout | null>(null);
+  const listRef = useRef<HTMLOListElement>(null);
 
+  // Carousel autoplay effect
   useEffect(() => {
-    if (emblaApi) {
-      emblaApi.reInit();
+    if (!isCarousel || !emblaApi) return;
 
-      // Clear any existing interval
+    emblaApi.reInit();
+
+    if (autoplayInterval.current) {
+      clearInterval(autoplayInterval.current);
+    }
+
+    autoplayInterval.current = setInterval(() => {
+      if (!emblaApi) return;
+      if (emblaApi.canScrollNext()) {
+        emblaApi.scrollNext();
+      } else {
+        emblaApi.scrollTo(0);
+      }
+    }, 5000);
+
+    return () => {
       if (autoplayInterval.current) {
         clearInterval(autoplayInterval.current);
       }
+    };
+  }, [isCarousel, emblaApi, announcements]);
 
-      autoplayInterval.current = setInterval(() => {
-        if (!emblaApi) return;
-        if (emblaApi.canScrollNext()) {
-          emblaApi.scrollNext();
-        } else {
-          emblaApi.scrollTo(0); // Go back to the first slide
-        }
-      }, 5000); // 5 seconds
+  // List auto-scroll effect
+  useEffect(() => {
+    if (isCarousel) return;
 
-      return () => {
-        if (autoplayInterval.current) {
-          clearInterval(autoplayInterval.current);
-        }
-      };
-    }
-  }, [emblaApi, announcements]);
+    const container = listRef.current;
+    if (!container) return;
+
+    const interval = setInterval(() => {
+      const liElements = container.querySelectorAll('li');
+      if (liElements.length === 0) return;
+
+      const firstLi = liElements[0];
+      const scrollStep = firstLi.getBoundingClientRect().height + 24;
+
+      const maxScroll = container.scrollHeight - container.clientHeight;
+
+      if (container.scrollTop + scrollStep >= maxScroll) {
+        container.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        container.scrollBy({ top: scrollStep, behavior: 'smooth' });
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [isCarousel, announcements]);
 
   if (announcements.length === 0) {
     return <div className="text-gray-500">No announcements</div>;
@@ -62,7 +88,7 @@ export default function AnnouncementList({ announcements, headlineSize, type }: 
                 {announcement.description && (
                   <ContentfulRichText richTextDocument={announcement.description.json} />
                 )}
-                {announcement.image && (
+                {/* {announcement.image && (
                   <div className="mt-4">
                     <Image
                       src={announcement.image.url}
@@ -72,7 +98,7 @@ export default function AnnouncementList({ announcements, headlineSize, type }: 
                       className="rounded-lg"
                     />
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           ))}
@@ -81,60 +107,31 @@ export default function AnnouncementList({ announcements, headlineSize, type }: 
     );
   }
 
-  if (!isCarousel) {
-    const listRef = useRef<HTMLOListElement>(null);
-  
-    useEffect(() => {
-      const container = listRef.current;
-      if (!container) return;
-  
-      const interval = setInterval(() => {
-        const liElements = container.querySelectorAll('li');
-        if (liElements.length === 0) return;
-  
-        const firstLi = liElements[0];
-        const scrollStep = firstLi.getBoundingClientRect().height + 24; // 24px from space-y-6
-  
-        const maxScroll = container.scrollHeight - container.clientHeight;
-  
-        if (container.scrollTop + scrollStep >= maxScroll) {
-          // Reset to top
-          container.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          // Scroll down by one item
-          container.scrollBy({ top: scrollStep, behavior: 'smooth' });
-        }
-      }, 5000);
-  
-      return () => clearInterval(interval);
-    }, [announcements]);
-  
-    return (
-      <ol ref={listRef} className="space-y-6 h-[40vh] overflow-y-scroll scroll-smooth">
-        {announcements.map((announcement) => (
-          <li key={announcement.id} className="border-b pb-8 pt-8">
-            <div className="uppercase font-bold text-sm tracking-wide text-gray-600">{announcement.eyebrowText}</div>
-            <h3 className={`${headlineSize === 'small' ? 'text-3xl' : 'text-4xl'} font-bold text-emerald-800 tracking-wide`}>
-              {announcement.headline}
-            </h3>
-            {announcement.description && (
-              <ContentfulRichText richTextDocument={announcement.description.json} />
-            )}
-            {announcement.image && (
-              <div className="mt-4">
-                <Image
-                  src={announcement.image.url}
-                  alt={announcement.headline}
-                  width={400}
-                  height={300}
-                  className="rounded-lg"
-                />
-              </div>
-            )}
-          </li>
-        ))}
-      </ol>
-    );
-  }
-  
+  // Not a carousel: render scrolling list
+  return (
+    <ol ref={listRef} className="space-y-6 h-[40vh] overflow-y-scroll scroll-smooth">
+      {announcements.map((announcement) => (
+        <li key={announcement.id} className="border-b pb-8 pt-8">
+          <div className="uppercase font-bold text-sm tracking-wide text-gray-600">{announcement.eyebrowText}</div>
+          <h3 className={`${headlineSize === 'small' ? 'text-3xl' : 'text-4xl'} font-bold text-emerald-800 tracking-wide`}>
+            {announcement.headline}
+          </h3>
+          {announcement.description && (
+            <ContentfulRichText richTextDocument={announcement.description.json} />
+          )}
+          {/* {announcement.image && (
+            <div className="mt-4">
+              <Image
+                src={announcement.image.url}
+                alt={announcement.headline}
+                width={400}
+                height={300}
+                className="rounded-lg"
+              />
+            </div>
+          )} */}
+        </li>
+      ))}
+    </ol>
+  );
 }

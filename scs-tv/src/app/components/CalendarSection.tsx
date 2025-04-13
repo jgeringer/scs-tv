@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { CalendarEvent, getCalendarEvents } from '../utils/calendar';
 import CalendarList from './CalendarList';
-import { faCalendar, faCalendarAlt, faSoccerBall } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function CalendarSection() {
@@ -17,7 +17,7 @@ export default function CalendarSection() {
         const calendarEvents = await getCalendarEvents();
         setEvents(calendarEvents);
         setLoading(false);
-      } catch (err) {
+      } catch {
         setError('Failed to load calendar events');
         setLoading(false);
       }

@@ -26,7 +26,6 @@ export default function CalendarSection() {
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-4">Calendar</h2>
       {loading ? (
         <div>Loading calendar events...</div>
       ) : error ? (

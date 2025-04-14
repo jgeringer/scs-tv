@@ -109,7 +109,7 @@ export default function AnnouncementList({ announcements, headlineSize, type }: 
 
   // Not a carousel: render scrolling list
   return (
-    <ol ref={listRef} className="space-y-6 h-[40vh] overflow-y-scroll scroll-smooth">
+    <ol ref={listRef} className="space-y-6 h-[30vh] overflow-y-scroll scroll-smooth announcement-list">
       {announcements.map((announcement) => (
         <li key={announcement.id} className="border-b pb-8 pt-8">
           <div className="uppercase font-bold text-sm tracking-wide text-gray-600">{announcement.eyebrowText}</div>

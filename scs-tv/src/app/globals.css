@@ -89,3 +89,14 @@ body {
   font-style: normal;
   font-size: 24px;
 }
+
+.bottom-section {
+  height: 39vh;
+  @media screen and (min-width: 1800px) {
+    height: 49vh;
+  }
+}
+
+.announcement-list {
+  height: calc(100% - 50px);
+}

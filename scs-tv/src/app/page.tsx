@@ -14,7 +14,7 @@ import { faPersonRunning } from "@fortawesome/free-solid-svg-icons/faPersonRunni
 
 
 export default async function Home() {
-  const weather = await getWeather(); // false;
+  const weather = false; // await getWeather();
   const announcements = await getAnnouncements();
 
   const schoolAnnouncements = announcements.filter(item => item.announcementType === "School") // filter by items where the announcementType is "School"
@@ -61,7 +61,7 @@ export default async function Home() {
         </aside>
       </header>
       
-      <main className="flex flex-1 bg-gray-200">
+      <main className="flex flex-1 bg-gray-200 h-[77vh]">
         <aside className="w-1/4 p-8">
           <CalendarSection />
         </aside>
@@ -70,7 +70,7 @@ export default async function Home() {
             <h2 className="text-3xl font-bold text-white tracking-wide pt-8 pr-8 pb-0 pl-8 eyebrow"><FontAwesomeIcon icon={faNewspaper} width="32" /> Announcements</h2>
             <AnnouncementList announcements={schoolAnnouncements} type="Carousel" />
           </div>
-          <div className="flex gap-8">
+          <div className="flex gap-8 bottom-section">
             <section className="w-3/5 component--dim rounded-2xl p-8">
               <h2 className="text-3xl font-bold text-white tracking-wide mb-4 eyebrow--dim flex justify-between">
                 <span>

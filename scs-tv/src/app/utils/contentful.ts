@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @ts-nocheck: don't even try
 
 // Define the announcement type
 export interface Announcement {
@@ -15,7 +15,7 @@ export interface Announcement {
 export interface Game {
   id: string;
   opponent: string;
-  location: 'Home' | 'Away';
+  location: "Home" | "Away";
   scsScore: string;
   opponentScore: string;
   date: string;
@@ -38,8 +38,11 @@ export interface Gallery {
 }
 
 // Ensure we have the required environment variables
-if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_DELIVERY_TOKEN) {
-  console.error('Missing required Contentful environment variables');
+if (
+  !process.env.CONTENTFUL_SPACE_ID ||
+  !process.env.CONTENTFUL_DELIVERY_TOKEN
+) {
+  console.error("Missing required Contentful environment variables");
 }
 
 const GRAPHQL_ENDPOINT = `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`;
@@ -138,18 +141,24 @@ const photoGalleryQuery = `
 export async function getAnnouncements(): Promise<Announcement[]> {
   try {
     const now = new Date().toISOString();
-    
+
     // Debug environment variables
-    console.log("Contentful Space ID:", process.env.CONTENTFUL_SPACE_ID ? "Set" : "Not set");
-    console.log("Contentful Delivery Token:", process.env.CONTENTFUL_DELIVERY_TOKEN ? "Set" : "Not set");
-    
+    console.log(
+      "Contentful Space ID:",
+      process.env.CONTENTFUL_SPACE_ID ? "Set" : "Not set"
+    );
+    console.log(
+      "Contentful Delivery Token:",
+      process.env.CONTENTFUL_DELIVERY_TOKEN ? "Set" : "Not set"
+    );
+
     // Debug GraphQL endpoint
     console.log("GraphQL Endpoint:", GRAPHQL_ENDPOINT);
 
     const response = await fetch(GRAPHQL_ENDPOINT, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.CONTENTFUL_DELIVERY_TOKEN}`,
       },
       body: JSON.stringify({
@@ -160,12 +169,14 @@ export async function getAnnouncements(): Promise<Announcement[]> {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Contentful API Error:', {
+      console.error("Contentful API Error:", {
         status: response.status,
         statusText: response.statusText,
-        body: errorText
+        body: errorText,
       });
-      throw new Error(`Failed to fetch announcements: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Failed to fetch announcements: ${response.status} ${response.statusText}`
+      );
     }
 
     const { data } = await response.json();
@@ -181,7 +192,7 @@ export async function getAnnouncements(): Promise<Announcement[]> {
       // image: item.image,
     }));
   } catch (error) {
-    console.error('Error fetching announcements:', error);
+    console.error("Error fetching announcements:", error);
     return [];
   }
 }
@@ -190,9 +201,9 @@ export async function getAnnouncements(): Promise<Announcement[]> {
 export async function getSportsTicker(): Promise<SportsTicker | null> {
   try {
     const response = await fetch(GRAPHQL_ENDPOINT, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.CONTENTFUL_DELIVERY_TOKEN}`,
       },
       body: JSON.stringify({
@@ -202,22 +213,24 @@ export async function getSportsTicker(): Promise<SportsTicker | null> {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Contentful API Error:', {
+      console.error("Contentful API Error:", {
         status: response.status,
         statusText: response.statusText,
-        body: errorText
+        body: errorText,
       });
-      throw new Error(`Failed to fetch sports ticker: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Failed to fetch sports ticker: ${response.status} ${response.statusText}`
+      );
     }
 
     const { data } = await response.json();
-    
+
     if (!data.sportsTickerCollection.items.length) {
       return null;
     }
 
     const tickerData = data.sportsTickerCollection.items[0];
-    
+
     // Transform the data to match our interface
     return {
       id: tickerData.sys.id,
@@ -236,18 +249,17 @@ export async function getSportsTicker(): Promise<SportsTicker | null> {
       })),
     };
   } catch (error) {
-    console.error('Error fetching sports ticker:', error);
+    console.error("Error fetching sports ticker:", error);
     return null;
   }
-} 
-
+}
 
 export async function getPhotoGallery(): Promise<Gallery | null> {
   try {
     const response = await fetch(GRAPHQL_ENDPOINT, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.CONTENTFUL_DELIVERY_TOKEN}`,
       },
       body: JSON.stringify({
@@ -257,21 +269,24 @@ export async function getPhotoGallery(): Promise<Gallery | null> {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Contentful API Error:', {
+      console.error("Contentful API Error:", {
         status: response.status,
         statusText: response.statusText,
-        body: errorText
+        body: errorText,
       });
-      throw new Error(`Failed to fetch gallery: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Failed to fetch gallery: ${response.status} ${response.statusText}`
+      );
     }
 
     const { data } = await response.json();
-    
+
     if (!data.galleryCollection.items.length) {
       return null;
     }
 
-    const galleryData = data.galleryCollection.items[0].galleryItemsCollection.items;
+    const galleryData =
+      data.galleryCollection.items[0].galleryItemsCollection.items;
     // galleryCollection(limit: 1) {
     //   items {
     //     galleryItemsCollection {
@@ -279,13 +294,13 @@ export async function getPhotoGallery(): Promise<Gallery | null> {
     //         ...on GalleryItem {
     //           media {
     //             url
-    
+
     // Transform the data to match our interface
     return {
       photoGallery: galleryData,
     };
   } catch (error) {
-    console.error('Error fetching gallery:', error);
+    console.error("Error fetching gallery:", error);
     return null;
   }
-} 
+}

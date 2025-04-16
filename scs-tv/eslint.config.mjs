@@ -16,6 +16,16 @@ const eslintConfig = [
       "@typescript-eslint/ban-ts-comment": "off", // Globally disable the rule
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": "off",
+      // turn off ts-ignore
+      "@typescript-eslint/ban-ts-comment": [
+        "error",
+        {
+          "ts-ignore": "allow-with-description",
+          "ts-expect-error": "allow-with-description",
+          "ts-nocheck": "allow-with-description",
+          "ts-check": false,
+        },
+      ],
     },
   },
 ];

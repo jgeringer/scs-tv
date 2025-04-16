@@ -5,10 +5,8 @@ const SPREADSHEET_ID = '1l-oTjaJQxTiNFWCR-RAU7nSvCvNg4Br6G36Je8bmLtU'; // Replac
 // const SPREADSHEET_ID = `2PACX-1vRfv4TOxblDhrnqwloIDae8HZsBKeusaw-ApaYqsMHXms06B9kGpZAxNgiCLYXc2G5fATyUMfugbgE4`;
 
 
-
 export async function GET(req: Request) { // Note the change in the 'res' type
   const keyFile = process.env.GOOGLE_CREDENTIALS_JSON;
-  console.log('in the route...', keyFile);
   try {
     const credentials = JSON.parse(keyFile);
     const auth = new google.auth.GoogleAuth({

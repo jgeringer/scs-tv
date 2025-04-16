@@ -32,7 +32,7 @@ export default function CalendarList({ events }: CalendarListProps) {
         return (
           <li key={event.id} className="flex border-b pb-4">
             {/* Calendar Box */}
-            <div className="bg-white rounded-md p-2 w-20 flex flex-col items-center justify-center mr-4 float-left border text-gray-600">
+            <div className="bg-white rounded-md p-2 w-20 flex flex-col items-center justify-center mr-4 float-left border text-gray-600 w-100px">
               <div className="text-xs font-semibold text-gray-600">{weekdayShort.toUpperCase()}</div>
               <div className="text-2xl font-bold">{day}</div>
               <div className="text-sm text-gray-600">{monthShort}</div>
@@ -40,7 +40,7 @@ export default function CalendarList({ events }: CalendarListProps) {
 
             {/* Event Details */}
             <div className="flex-grow">
-              <div className="font-semibold text-xl">{event.summary}</div>
+              <div className="font-semibold text-lg">{event.summary}</div>
               <div className="text-lg text-gray-600">
                 {formattedTime !== 'All Day' && `at ${formattedTime}`}
               </div>

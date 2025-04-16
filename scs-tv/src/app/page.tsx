@@ -17,11 +17,7 @@ import { faPersonRunning } from "@fortawesome/free-solid-svg-icons/faPersonRunni
 // https://docs.google.com/spreadsheets/d/e/2PACX-1vRfv4TOxblDhrnqwloIDae8HZsBKeusaw-ApaYqsMHXms06B9kGpZAxNgiCLYXc2G5fATyUMfugbgE4/pub?output=csv
 
 export default async function Home() {
-  const weather = false; // await getWeather(); // false;
-  const announcements = await getAnnouncements();
-
-  const schoolAnnouncements = announcements.filter(item => item.announcementType === "School") // filter by items where the announcementType is "School"
-  const athleticsAnnouncements = announcements.filter(item => item.announcementType === "Athletics") // filter by items where the announcementType is "Athletics"
+  const weather = await getWeather(); // false;
   const sportsTicker = await getSportsTicker();
 
   const gallery = await getPhotoGallery();
@@ -34,8 +30,16 @@ export default async function Home() {
             <span>
               <Image src="/shamrock.png" width={60} height={60} alt="shamrock" />
             </span>
-            <span>
-              SCS News
+            <span className="flex justify-between">
+              <span>
+                Celtics Sports Network
+              </span>
+              <span className="flex gap-4 ml-8">
+                <FontAwesomeIcon icon={faVolleyball} width="32" />
+                <FontAwesomeIcon icon={faBasketball} width="32" />
+                <FontAwesomeIcon icon={faRunning} width="32" />
+                <FontAwesomeIcon icon={faSoccerBall} width="32" />
+              </span>
             </span>
           </h1>
         </div>
@@ -65,30 +69,14 @@ export default async function Home() {
       </header>
       
       <main className="flex flex-1 bg-gray-200 h-[77vh]">
-        <aside className="w-1/4 p-8">
+        <aside className="w-[calc(25%+8rem)] p-8">
           <CalendarSection />
         </aside>
         <section className="w-3/4 p-8 flex flex-col gap-16">
-          <div className="h-[25vh] overflow-hidden component rounded-2xl">
-            <h2 className="text-3xl font-bold text-white tracking-wide pt-8 pr-8 pb-0 pl-8 eyebrow"><FontAwesomeIcon icon={faNewspaper} width="32" /> Announcements</h2>
-            <AnnouncementList announcements={schoolAnnouncements} type="Carousel" />
-          </div>
-          <div className="flex gap-8 bottom-section">
-            <section className="w-3/5 component--dim rounded-2xl p-8">
-              <h2 className="text-3xl font-bold text-white tracking-wide mb-4 eyebrow--dim flex justify-between">
-                <span>
-                <FontAwesomeIcon icon={faPersonRunning} width="32" /> Celtics Sports Network
-                </span>
-                <span className="flex gap-4">
-                  <FontAwesomeIcon icon={faVolleyball} width="32" />
-                  <FontAwesomeIcon icon={faBasketball} width="32" />
-                  <FontAwesomeIcon icon={faRunning} width="32" />
-                  <FontAwesomeIcon icon={faSoccerBall} width="32" />
-                </span>
-              </h2>
-              <AnnouncementList announcements={athleticsAnnouncements} headlineSize="small" />
-            </section>
-            <aside className="w-2/5 component--dim rounded-2xl p-8 rotate-3">
+          
+          <div className="flex gap-8 h-full floating-gallery">
+            
+            <aside className="w-full h-full component--dim rounded-2xl p-8 rotate-2">
               <div className="flex flex-col h-full">
                 <h2 className="text-3xl font-bold text-white tracking-wide mb-4 eyebrow--dim">
                 <FontAwesomeIcon icon={faCamera} width="32" /> Shamrock Snapshots

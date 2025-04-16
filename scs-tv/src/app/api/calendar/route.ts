@@ -17,7 +17,7 @@ export async function GET() {
     // Get the current date and date 7 days from now
     const now = new Date();
     const oneWeekFromNow = new Date();
-    oneWeekFromNow.setDate(now.getDate() + 30);
+    oneWeekFromNow.setDate(now.getDate() + 60);
     
     // Format dates for the API
     const timeMin = now.toISOString();

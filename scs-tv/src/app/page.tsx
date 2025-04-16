@@ -12,9 +12,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBasketball, faCamera, faNewspaper, faRunning, faSoccerBall, faVolleyball } from "@fortawesome/free-solid-svg-icons";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons/faPersonRunning";
 
+// Sheet ID: 1l-oTjaJQxTiNFWCR-RAU7nSvCvNg4Br6G36Je8bmLtU
+
+// https://docs.google.com/spreadsheets/d/e/2PACX-1vRfv4TOxblDhrnqwloIDae8HZsBKeusaw-ApaYqsMHXms06B9kGpZAxNgiCLYXc2G5fATyUMfugbgE4/pub?output=csv
 
 export default async function Home() {
-  const weather = await getWeather(); // false;
+  const weather = false; // await getWeather(); // false;
   const announcements = await getAnnouncements();
 
   const schoolAnnouncements = announcements.filter(item => item.announcementType === "School") // filter by items where the announcementType is "School"
@@ -111,7 +114,7 @@ export default async function Home() {
       </main>
       <footer className="flex p-4 bg-gray-100 border-emerald-800 z-1">
         <section className="bg-emerald-800 text-white rounded-2xl font-bold w-full overflow-hidden">
-          {sportsTicker && <SportsTicker sportsTicker={sportsTicker} />}
+          <SportsTicker />
         </section>
       </footer>
     </div>

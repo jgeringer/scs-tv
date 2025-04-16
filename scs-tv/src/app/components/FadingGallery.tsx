@@ -15,7 +15,7 @@ interface FadingGalleryProps {
 }
 
 export default function FadingGallery({ items }: FadingGalleryProps) {
-  console.log('items::::', items)
+  // console.log('items::::', items)
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {

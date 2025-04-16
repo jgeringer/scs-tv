@@ -16,8 +16,10 @@
     "@googleapis/calendar": "9.8.0",
     "contentful": "11.5.13",
     "embla-carousel-react": "8.6.0",
+    "google-auth-library": "9.15.1",
     "googleapis": "148.0.0",
     "next": "15.3.0",
+    "papaparse": "5.5.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

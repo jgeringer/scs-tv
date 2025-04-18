@@ -25,6 +25,14 @@ export async function GET() {
     const files = response.data.files || [];
 
     const imageUrls = await Promise.all(files.map(async (file) => {
+      if (!file.id) {
+        return {
+          name: file.name || 'Unknown',
+          id: 'unknown',
+          url: '',
+        };
+      }
+      
       const fileResponse = await drive.files.get({
         fileId: file.id,
         fields: 'webContentLink',

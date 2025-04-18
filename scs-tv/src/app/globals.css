@@ -121,4 +121,5 @@ body {
 
 .gallery-image {
   max-height: calc(100% - 20px);
+  width: auto;
 }

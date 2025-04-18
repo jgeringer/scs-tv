@@ -68,20 +68,21 @@ export default function FadingGallery() {
   }, [images.length]);
 
   return (
-    <div className="flex gap-8 h-full">
+    <div className="flex gap-8 justify-center items-center h-full">
       <aside 
-        className="w-full h-full component--dim rounded-2xl p-8 transition-all duration-500 ease-in-out" 
+        className="w-full component--dim rounded-2xl p-8 transition-all duration-500 ease-in-out" 
         style={{ 
           transform: `rotate(${rotation}deg) scale(${scale})`,
-          width: '100%',
+          // width: '100%',
+          width: 'auto',
           transition: 'transform 500ms ease-in-out, width 500ms ease-in-out, opacity 300ms ease-in-out',
           opacity: isTransitioning ? 0.3 : 1
         }}
       >
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col">
           <div className="flex-1">
-            <div className="relative w-full h-[100%]">
-              <h2 className="text-3xl font-bold text-white tracking-wide mb-4 eyebrow--dim gallery-heading">
+            <div className="relative w-full">
+              <h2 className="text-3xl font-bold text-white tracking-wide eyebrow--dim gallery-heading">
                 <FontAwesomeIcon icon={faCamera} width="32" /> Shamrock Snapshots
               </h2>
               {images.map((img, index) => {
@@ -92,7 +93,7 @@ export default function FadingGallery() {
                 return (
                   <div
                     key={img.id}
-                    className="absolute top-0 left-0 w-full h-full mt-6 transition-opacity duration-500 ease-in-out"
+                    className="top-0 left-0 w-full transition-opacity duration-500 ease-in-out"
                     style={{
                       opacity: showCurrentImage ? 1 : 0,
                     }}
@@ -101,9 +102,10 @@ export default function FadingGallery() {
                       <Image
                         src={img.url}
                         alt={img.name}
-                        fill
+                        width={1000}
+                        height={1000}
                         loading="eager"
-                        style={{ objectFit: 'cover', border: '1px solid black' }}
+                        style={{ border: '1px solid black' }}
                         priority={true}
                         className="gallery-image"
                       />

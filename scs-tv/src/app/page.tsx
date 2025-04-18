@@ -87,13 +87,9 @@ export default async function Home() {
         <aside className="w-[calc(25%+8rem)] p-8">
           <CalendarSection />
         </aside>
-        <section className="w-3/4 p-8 flex flex-col gap-16">
-          
-                      <FadingGallery items={gallery.photoGallery} />
+        <section className="w-3/4 p-8 flex flex-col gap-16 h-full">
+          <FadingGallery items={gallery.photoGallery} />
         </section>
-
-        {/* <div className="-z-1 absolute left-1/4 top-20 -translate-x-1/2 transform rounded-full border-[500px] border-b-blue-400 border-l-violet-600 border-r-pink-500 border-t-purple-400 blur-[240px]"></div>
-        <div className="-z-1 absolute right-[25vw] top-[50vh] rounded-full border-[300px] border-b-cyan-400 border-l-rose-600 border-r-indigo-500 border-t-blue-400 blur-[200px]"></div> */}
       </main>
       <footer className="flex p-4 bg-gray-100 border-emerald-800 z-1">
         <section className="bg-emerald-800 text-white rounded-2xl font-bold w-full overflow-hidden">

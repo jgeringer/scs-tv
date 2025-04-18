@@ -4,6 +4,7 @@ import { formatDate } from "./utils/date";
 import { getWeather } from "./utils/weather";
 import CalendarSection from "./components/CalendarSection";
 import TimeDisplay from "./components/TimeDisplay";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   getAnnouncements,
   getPhotoGallery,
@@ -12,7 +13,7 @@ import {
 import AnnouncementList from "./components/AnnouncementList";
 import SportsTicker from "./components/SportsTicker";
 import FadingGallery from "./components/FadingGallery";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   faBasketball,
   faCamera,
@@ -28,13 +29,13 @@ import { faPersonRunning } from "@fortawesome/free-solid-svg-icons/faPersonRunni
 // https://docs.google.com/spreadsheets/d/e/2PACX-1vRfv4TOxblDhrnqwloIDae8HZsBKeusaw-ApaYqsMHXms06B9kGpZAxNgiCLYXc2G5fATyUMfugbgE4/pub?output=csv
 
 export default async function Home() {
-  const weather = await getWeather(); // false;
+  const weather = false; // await getWeather();
   const sportsTicker = await getSportsTicker();
 
   const gallery = await getPhotoGallery();
 
   return (
-    <div className="flex flex-col h-screen scs-gradient">
+    <div className="flex flex-col h-screen scs-gradient overflow-hidden">
       <header className="flex justify-between items-center p-4 h-[100px] bg-gray-100">
         <div className="flex-1">
           <h1 className="text-4xl font-bold text-white tracking-wide flex items-center gap-4 main-text">
@@ -87,23 +88,8 @@ export default async function Home() {
           <CalendarSection />
         </aside>
         <section className="w-3/4 p-8 flex flex-col gap-16">
-          <div className="flex gap-8 h-full floating-gallery">
-            <aside className="w-full h-full component--dim rounded-2xl p-8 rotate-2">
-              <div className="flex flex-col h-full">
-                <h2 className="text-3xl font-bold text-white tracking-wide mb-4 eyebrow--dim">
-                  <FontAwesomeIcon icon={faCamera} width="32" /> Shamrock
-                  Snapshots
-                </h2>
-                {gallery &&
-                  gallery.photoGallery &&
-                  gallery.photoGallery.length > 0 && (
-                    <div className="flex-1">
+          
                       <FadingGallery items={gallery.photoGallery} />
-                    </div>
-                  )}
-              </div>
-            </aside>
-          </div>
         </section>
 
         {/* <div className="-z-1 absolute left-1/4 top-20 -translate-x-1/2 transform rounded-full border-[500px] border-b-blue-400 border-l-violet-600 border-r-pink-500 border-t-purple-400 blur-[240px]"></div>

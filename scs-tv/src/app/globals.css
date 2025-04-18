@@ -103,8 +103,6 @@ body {
 
 .floating-gallery {
   position: absolute;
-  top: 98px;
-  left: calc(25% + 7rem);
   height: 78vh;
   width: 64vw;
   z-index: 9;
@@ -113,4 +111,14 @@ body {
 .w-100px {
   width: 90px;
   flex-shrink: 0;
+}
+
+.gallery-heading {
+  z-index: 9999;
+  position: relative;
+  top: -18px;
+}
+
+.gallery-image {
+  max-height: calc(100% - 20px);
 }

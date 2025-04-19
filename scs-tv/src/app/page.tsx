@@ -29,7 +29,7 @@ import { faPersonRunning } from "@fortawesome/free-solid-svg-icons/faPersonRunni
 // https://docs.google.com/spreadsheets/d/e/2PACX-1vRfv4TOxblDhrnqwloIDae8HZsBKeusaw-ApaYqsMHXms06B9kGpZAxNgiCLYXc2G5fATyUMfugbgE4/pub?output=csv
 
 export default async function Home() {
-  const weather = false; // await getWeather();
+  const weather = await getWeather();
   const sportsTicker = await getSportsTicker();
 
   const gallery = await getPhotoGallery();

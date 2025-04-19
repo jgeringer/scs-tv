@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { REFRESH_INTERVAL } from '../utils/time';
 
 type DriveImage = {
   name: string;
@@ -53,6 +54,17 @@ export default function FadingGallery() {
       .catch(console.error);
   }, []);
 
+  // run this every 1 minute so that we can update the images when more are added
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetch('/api/drive-images')
+        .then((res) => res.json())
+        .then(setImages)
+        .catch(console.error);
+    }, REFRESH_INTERVAL);
+    return () => clearInterval(interval);
+  }, []);
+
   // Set up image rotation interval
   useEffect(() => {
     if (images.length === 0) return;
@@ -78,7 +90,7 @@ export default function FadingGallery() {
           }, 300);
         }, 50);
       }, 500);
-    }, 6000); // Change image every 6 seconds
+    }, 12000); // Change image every 12 seconds
 
     return () => clearInterval(interval);
   }, [images.length]);

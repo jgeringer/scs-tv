@@ -97,10 +97,6 @@ body {
   }
 }
 
-.announcement-list {
-  height: calc(100% - 50px);
-}
-
 .floating-gallery {
   position: absolute;
   height: 78vh;

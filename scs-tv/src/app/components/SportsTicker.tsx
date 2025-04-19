@@ -12,6 +12,7 @@ import {
   faTrophy,
   faVolleyball,
 } from "@fortawesome/free-solid-svg-icons";
+import { REFRESH_INTERVAL } from "../utils/time";
 
 export default function SportsTicker() {
   const [allSheetsData, setAllSheetsData] = useState({});
@@ -28,6 +29,7 @@ export default function SportsTicker() {
         if (!response.ok)
           throw new Error(`HTTP error! status: ${response.status}`);
         const jsonData = await response.json();
+        console.log('💥💥💥 SportsTicker fetching data::::', jsonData);
         setAllSheetsData(jsonData);
       } catch (err) {
         // @ts-ignore - TypeScript doesn't know about the error type
@@ -38,6 +40,12 @@ export default function SportsTicker() {
       }
     }
     fetchData();
+
+    // run this every 1 minute so that we can update the data when more is added
+    const interval = setInterval(() => {
+      fetchData();
+    }, REFRESH_INTERVAL);
+    return () => clearInterval(interval);
   }, []);
 
   // Flatten all games from all sheets
@@ -75,7 +83,7 @@ export default function SportsTicker() {
         setIsAnimating(false);
       }, 500);
     };
-    const interval = setInterval(advanceToNextGame, 3000);
+    const interval = setInterval(advanceToNextGame, 10000);
     return () => {
       clearInterval(interval);
       if (animationTimeoutRef.current)
@@ -142,7 +150,7 @@ export default function SportsTicker() {
       <section className="w-[calc(25%+5rem)] bg-emerald-800 text-white p-4 rounded-lg font-bold text-xl">
         <span>
           {renderSportsIcon(currentGame.teamName)}
-          {currentGame.teamName} - {currentGame.Grade} Grade{" "}
+          {currentGame.Meet} {currentGame.teamName} - {currentGame.Grade} Grade{" "}
           {currentGame.Gender}
         </span>
       </section>

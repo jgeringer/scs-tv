@@ -11,3 +11,4 @@ export function formatTime() {
     return `${hours}:${minutes} ${ampm}`;
   }
   
+  export const REFRESH_INTERVAL = 12 * 60 * 60 * 1000; // Refresh the data every 12 hours.

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { REFRESH_INTERVAL } from '../utils/time';
 
 // Define the event type based on the Google Sheets data structure
 interface CalendarEvent {
@@ -21,6 +22,7 @@ interface CalendarEvent {
     time: string;
   };
   dateObject?: Date;
+  timeDescription?: string;
 }
 
 export default function CalendarSection() {
@@ -78,14 +80,18 @@ export default function CalendarSection() {
             
             // Create a more descriptive title
             const sport = sheetName.split(' ')[0]; // Get the sport name (e.g., "Basketball")
-            const grade = row['Grade'] || 'N/A';
-            const gender = row['Gender'] || 'N/A';
+            const meet = row['Meet'] || '';
+            const grade = row['Grade'] || '';
+            const gender = row['Gender'] || '';
             const opponent = row['Opponent'] || 'TBD';
-            const homeAway = row['Home / Away'] || 'Home';
+            const homeAway = row['Home / Away'] || 'TBD';
+            const time = row['Time'] || '';
+            const location = row['Location'] || '';
             
-            const title = `${sport} - ${grade} Grade ${gender}`;
+            const title = `${meet ? meet : ''} ${sport} - ${grade} Grade ${gender}`;
             // Use "@" for away games and "vs" for home games
-            const description = homeAway === 'Away' ? `@ ${opponent}` : `vs ${opponent}`;
+            const description = homeAway === 'Away' ? `@ ${location || opponent}` : `vs ${location || opponent}`;
+            const timeDescription = time ? `${time}` : '';
             
             // Format the date properly
             const dateStr = row['Date'];
@@ -190,6 +196,7 @@ export default function CalendarSection() {
                 date: dateStr || undefined
               },
               description: description,
+              timeDescription: timeDescription,
               location: row['Location'] || 'TBD',
               formattedDate: formattedDateInfo,
               // Store the actual Date object for sorting
@@ -255,6 +262,12 @@ export default function CalendarSection() {
     }
 
     fetchEvents();
+
+    // Call fetchEvents every 1 minute
+    const interval = setInterval(() => {
+      fetchEvents();
+    }, REFRESH_INTERVAL);
+    return () => clearInterval(interval);
   }, []);
 
   // Auto-scroll effect
@@ -327,7 +340,7 @@ function CalendarList({
   return (
     <ol ref={listRef} className="space-y-4 max-h-[calc(100vh-400px)] overflow-y-auto pr-2">
       {events.map((event, index) => {
-        console.log(`💥💥💥 event:`, event);
+        // console.log(`💥💥💥 event:`, event);
         
         // Use the formattedDate property if available, otherwise fall back to manual parsing
         const day = event.formattedDate?.day || event.start.date?.split('/')[1] || '';
@@ -348,7 +361,7 @@ function CalendarList({
             <div className="flex-1">
               <h3 className="font-semibold text-lg">{event.title}</h3>
               {event.description && (
-                <p className="text-gray-700 mt-1">{event.description}</p>
+                <p className="text-gray-700 mt-1">{event.description}<br />{event.timeDescription}</p>
               )}
             </div>
           </li>

@@ -5,12 +5,6 @@ import { getWeather } from "./utils/weather";
 import CalendarSection from "./components/CalendarSection";
 import TimeDisplay from "./components/TimeDisplay";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  getAnnouncements,
-  getPhotoGallery,
-  getSportsTicker,
-} from "./utils/contentful";
-import AnnouncementList from "./components/AnnouncementList";
 import SportsTicker from "./components/SportsTicker";
 import FadingGallery from "./components/FadingGallery";
 
@@ -25,14 +19,10 @@ import {
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons/faPersonRunning";
 
 // Sheet ID: 1l-oTjaJQxTiNFWCR-RAU7nSvCvNg4Br6G36Je8bmLtU
-
 // https://docs.google.com/spreadsheets/d/e/2PACX-1vRfv4TOxblDhrnqwloIDae8HZsBKeusaw-ApaYqsMHXms06B9kGpZAxNgiCLYXc2G5fATyUMfugbgE4/pub?output=csv
 
 export default async function Home() {
   const weather = await getWeather();
-  const sportsTicker = await getSportsTicker();
-
-  const gallery = await getPhotoGallery();
 
   return (
     <div className="flex flex-col h-screen scs-gradient overflow-hidden">
@@ -88,7 +78,7 @@ export default async function Home() {
           <CalendarSection />
         </aside>
         <section className="w-3/4 p-8 flex flex-col gap-16 h-full">
-          <FadingGallery items={gallery.photoGallery} />
+          <FadingGallery />
         </section>
       </main>
       <footer className="flex p-4 bg-gray-100 border-emerald-800 z-1">

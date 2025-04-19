@@ -292,7 +292,7 @@ export default function CalendarSection() {
         <div className="text-red-500">{error}</div>
       ) : (
         <div className="component rounded-2xl p-8 h-[100%] bottom-gradient overflow-hidden">
-          <h2 className="text-xl font-bold text-white tracking-wide pb-4 eyebrow"><FontAwesomeIcon icon={faCalendar} width="32" /> Upcoming athletics events</h2>
+          <h2 className="text-2xl font-bold text-white tracking-wide pb-4 eyebrow"><FontAwesomeIcon icon={faCalendar} width="32" /> Upcoming athletics events</h2>
           <CalendarList 
             events={events} 
             listRef={listRef as React.RefObject<HTMLOListElement>} 

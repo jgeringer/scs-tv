@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -20,12 +20,16 @@ interface CalendarEvent {
     weekdayShort: string;
     time: string;
   };
+  dateObject?: Date;
 }
 
 export default function CalendarSection() {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const listRef = useRef<HTMLOListElement>(null);
+  const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
 
   useEffect(() => {
     async function fetchEvents() {
@@ -63,6 +67,7 @@ export default function CalendarSection() {
         // Set to beginning of today to include today's events
         now.setHours(0, 0, 0, 0);
         
+        // Process all sheets and collect events
         gameSheets.forEach(([sheetName, sheetData]) => {
           if (!Array.isArray(sheetData)) return;
           
@@ -184,19 +189,59 @@ export default function CalendarSection() {
               },
               description: description,
               location: row['Location'] || 'TBD',
-              formattedDate: formattedDateInfo
+              formattedDate: formattedDateInfo,
+              // Store the actual Date object for sorting
+              dateObject: dateObj
             } as CalendarEvent;
           }).filter((game): game is CalendarEvent => game !== null);
           
           allGames.push(...games);
         });
         
-        // Sort by date
+        // Sort by date using the stored dateObject
         const sortedEvents = allGames.sort((a, b) => {
-          const dateA = a.start.dateTime ? new Date(a.start.dateTime) : new Date(a.start.date + 'T00:00:00');
-          const dateB = b.start.dateTime ? new Date(b.start.dateTime) : new Date(b.start.date + 'T00:00:00');
+          // Use the stored dateObject for comparison if available
+          if (a.dateObject && b.dateObject) {
+            return a.dateObject.getTime() - b.dateObject.getTime();
+          }
+          
+          // Fallback to the previous sorting logic if dateObject is not available
+          let dateA: Date;
+          let dateB: Date;
+          
+          // Handle dateTime format
+          if (a.start.dateTime) {
+            dateA = new Date(a.start.dateTime);
+          } else if (a.start.date) {
+            // Parse MM/DD/YYYY format
+            const [monthA, dayA, yearA] = a.start.date.split('/').map(Number);
+            dateA = new Date(yearA, monthA - 1, dayA);
+          } else {
+            // Fallback to current date if no date is available
+            dateA = new Date();
+          }
+          
+          if (b.start.dateTime) {
+            dateB = new Date(b.start.dateTime);
+          } else if (b.start.date) {
+            // Parse MM/DD/YYYY format
+            const [monthB, dayB, yearB] = b.start.date.split('/').map(Number);
+            dateB = new Date(yearB, monthB - 1, dayB);
+          } else {
+            // Fallback to current date if no date is available
+            dateB = new Date();
+          }
+          
+          // Compare dates
           return dateA.getTime() - dateB.getTime();
         });
+        
+        // Log sorted events to verify sorting
+        console.log('Sorted events by date:', sortedEvents.map(event => ({
+          title: event.title,
+          date: event.start.dateTime || event.start.date,
+          formattedDate: event.formattedDate
+        })));
         
         setEvents(sortedEvents);
         setLoading(false);
@@ -210,6 +255,33 @@ export default function CalendarSection() {
     fetchEvents();
   }, []);
 
+  // Auto-scroll effect
+  useEffect(() => {
+    if (events.length === 0) return;
+    
+    // Initialize item refs array
+    itemRefs.current = new Array(events.length).fill(null);
+    
+    const scrollInterval = setInterval(() => {
+      // Move to the next item
+      setActiveIndex((prevIndex) => {
+        const nextIndex = (prevIndex + 1) % events.length;
+        
+        // Scroll the active item into view
+        if (itemRefs.current[nextIndex] && listRef.current) {
+          itemRefs.current[nextIndex]?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+        }
+        
+        return nextIndex;
+      });
+    }, 6000); // 20 seconds per item
+    
+    return () => clearInterval(scrollInterval);
+  }, [events]);
+
   return (
     <>
       {loading ? (
@@ -219,7 +291,12 @@ export default function CalendarSection() {
       ) : (
         <div className="component rounded-2xl p-8 h-[100%] bottom-gradient overflow-hidden">
           <h2 className="text-xl font-bold text-white tracking-wide pb-4 eyebrow"><FontAwesomeIcon icon={faCalendar} width="32" /> Upcoming athletics events</h2>
-          <CalendarList events={events} />
+          <CalendarList 
+            events={events} 
+            listRef={listRef as React.RefObject<HTMLOListElement>} 
+            itemRefs={itemRefs} 
+            activeIndex={activeIndex} 
+          />
         </div>
       )}
     </>
@@ -229,16 +306,25 @@ export default function CalendarSection() {
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-
 // CalendarList component
-function CalendarList({ events }: { events: CalendarEvent[] }) {
+function CalendarList({ 
+  events, 
+  listRef, 
+  itemRefs, 
+  activeIndex 
+}: { 
+  events: CalendarEvent[],
+  listRef: React.RefObject<HTMLOListElement>,
+  itemRefs: React.MutableRefObject<(HTMLLIElement | null)[]>,
+  activeIndex: number
+}) {
   if (events.length === 0) {
     return <div className="text-gray-500">No upcoming events</div>;
   }
 
   return (
-    <ol className="space-y-4 max-h-[calc(100vh-400px)] overflow-y-auto pr-2">
-      {events.map((event) => {
+    <ol ref={listRef} className="space-y-4 max-h-[calc(100vh-400px)] overflow-y-auto pr-2">
+      {events.map((event, index) => {
         console.log(`💥💥💥 event:`, event);
         
         // Use the formattedDate property if available, otherwise fall back to manual parsing
@@ -247,7 +333,11 @@ function CalendarList({ events }: { events: CalendarEvent[] }) {
         const time = event.formattedDate?.time || '';
 
         return (
-          <li key={event.id} className="flex items-start gap-4">
+          <li 
+            key={event.id} 
+            ref={(el) => { itemRefs.current[index] = el; }}
+            className={`flex items-start gap-4 transition-opacity duration-500 ${index === activeIndex ? 'opacity-100' : 'opacity-50'}`}
+          >
             <div className="flex-shrink-0 w-16 text-center bg-emerald-800 text-white rounded-lg p-2">
               <div className="text-2xl font-bold">{day}</div>
               <div className="text-sm">{monthShort}</div>

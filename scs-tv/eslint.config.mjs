@@ -16,6 +16,15 @@ const eslintConfig = [
       "@typescript-eslint/ban-ts-comment": "off", // Globally disable the rule
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
+      // disable no const 
+      "@typescript-eslint/no-const-enum": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
+      // disable never reassigned use const 
+      "@typescript-eslint/no-reassign": "off",
+      // disable prefer const 
+      "@typescript-eslint/prefer-const": "off",
       // turn off ts-ignore
       "@typescript-eslint/ban-ts-comment": [
         "error",

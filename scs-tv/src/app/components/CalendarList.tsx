@@ -40,7 +40,7 @@ export default function CalendarList({ events }: CalendarListProps) {
 
             {/* Event Details */}
             <div className="flex-grow">
-              <div className="font-semibold text-lg">{event.summary}</div>
+              <div className="font-semibold text-lg">{event.title}</div>
               <div className="text-lg text-gray-600">
                 {formattedTime !== 'All Day' && `at ${formattedTime}`}
               </div>

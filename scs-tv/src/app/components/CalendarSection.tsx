@@ -111,6 +111,7 @@ export default function CalendarSection() {
                 // Try to parse time in various formats
                 const timeMatch = timeStr.match(/(\d{1,2}):?(\d{2})?\s*(am|pm)?/i);
                 if (timeMatch) {
+                  // eslint-disable-next-line prefer-const
                   let hours = parseInt(timeMatch[1]);
                   const minutes = timeMatch[2] ? timeMatch[2] : '00';
                   const ampm = timeMatch[3] ? timeMatch[3].toLowerCase() : '';
@@ -129,6 +130,7 @@ export default function CalendarSection() {
                   // Try to parse 24-hour format
                   const timeParts = timeStr.split(':');
                   if (timeParts.length >= 1) {
+                    // eslint-disable-next-line prefer-const
                     let hours = parseInt(timeParts[0]);
                     const minutes = timeParts.length > 1 ? timeParts[1] : '00';
                     

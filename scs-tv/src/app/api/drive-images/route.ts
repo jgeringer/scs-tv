@@ -33,7 +33,7 @@ export async function GET() {
         };
       }
       
-      const directUrl = `https://drive.google.com/uc?export=view&id=${file.id}`;
+      const directUrl = `https://drive.usercontent.google.com/download?&id=${file.id}&export=view`;
 
       return {
         name: file.name,

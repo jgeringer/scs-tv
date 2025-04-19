@@ -33,15 +33,12 @@ export async function GET() {
         };
       }
       
-      const fileResponse = await drive.files.get({
-        fileId: file.id,
-        fields: 'webContentLink',
-      });
+      const directUrl = `https://drive.google.com/uc?export=view&id=${file.id}`;
 
       return {
         name: file.name,
         id: file.id,
-        url: fileResponse.data.webContentLink,
+        url: directUrl,
       };
     }));
 

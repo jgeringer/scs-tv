@@ -138,10 +138,12 @@ export default function SportsTicker() {
 
   const renderPlaceText = (place: string) => {
     if (!place) return;
-    if (place === "1") return "1st place";
-    if (place === "2") return "2nd place";
-    if (place === "3") return "3rd place";
-    if (place >= "4" && place <= "10") return `${place}th place`;
+    
+    const placeNumber = parseInt(place);
+    if (placeNumber === 1) return "1st place";
+    if (placeNumber === 2) return "2nd place";
+    if (placeNumber === 3) return "3rd place";
+    if (placeNumber >= 4 && placeNumber <= 10) return `${placeNumber}th place`;
     return "";
   };
 

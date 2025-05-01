@@ -1,8 +1,9 @@
 import { google } from "googleapis";
 import { NextResponse } from "next/server"; // Import NextResponse
 
-const SPREADSHEET_ID = "1l-oTjaJQxTiNFWCR-RAU7nSvCvNg4Br6G36Je8bmLtU"; // Replace with your spreadsheet ID
+// const SPREADSHEET_ID = "1l-oTjaJQxTiNFWCR-RAU7nSvCvNg4Br6G36Je8bmLtU"; // My personal spreadsheet ID. Replace with your spreadsheet ID
 // const SPREADSHEET_ID = `2PACX-1vRfv4TOxblDhrnqwloIDae8HZsBKeusaw-ApaYqsMHXms06B9kGpZAxNgiCLYXc2G5fATyUMfugbgE4`;
+const SPREADSHEET_ID = "11CfryIoItDAfTQbjcttmALAxr3_kzfO59IxMmeEGGbw"; // SCS ID
 
 export async function GET(req: Request) {
   // Note the change in the 'res' type

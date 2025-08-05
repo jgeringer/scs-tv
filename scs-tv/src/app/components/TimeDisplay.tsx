@@ -7,10 +7,10 @@ export default function TimeDisplay() {
   const [time, setTime] = useState(formatTime());
 
   useEffect(() => {
-    // Update time every second
+    // Update time every 30 seconds
     const interval = setInterval(() => {
       setTime(formatTime());
-    }, 2000);
+    }, 30000);
 
     // Cleanup interval on component unmount
     return () => clearInterval(interval);

@@ -1,9 +1,9 @@
 // @ts-nocheck: just dont check this file
 import Image from "next/image";
 import { formatDate } from "./utils/date";
-import { getWeather } from "./utils/weather";
 import CalendarSection from "./components/CalendarSection";
 import TimeDisplay from "./components/TimeDisplay";
+import WeatherDisplay from "./components/WeatherDisplay";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SportsTicker from "./components/SportsTicker";
 import FadingGallery from "./components/FadingGallery";
@@ -21,9 +21,7 @@ import { faPersonRunning } from "@fortawesome/free-solid-svg-icons/faPersonRunni
 // Sheet ID: 1l-oTjaJQxTiNFWCR-RAU7nSvCvNg4Br6G36Je8bmLtU
 // https://docs.google.com/spreadsheets/d/e/2PACX-1vRfv4TOxblDhrnqwloIDae8HZsBKeusaw-ApaYqsMHXms06B9kGpZAxNgiCLYXc2G5fATyUMfugbgE4/pub?output=csv
 
-export default async function Home() {
-  const weather = await getWeather();
-
+export default function Home() {
   return (
     <div className="flex flex-col h-screen scs-gradient overflow-hidden">
       <header className="flex justify-between items-center p-4 h-[100px] bg-gray-100">
@@ -54,21 +52,7 @@ export default async function Home() {
             <TimeDisplay />
           </div>
           <div>
-            {weather ? (
-              <div className="flex items-center space-x-2">
-                <img
-                  src={`http://openweathermap.org/img/wn/${weather.icon}@2x.png`}
-                  alt={weather.description}
-                  width={50}
-                  height={50}
-                />
-                <span>
-                  {weather.temperature}°F - {weather.description}
-                </span>
-              </div>
-            ) : (
-              <div>Weather data unavailable</div>
-            )}
+            <WeatherDisplay />
           </div>
         </aside>
       </header>

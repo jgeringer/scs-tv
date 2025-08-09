@@ -25,7 +25,7 @@ import DateTimeDisplay from "./components/DateTimeDisplay";
 export default function Home() {
   return (
     <div className="flex flex-col h-screen scs-gradient overflow-hidden">
-      <header className="flex justify-between items-center p-4 h-[100px] bg-gray-100">
+      <header className="flex justify-between items-center p-4 h-[100px] " style={{}}>
         <div className="flex-1">
           <h1 className="text-4xl font-bold text-white tracking-wide flex items-center gap-4 main-text">
             <span>
@@ -47,7 +47,7 @@ export default function Home() {
             </span>
           </h1>
         </div>
-        <aside className="flex items-end space-y-2 gap-8 font-bold">
+        <aside className="flex items-end space-y-2 gap-8 font-bold" style={{ color: `var(--dateTime)` }}>
           <div>
             <DateTimeDisplay />
           </div>
@@ -57,7 +57,7 @@ export default function Home() {
         </aside>
       </header>
 
-      <main className="flex flex-1 bg-gray-200 h-[77vh]">
+      <main className="flex flex-1 h-[77vh]" style={{ background: `var(--background)` }}>
         <aside className="w-[calc(25%+8rem)] p-8">
           <CalendarSection />
         </aside>
@@ -65,7 +65,7 @@ export default function Home() {
           <FadingGallery />
         </section>
       </main>
-      <footer className="flex p-4 bg-gray-100 border-emerald-800 z-1">
+      <footer className="flex p-4 border-emerald-800 z-1">
         <section className="bg-emerald-800 text-white rounded-2xl font-bold w-full overflow-hidden">
           <SportsTicker />
         </section>

@@ -17,6 +17,7 @@ import {
   faVolleyball,
 } from "@fortawesome/free-solid-svg-icons";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons/faPersonRunning";
+import DateTimeDisplay from "./components/DateTimeDisplay";
 
 // Sheet ID: 1l-oTjaJQxTiNFWCR-RAU7nSvCvNg4Br6G36Je8bmLtU
 // https://docs.google.com/spreadsheets/d/e/2PACX-1vRfv4TOxblDhrnqwloIDae8HZsBKeusaw-ApaYqsMHXms06B9kGpZAxNgiCLYXc2G5fATyUMfugbgE4/pub?output=csv
@@ -47,9 +48,8 @@ export default function Home() {
           </h1>
         </div>
         <aside className="flex items-end space-y-2 gap-8 font-bold">
-          <div>{formatDate()}</div>
           <div>
-            <TimeDisplay />
+            <DateTimeDisplay />
           </div>
           <div>
             <WeatherDisplay />

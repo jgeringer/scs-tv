@@ -1,0 +1,167 @@
+// take the division_location_id values from the events and use them to search for the corresponding division locations
+// ex: 75473872
+// https://apiv3.teamsnap.com/division_locations/search?id=75473872
+
+{
+    "collection": {
+        "version": "3.867.0",
+        "href": "https://apiv3.teamsnap.com/v3/division_locations",
+        "rel": "division_locations",
+        "template": {
+            "data": [
+                {
+                    "name": "name",
+                    "value": null
+                },
+                {
+                    "name": "url",
+                    "value": null
+                },
+                {
+                    "name": "phone",
+                    "value": null
+                },
+                {
+                    "name": "notes",
+                    "value": null
+                },
+                {
+                    "name": "address",
+                    "value": null
+                },
+                {
+                    "name": "division_id",
+                    "value": null
+                },
+                {
+                    "name": "type",
+                    "value": "division_location"
+                }
+            ]
+        },
+        "links": [
+            {
+                "rel": "events",
+                "href": "https://apiv3.teamsnap.com/v3/events"
+            },
+            {
+                "rel": "root",
+                "href": "https://apiv3.teamsnap.com/v3/"
+            },
+            {
+                "rel": "self",
+                "href": "https://apiv3.teamsnap.com/v3/division_locations/search?id=75473872"
+            }
+        ],
+        "queries": [
+            {
+                "rel": "search",
+                "href": "https://apiv3.teamsnap.com/v3/division_locations/search",
+                "data": [
+                    {
+                        "name": "division_id",
+                        "value": null
+                    },
+                    {
+                        "name": "team_id",
+                        "value": null
+                    },
+                    {
+                        "name": "id",
+                        "value": null
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": null
+                    },
+                    {
+                        "name": "organization_id",
+                        "value": null
+                    },
+                    {
+                        "name": "page_size",
+                        "value": null,
+                        "prompt": "The number of items to return for each page. Sending this parameter with the query will enable paging for the returned collection."
+                    },
+                    {
+                        "name": "page_number",
+                        "value": null,
+                        "prompt": "The number of the page to be returned. This requires that paging be turned on by also providing the page_size parameter."
+                    }
+                ]
+            }
+        ],
+        "commands": [
+            {
+                "rel": "import_from_division",
+                "href": "https://apiv3.teamsnap.com/v3/division_locations/import_from_division",
+                "prompt": "Copy the specified 'source_division_location_ids' to the specified 'destination_division_id'.",
+                "data": [
+                    {
+                        "name": "destination_division_id",
+                        "value": null
+                    },
+                    {
+                        "name": "source_location_ids",
+                        "value": null
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "href": "https://apiv3.teamsnap.com/v3/division_locations/75473872",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": 75473872,
+                        "type": "String"
+                    },
+                    {
+                        "name": "type",
+                        "value": "division_location",
+                        "type": "String"
+                    },
+                    {
+                        "name": "address",
+                        "value": "5900 W Belmont Ave, Chicago, IL 60634",
+                        "type": "String"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Home Soccer Field (St. Pats)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "notes",
+                        "value": "Field is behind the school.  Park in the parking lot off of Austin Ave.",
+                        "type": "String"
+                    },
+                    {
+                        "name": "phone",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "division_id",
+                        "value": 973432,
+                        "type": "String"
+                    },
+                    {
+                        "name": "url",
+                        "value": "",
+                        "type": "String"
+                    }
+                ],
+                "links": [
+                    {
+                        "rel": "events",
+                        "href": "https://apiv3.teamsnap.com/v3/events/search?location_id=75473872"
+                    }
+                ],
+                "rel": "division_location-75473872"
+            }
+        ]
+    }
+}
+

@@ -52,7 +52,7 @@ export default function Home() {
             <DateTimeDisplay />
           </div>
           <div>
-            <WeatherDisplay />
+            {/* <WeatherDisplay /> */}
           </div>
         </aside>
       </header>
@@ -62,7 +62,7 @@ export default function Home() {
           <CalendarSection />
         </aside>
         <section className="w-3/4 p-8 flex flex-col gap-16 h-full">
-          <FadingGallery />
+          {/* <FadingGallery /> */}
         </section>
       </main>
       <footer className="flex p-4 border-emerald-800 z-1">

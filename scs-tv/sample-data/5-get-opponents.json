@@ -1,0 +1,95 @@
+// https://apiv3.teamsnap.com/opponents/search?team_id=116106664
+// Ex: opponent_id is from the events call. 
+// 116106664
+
+{
+    "collection": {
+        "version": "3.867.0",
+        "href": "https://apiv3.teamsnap.com/v3/opponents",
+        "rel": "opponents",
+        "template": {
+            "data": [
+                {
+                    "name": "name",
+                    "value": null
+                },
+                {
+                    "name": "contacts_name",
+                    "value": null
+                },
+                {
+                    "name": "contacts_phone",
+                    "value": null
+                },
+                {
+                    "name": "contacts_email",
+                    "value": null
+                },
+                {
+                    "name": "notes",
+                    "value": null
+                },
+                {
+                    "name": "team_id",
+                    "value": null
+                },
+                {
+                    "name": "type",
+                    "value": "opponent"
+                }
+            ]
+        },
+        "links": [
+            {
+                "rel": "events",
+                "href": "https://apiv3.teamsnap.com/v3/events"
+            },
+            {
+                "rel": "opponent_results",
+                "href": "https://apiv3.teamsnap.com/v3/opponents_results"
+            },
+            {
+                "rel": "team",
+                "href": "https://apiv3.teamsnap.com/v3/teams"
+            },
+            {
+                "rel": "root",
+                "href": "https://apiv3.teamsnap.com/v3/"
+            },
+            {
+                "rel": "self",
+                "href": "https://apiv3.teamsnap.com/v3/opponents/search?team_id=116106664"
+            }
+        ],
+        "queries": [
+            {
+                "rel": "search",
+                "href": "https://apiv3.teamsnap.com/v3/opponents/search",
+                "data": [
+                    {
+                        "name": "team_id",
+                        "value": null
+                    },
+                    {
+                        "name": "league_team_id",
+                        "value": null
+                    },
+                    {
+                        "name": "id",
+                        "value": null
+                    },
+                    {
+                        "name": "page_size",
+                        "value": null,
+                        "prompt": "The number of items to return for each page. Sending this parameter with the query will enable paging for the returned collection."
+                    },
+                    {
+                        "name": "page_number",
+                        "value": null,
+                        "prompt": "The number of the page to be returned. This requires that paging be turned on by also providing the page_size parameter."
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,164 @@
+// https://apiv3.teamsnap.com/division_locations/search?id=61110449
+
+{
+    "collection": {
+        "version": "3.867.0",
+        "href": "https://apiv3.teamsnap.com/v3/division_locations",
+        "rel": "division_locations",
+        "template": {
+            "data": [
+                {
+                    "name": "name",
+                    "value": null
+                },
+                {
+                    "name": "url",
+                    "value": null
+                },
+                {
+                    "name": "phone",
+                    "value": null
+                },
+                {
+                    "name": "notes",
+                    "value": null
+                },
+                {
+                    "name": "address",
+                    "value": null
+                },
+                {
+                    "name": "division_id",
+                    "value": null
+                },
+                {
+                    "name": "type",
+                    "value": "division_location"
+                }
+            ]
+        },
+        "links": [
+            {
+                "rel": "events",
+                "href": "https://apiv3.teamsnap.com/v3/events"
+            },
+            {
+                "rel": "root",
+                "href": "https://apiv3.teamsnap.com/v3/"
+            },
+            {
+                "rel": "self",
+                "href": "https://apiv3.teamsnap.com/v3/division_locations/search?id=61110449"
+            }
+        ],
+        "queries": [
+            {
+                "rel": "search",
+                "href": "https://apiv3.teamsnap.com/v3/division_locations/search",
+                "data": [
+                    {
+                        "name": "division_id",
+                        "value": null
+                    },
+                    {
+                        "name": "team_id",
+                        "value": null
+                    },
+                    {
+                        "name": "id",
+                        "value": null
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": null
+                    },
+                    {
+                        "name": "organization_id",
+                        "value": null
+                    },
+                    {
+                        "name": "page_size",
+                        "value": null,
+                        "prompt": "The number of items to return for each page. Sending this parameter with the query will enable paging for the returned collection."
+                    },
+                    {
+                        "name": "page_number",
+                        "value": null,
+                        "prompt": "The number of the page to be returned. This requires that paging be turned on by also providing the page_size parameter."
+                    }
+                ]
+            }
+        ],
+        "commands": [
+            {
+                "rel": "import_from_division",
+                "href": "https://apiv3.teamsnap.com/v3/division_locations/import_from_division",
+                "prompt": "Copy the specified 'source_division_location_ids' to the specified 'destination_division_id'.",
+                "data": [
+                    {
+                        "name": "destination_division_id",
+                        "value": null
+                    },
+                    {
+                        "name": "source_location_ids",
+                        "value": null
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "href": "https://apiv3.teamsnap.com/v3/division_locations/61110449",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": 61110449,
+                        "type": "String"
+                    },
+                    {
+                        "name": "type",
+                        "value": "division_location",
+                        "type": "String"
+                    },
+                    {
+                        "name": "address",
+                        "value": "199 W Kellogg Blvd, St Paul, MN 55102",
+                        "type": "String"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Xcel Energy Center",
+                        "type": "String"
+                    },
+                    {
+                        "name": "notes",
+                        "value": "",
+                        "type": "String"
+                    },
+                    {
+                        "name": "phone",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "division_id",
+                        "value": 636834,
+                        "type": "String"
+                    },
+                    {
+                        "name": "url",
+                        "value": "",
+                        "type": "String"
+                    }
+                ],
+                "links": [
+                    {
+                        "rel": "events",
+                        "href": "https://apiv3.teamsnap.com/v3/events/search?location_id=61110449"
+                    }
+                ],
+                "rel": "division_location-61110449"
+            }
+        ]
+    }
+}

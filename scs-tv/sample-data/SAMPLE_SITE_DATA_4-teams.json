@@ -1,0 +1,1546 @@
+// https://apiv3.teamsnap.com/teams/search?team_id=83359613,8013369,83359614,8013368,90663579
+// 83359613,8013369,83359614,8013368,90663579
+
+
+{
+    "collection": {
+        "version": "3.867.0",
+        "href": "https://apiv3.teamsnap.com/v3/teams",
+        "rel": "teams",
+        "template": {
+            "data": []
+        },
+        "links": [
+            {
+                "rel": "advertisements",
+                "href": "https://apiv3.teamsnap.com/v3/advertisements"
+            },
+            {
+                "rel": "active_season_team",
+                "href": "https://apiv3.teamsnap.com/v3/teams"
+            },
+            {
+                "rel": "assignments",
+                "href": "https://apiv3.teamsnap.com/v3/assignments"
+            },
+            {
+                "rel": "availabilities",
+                "href": "https://apiv3.teamsnap.com/v3/availabilities"
+            },
+            {
+                "rel": "batch_invoices",
+                "href": "https://apiv3.teamsnap.com/v3/batch_invoices"
+            },
+            {
+                "rel": "batch_invoices_aggregates",
+                "href": "https://apiv3.teamsnap.com/v3/batch_invoices_aggregates"
+            },
+            {
+                "rel": "broadcast_email_attachments",
+                "href": "https://apiv3.teamsnap.com/v3/broadcast_email_attachments"
+            },
+            {
+                "rel": "broadcast_emails",
+                "href": "https://apiv3.teamsnap.com/v3/broadcast_emails"
+            },
+            {
+                "rel": "broadcast_alerts",
+                "href": "https://apiv3.teamsnap.com/v3/broadcast_alerts"
+            },
+            {
+                "rel": "commissioners",
+                "href": "https://apiv3.teamsnap.com/v3/members"
+            },
+            {
+                "rel": "contact_email_addresses",
+                "href": "https://apiv3.teamsnap.com/v3/contact_email_addresses"
+            },
+            {
+                "rel": "contact_phone_numbers",
+                "href": "https://apiv3.teamsnap.com/v3/contact_phone_numbers"
+            },
+            {
+                "rel": "contacts",
+                "href": "https://apiv3.teamsnap.com/v3/contacts"
+            },
+            {
+                "rel": "custom_data",
+                "href": "https://apiv3.teamsnap.com/v3/custom_data"
+            },
+            {
+                "rel": "custom_fields",
+                "href": "https://apiv3.teamsnap.com/v3/custom_fields"
+            },
+            {
+                "rel": "division_contact_email_addresses",
+                "href": "https://apiv3.teamsnap.com/v3/division_contact_email_addresses"
+            },
+            {
+                "rel": "division_contact_phone_numbers",
+                "href": "https://apiv3.teamsnap.com/v3/division_contact_phone_numbers"
+            },
+            {
+                "rel": "division_contacts",
+                "href": "https://apiv3.teamsnap.com/v3/division_contacts"
+            },
+            {
+                "rel": "division_locations",
+                "href": "https://apiv3.teamsnap.com/v3/division_locations"
+            },
+            {
+                "rel": "division_member_email_addresses",
+                "href": "https://apiv3.teamsnap.com/v3/division_member_email_addresses"
+            },
+            {
+                "rel": "division_member_phone_numbers",
+                "href": "https://apiv3.teamsnap.com/v3/division_member_phone_numbers"
+            },
+            {
+                "rel": "division_members",
+                "href": "https://apiv3.teamsnap.com/v3/division_members"
+            },
+            {
+                "rel": "division_members_preferences",
+                "href": "https://apiv3.teamsnap.com/v3/division_members_preferences"
+            },
+            {
+                "rel": "division_team_standings",
+                "href": "https://apiv3.teamsnap.com/v3/division_team_standings"
+            },
+            {
+                "rel": "event_statistics",
+                "href": "https://apiv3.teamsnap.com/v3/event_statistics"
+            },
+            {
+                "rel": "events",
+                "href": "https://apiv3.teamsnap.com/v3/events"
+            },
+            {
+                "rel": "events_overview",
+                "href": "https://apiv3.teamsnap.com/v3/events/overview"
+            },
+            {
+                "rel": "forum_posts",
+                "href": "https://apiv3.teamsnap.com/v3/forum_posts"
+            },
+            {
+                "rel": "forum_subscriptions",
+                "href": "https://apiv3.teamsnap.com/v3/forum_subscriptions"
+            },
+            {
+                "rel": "forum_topics",
+                "href": "https://apiv3.teamsnap.com/v3/forum_topics"
+            },
+            {
+                "rel": "league_custom_data",
+                "href": "https://apiv3.teamsnap.com/v3/league_custom_data"
+            },
+            {
+                "rel": "league_custom_fields",
+                "href": "https://apiv3.teamsnap.com/v3/league_custom_fields"
+            },
+            {
+                "rel": "league_registrant_documents",
+                "href": "https://apiv3.teamsnap.com/v3/league_registrant_documents"
+            },
+            {
+                "rel": "locations",
+                "href": "https://apiv3.teamsnap.com/v3/locations"
+            },
+            {
+                "rel": "managers",
+                "href": "https://apiv3.teamsnap.com/v3/members"
+            },
+            {
+                "rel": "member_balances",
+                "href": "https://apiv3.teamsnap.com/v3/member_balances"
+            },
+            {
+                "rel": "member_email_addresses",
+                "href": "https://apiv3.teamsnap.com/v3/member_email_addresses"
+            },
+            {
+                "rel": "member_files",
+                "href": "https://apiv3.teamsnap.com/v3/member_files"
+            },
+            {
+                "rel": "member_links",
+                "href": "https://apiv3.teamsnap.com/v3/member_links"
+            },
+            {
+                "rel": "member_payments",
+                "href": "https://apiv3.teamsnap.com/v3/member_payments"
+            },
+            {
+                "rel": "member_phone_numbers",
+                "href": "https://apiv3.teamsnap.com/v3/member_phone_numbers"
+            },
+            {
+                "rel": "member_photos",
+                "href": "https://apiv3.teamsnap.com/v3/member_photos"
+            },
+            {
+                "rel": "member_statistics",
+                "href": "https://apiv3.teamsnap.com/v3/member_statistics"
+            },
+            {
+                "rel": "members",
+                "href": "https://apiv3.teamsnap.com/v3/members"
+            },
+            {
+                "rel": "members_preferences",
+                "href": "https://apiv3.teamsnap.com/v3/members_preferences"
+            },
+            {
+                "rel": "message_data",
+                "href": "https://apiv3.teamsnap.com/v3/message_data"
+            },
+            {
+                "rel": "messages",
+                "href": "https://apiv3.teamsnap.com/v3/messages"
+            },
+            {
+                "rel": "opponents",
+                "href": "https://apiv3.teamsnap.com/v3/opponents"
+            },
+            {
+                "rel": "opponents_results",
+                "href": "https://apiv3.teamsnap.com/v3/opponents_results"
+            },
+            {
+                "rel": "owner",
+                "href": "https://apiv3.teamsnap.com/v3/members"
+            },
+            {
+                "rel": "payment_notes",
+                "href": "https://apiv3.teamsnap.com/v3/payment_notes"
+            },
+            {
+                "rel": "paypal_currency",
+                "href": "https://apiv3.teamsnap.com/v3/paypal_currencies"
+            },
+            {
+                "rel": "plan",
+                "href": "https://apiv3.teamsnap.com/v3/plans"
+            },
+            {
+                "rel": "sponsors",
+                "href": "https://apiv3.teamsnap.com/v3/sponsors"
+            },
+            {
+                "rel": "sport",
+                "href": "https://apiv3.teamsnap.com/v3/sports"
+            },
+            {
+                "rel": "sport_positions",
+                "href": "https://apiv3.teamsnap.com/v3/sport_positions"
+            },
+            {
+                "rel": "statistic",
+                "href": "https://apiv3.teamsnap.com/v3/statistics"
+            },
+            {
+                "rel": "statistic_aggregates",
+                "href": "https://apiv3.teamsnap.com/v3/statistic_aggregates"
+            },
+            {
+                "rel": "statistic_data",
+                "href": "https://apiv3.teamsnap.com/v3/statistic_data"
+            },
+            {
+                "rel": "statistic_group",
+                "href": "https://apiv3.teamsnap.com/v3/statistic_groups"
+            },
+            {
+                "rel": "suggested_assignments",
+                "href": "https://apiv3.teamsnap.com/v3/suggested_assignments"
+            },
+            {
+                "rel": "team_fees",
+                "href": "https://apiv3.teamsnap.com/v3/team_fees"
+            },
+            {
+                "rel": "team_media",
+                "href": "https://apiv3.teamsnap.com/v3/team_media"
+            },
+            {
+                "rel": "team_medium_comments",
+                "href": "https://apiv3.teamsnap.com/v3/team_medium_comments"
+            },
+            {
+                "rel": "team_media_groups",
+                "href": "https://apiv3.teamsnap.com/v3/team_media_groups"
+            },
+            {
+                "rel": "team_paypal_preferences",
+                "href": "https://apiv3.teamsnap.com/v3/teams_paypal_preferences"
+            },
+            {
+                "rel": "team_photos",
+                "href": "https://apiv3.teamsnap.com/v3/team_photos"
+            },
+            {
+                "rel": "team_preferences",
+                "href": "https://apiv3.teamsnap.com/v3/teams_preferences"
+            },
+            {
+                "rel": "team_public_site",
+                "href": "https://apiv3.teamsnap.com/v3/team_public_sites"
+            },
+            {
+                "rel": "team_results",
+                "href": "https://apiv3.teamsnap.com/v3/teams_results"
+            },
+            {
+                "rel": "team_statistics",
+                "href": "https://apiv3.teamsnap.com/v3/team_statistics"
+            },
+            {
+                "rel": "tracked_item_statuses",
+                "href": "https://apiv3.teamsnap.com/v3/tracked_item_statuses"
+            },
+            {
+                "rel": "tracked_items",
+                "href": "https://apiv3.teamsnap.com/v3/tracked_items"
+            },
+            {
+                "rel": "root",
+                "href": "https://apiv3.teamsnap.com/v3/"
+            },
+            {
+                "rel": "self",
+                "href": "https://apiv3.teamsnap.com/v3/teams/search?team_id=83359613,8013369,83359614,8013368,90663579"
+            }
+        ],
+        "queries": [
+            {
+                "rel": "search",
+                "href": "https://apiv3.teamsnap.com/v3/teams/search",
+                "sort": [
+                    "name"
+                ],
+                "data": [
+                    {
+                        "name": "id",
+                        "value": null
+                    },
+                    {
+                        "name": "team_id",
+                        "value": null
+                    },
+                    {
+                        "name": "user_id",
+                        "value": null
+                    },
+                    {
+                        "name": "division_id",
+                        "value": null
+                    },
+                    {
+                        "name": "page_size",
+                        "value": null,
+                        "prompt": "The number of items to return for each page. Sending this parameter with the query will enable paging for the returned collection."
+                    },
+                    {
+                        "name": "page_number",
+                        "value": null,
+                        "prompt": "The number of the page to be returned. This requires that paging be turned on by also providing the page_size parameter."
+                    },
+                    {
+                        "name": "sort_name",
+                        "value": null,
+                        "prompt": "Sort the returned dataset based on the name field, valid values are 'asc' or 'desc'."
+                    }
+                ]
+            },
+            {
+                "rel": "available_for_statistic_import",
+                "href": "https://apiv3.teamsnap.com/v3/teams/available_for_statistic_import",
+                "prompt": "Finds all teams accessible to current user that have the provided sport_id and have at least one statistic to import",
+                "data": [
+                    {
+                        "name": "sport_id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "active_teams",
+                "href": "https://apiv3.teamsnap.com/v3/teams/active",
+                "prompt": "Finds all active teams for a given user. Excludes archived seasons and retired teams.",
+                "data": [
+                    {
+                        "name": "user_id",
+                        "value": null
+                    },
+                    {
+                        "name": "division_id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "division_search",
+                "href": "https://apiv3.teamsnap.com/v3/teams/division_search",
+                "prompt": "Search the teams on the division_id and its descendants or a commissioner's user_id.",
+                "data": [
+                    {
+                        "name": "division_id",
+                        "value": null
+                    },
+                    {
+                        "name": "user_id",
+                        "value": null
+                    },
+                    {
+                        "name": "is_active",
+                        "value": null
+                    },
+                    {
+                        "name": "is_commissioner",
+                        "value": null
+                    },
+                    {
+                        "name": "page_size",
+                        "value": null,
+                        "prompt": "The number of items to return for each page. Sending this parameter with the query will enable paging for the returned collection."
+                    },
+                    {
+                        "name": "page_number",
+                        "value": null,
+                        "prompt": "The number of the page to be returned. This requires that paging be turned on by also providing the page_size parameter."
+                    }
+                ]
+            }
+        ],
+        "commands": [
+            {
+                "rel": "invite",
+                "href": "https://apiv3.teamsnap.com/v3/teams/invite",
+                "prompt": "invite team members or contacts to join TeamSnap.",
+                "data": [
+                    {
+                        "name": "team_id",
+                        "value": null
+                    },
+                    {
+                        "name": "contact_id",
+                        "value": null
+                    },
+                    {
+                        "name": "member_id",
+                        "value": null
+                    },
+                    {
+                        "name": "introduction",
+                        "value": null
+                    },
+                    {
+                        "name": "notify_as_member_id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "update_time_zone",
+                "href": "https://apiv3.teamsnap.com/v3/teams/update_time_zone",
+                "prompt": "Update team's time zone. This is currently the only method of updating a team's time zone.",
+                "data": [
+                    {
+                        "name": "team_id",
+                        "value": null
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": null
+                    },
+                    {
+                        "name": "offset_team_times",
+                        "value": null,
+                        "deprecated": true,
+                        "prompt": "%{old} is deprecated and will be removed in a future version, use %{new} instead."
+                    }
+                ]
+            },
+            {
+                "rel": "reset_statistics",
+                "href": "https://apiv3.teamsnap.com/v3/teams/reset_statistics",
+                "prompt": "Deletes all data, categories and groups for a given team_id",
+                "data": [
+                    {
+                        "name": "team_id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "invite_team_owners",
+                "href": "https://apiv3.teamsnap.com/v3/teams/invite_team_owners",
+                "prompt": "Beta: (This endpoint subject to change) Allow commissioners to send invitations to all owners on active teams in the division.",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "change_owner",
+                "href": "https://apiv3.teamsnap.com/v3/teams/change_owner",
+                "prompt": "Beta: (This endpoint subject to change) Allow commissioners to change the owner of a league team.",
+                "data": [
+                    {
+                        "name": "team_id",
+                        "value": null
+                    },
+                    {
+                        "name": "member_id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "toggle_team_visibility_on_dashboard",
+                "href": "https://apiv3.teamsnap.com/v3/teams/toggle_team_visibility_on_dashboard",
+                "prompt": "Toggles the visibility of teams on the list of active teams, per user. Requires a single id or a comma separated list of 'team_id's",
+                "data": [
+                    {
+                        "name": "team_ids",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "send_upsell_message_from_owner",
+                "href": "https://apiv3.teamsnap.com/v3/teams/send_upsell_message_from_owner",
+                "prompt": "Send an upsell email to the team owner.",
+                "data": [
+                    {
+                        "name": "team_id",
+                        "value": null
+                    },
+                    {
+                        "name": "feature",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "send_upsell_message_from_contact",
+                "href": "https://apiv3.teamsnap.com/v3/teams/send_upsell_message_from_contact",
+                "prompt": "Send an upsell email to the team owner from a contact.",
+                "data": [
+                    {
+                        "name": "team_id",
+                        "value": null
+                    },
+                    {
+                        "name": "contact_id",
+                        "value": null
+                    },
+                    {
+                        "name": "feature",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "send_team_store_push_notification",
+                "href": "https://apiv3.teamsnap.com/v3/teams/send_team_store_push_notification",
+                "prompt": "Send a team store push notification that links to the team store.",
+                "data": [
+                    {
+                        "name": "team_id",
+                        "value": null
+                    },
+                    {
+                        "name": "user_id",
+                        "value": null
+                    },
+                    {
+                        "name": "member_id",
+                        "value": null
+                    },
+                    {
+                        "name": "contact_id",
+                        "value": null
+                    },
+                    {
+                        "name": "push_type_id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "update_team_plan",
+                "href": "https://apiv3.teamsnap.com/v3/teams/update_team_plan",
+                "prompt": "Update team's plan. Requires a single id or a comma separated list of 'team_id's and a plan_id.",
+                "data": [
+                    {
+                        "name": "team_ids",
+                        "value": null
+                    },
+                    {
+                        "name": "plan_id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "apply_promotion",
+                "href": "https://apiv3.teamsnap.com/v3/teams/apply_promotion",
+                "prompt": "Apply a promotion to a team. Requires a single id or a comma separated list of 'team_id's, promotion_name, promotion_length and a plan_id.",
+                "data": [
+                    {
+                        "name": "team_ids",
+                        "value": null
+                    },
+                    {
+                        "name": "promotion_name",
+                        "value": null
+                    },
+                    {
+                        "name": "promotion_length",
+                        "value": null
+                    },
+                    {
+                        "name": "plan_id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "request_desktop_site_email",
+                "href": "https://apiv3.teamsnap.com/v3/teams/request_desktop_site_email",
+                "prompt": "Sends an email to the team owner that has a link to the desktop site.",
+                "data": [
+                    {
+                        "name": "team_id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "send_parent_player_team_store_notification",
+                "href": "https://apiv3.teamsnap.com/v3/teams/send_parent_player_team_store_notification",
+                "prompt": "Send an email notification to parent/players 5 days after they were invited/accepted to a team. ",
+                "data": [
+                    {
+                        "name": "team_id",
+                        "value": null
+                    },
+                    {
+                        "name": "user_id",
+                        "value": null
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "href": "https://apiv3.teamsnap.com/v3/teams/8013368",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": 8013368,
+                        "type": "String"
+                    },
+                    {
+                        "name": "division_name",
+                        "value": "2011",
+                        "type": "String"
+                    },
+                    {
+                        "name": "division_id",
+                        "value": 636838,
+                        "type": "String"
+                    },
+                    {
+                        "name": "is_retired",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "name",
+                        "value": "11Silver",
+                        "type": "String"
+                    },
+                    {
+                        "name": "season_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_description",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_iana_name",
+                        "value": "America/Denver",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_offset",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "active_payment_provider",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "default_payment_provider",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "ad_unit_hero_id",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "ad_unit_hero_template_id",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "ad_unit_inline_id",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "humanized_media_storage_used",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "is_gateway_required_for_sms",
+                        "value": null,
+                        "type": "Boolean"
+                    }
+                ],
+                "links": [
+                    {
+                        "rel": "active_season_team",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/CensoredAttribute"
+                    },
+                    {
+                        "rel": "advertisements",
+                        "href": "https://apiv3.teamsnap.com/v3/advertisements/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "assignments",
+                        "href": "https://apiv3.teamsnap.com/v3/assignments/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "availabilities",
+                        "href": "https://apiv3.teamsnap.com/v3/availabilities/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "availabilities_csv_export",
+                        "href": "https://apiv3.teamsnap.com/v3/exports/availabilities_csv?hs=vrHWrqkoSHFfyv2twT9VVjSKfkPKm8I9gVYPLkvD9U8hmTf0mSiap3A%252FPTMejbBIzQauGpdqwZ1PdzM2rqQ3DQ%253D%253D"
+                    },
+                    {
+                        "rel": "batch_invoices",
+                        "href": "https://apiv3.teamsnap.com/v3/batch_invoices/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "batch_invoices_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/batch_invoices_aggregates/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "broadcast_email_attachments",
+                        "href": "https://apiv3.teamsnap.com/v3/broadcast_email_attachments/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "broadcast_emails",
+                        "href": "https://apiv3.teamsnap.com/v3/broadcast_emails/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "broadcast_alerts",
+                        "href": "https://apiv3.teamsnap.com/v3/broadcast_alerts/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "calendar_http",
+                        "href": "http://ical-cdn.teamsnap.com/team_schedule/CensoredAttribute.ics"
+                    },
+                    {
+                        "rel": "calendar_http_games_only",
+                        "href": "http://ical-cdn.teamsnap.com/team_schedule/filter/games/CensoredAttribute.ics"
+                    },
+                    {
+                        "rel": "calendar_webcal",
+                        "href": "webcal://ical-cdn.teamsnap.com/team_schedule/CensoredAttribute.ics"
+                    },
+                    {
+                        "rel": "calendar_webcal_games_only",
+                        "href": "webcal://ical-cdn.teamsnap.com/team_schedule/filter/games/CensoredAttribute.ics"
+                    },
+                    {
+                        "rel": "commissioners",
+                        "href": "https://apiv3.teamsnap.com/v3/members/commissioners?team_id=8013368"
+                    },
+                    {
+                        "rel": "contact_email_addresses",
+                        "href": "https://apiv3.teamsnap.com/v3/contact_email_addresses/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "contact_phone_numbers",
+                        "href": "https://apiv3.teamsnap.com/v3/contact_phone_numbers/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "contacts",
+                        "href": "https://apiv3.teamsnap.com/v3/contacts/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "custom_data",
+                        "href": "https://apiv3.teamsnap.com/v3/custom_data/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "custom_fields",
+                        "href": "https://apiv3.teamsnap.com/v3/custom_fields/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "division_contact_email_addresses",
+                        "href": "https://apiv3.teamsnap.com/v3/division_contact_email_addresses/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "division_contact_phone_numbers",
+                        "href": "https://apiv3.teamsnap.com/v3/division_contact_phone_numbers/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "division_contacts",
+                        "href": "https://apiv3.teamsnap.com/v3/division_contacts/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "division_locations",
+                        "href": "https://apiv3.teamsnap.com/v3/division_locations/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "division_member_email_addresses",
+                        "href": "https://apiv3.teamsnap.com/v3/division_member_email_addresses/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "division_member_phone_numbers",
+                        "href": "https://apiv3.teamsnap.com/v3/division_member_phone_numbers/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "division_members",
+                        "href": "https://apiv3.teamsnap.com/v3/division_members/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "division_members_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/division_members_preferences/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "division_team_standings",
+                        "href": "https://apiv3.teamsnap.com/v3/division_team_standings/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "forum_posts",
+                        "href": "https://apiv3.teamsnap.com/v3/forum_posts/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "forum_subscriptions",
+                        "href": "https://apiv3.teamsnap.com/v3/forum_subscriptions/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "forum_topics",
+                        "href": "https://apiv3.teamsnap.com/v3/forum_topics/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "event_statistics",
+                        "href": "https://apiv3.teamsnap.com/v3/event_statistics/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "events",
+                        "href": "https://apiv3.teamsnap.com/v3/events/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "events_csv_export",
+                        "href": "https://apiv3.teamsnap.com/v3/exports/events_csv?hs=vrHWrqkoSHFfyv2twT9VVjSKfkPKm8I9gVYPLkvD9U8hmTf0mSiap3A%252FPTMejbBIzQauGpdqwZ1PdzM2rqQ3DQ%253D%253D"
+                    },
+                    {
+                        "rel": "events_overview",
+                        "href": "https://apiv3.teamsnap.com/v3/events/overview?team_id=8013368"
+                    },
+                    {
+                        "rel": "health_check_questionnaire_template",
+                        "href": "https://apiv3.teamsnap.com/v3/health_check_questionnaire_templates/search?division_id=CensoredAttribute"
+                    },
+                    {
+                        "rel": "invoices_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/invoices_aggregates/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "invoice_recipients_invoices_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/invoice_recipients_invoices_aggregates/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "granted_wepay_account",
+                        "href": "https://apiv3.teamsnap.com/v3/wepay_accounts/search?is_granted=true&team_id=8013368"
+                    },
+                    {
+                        "rel": "league_custom_data",
+                        "href": "https://apiv3.teamsnap.com/v3/league_custom_data/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "league_custom_fields",
+                        "href": "https://apiv3.teamsnap.com/v3/league_custom_fields/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "league_registrant_documents",
+                        "href": "https://apiv3.teamsnap.com/v3/league_registrant_documents/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "locations",
+                        "href": "https://apiv3.teamsnap.com/v3/locations/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "managers",
+                        "href": "https://apiv3.teamsnap.com/v3/members/managers?team_id=8013368"
+                    },
+                    {
+                        "rel": "member_balances",
+                        "href": "https://apiv3.teamsnap.com/v3/member_balances/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "member_email_addresses",
+                        "href": "https://apiv3.teamsnap.com/v3/member_email_addresses/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "member_files",
+                        "href": "https://apiv3.teamsnap.com/v3/member_files/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "member_links",
+                        "href": "https://apiv3.teamsnap.com/v3/member_links/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "member_payments",
+                        "href": "https://apiv3.teamsnap.com/v3/member_payments/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "member_phone_numbers",
+                        "href": "https://apiv3.teamsnap.com/v3/member_phone_numbers/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "member_photos",
+                        "href": "https://apiv3.teamsnap.com/v3/member_photos/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "member_statistics",
+                        "href": "https://apiv3.teamsnap.com/v3/member_statistics/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "members",
+                        "href": "https://apiv3.teamsnap.com/v3/members/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "members_csv_export",
+                        "href": "https://apiv3.teamsnap.com/v3/exports/members_csv?hs=vrHWrqkoSHFfyv2twT9VVjSKfkPKm8I9gVYPLkvD9U8hmTf0mSiap3A%252FPTMejbBIzQauGpdqwZ1PdzM2rqQ3DQ%253D%253D"
+                    },
+                    {
+                        "rel": "members_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/members_preferences/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "message_data",
+                        "href": "https://apiv3.teamsnap.com/v3/message_data/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "messages",
+                        "href": "https://apiv3.teamsnap.com/v3/messages/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "messaging_permissions",
+                        "href": "https://apiv3.teamsnap.com/v3/messaging_permissions?team_id=8013368"
+                    },
+                    {
+                        "rel": "opponents",
+                        "href": "https://apiv3.teamsnap.com/v3/opponents/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "opponents_results",
+                        "href": "https://apiv3.teamsnap.com/v3/opponents_results/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "owner",
+                        "href": "https://apiv3.teamsnap.com/v3/members/owner?team_id=8013368"
+                    },
+                    {
+                        "rel": "payment_notes",
+                        "href": "https://apiv3.teamsnap.com/v3/payment_notes/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "paypal_currency",
+                        "href": "https://apiv3.teamsnap.com/v3/paypal_currencies/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "plan",
+                        "href": "https://apiv3.teamsnap.com/v3/plans/CensoredAttribute"
+                    },
+                    {
+                        "rel": "sponsors",
+                        "href": "https://apiv3.teamsnap.com/v3/sponsors/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "sport",
+                        "href": "https://apiv3.teamsnap.com/v3/sports/CensoredAttribute"
+                    },
+                    {
+                        "rel": "sport_positions",
+                        "href": "https://apiv3.teamsnap.com/v3/sport_positions/search?sport_id=CensoredAttribute"
+                    },
+                    {
+                        "rel": "statistics",
+                        "href": "https://apiv3.teamsnap.com/v3/statistics/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "statistic_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/statistic_aggregates/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "statistic_data",
+                        "href": "https://apiv3.teamsnap.com/v3/statistic_data/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "statistic_groups",
+                        "href": "https://apiv3.teamsnap.com/v3/statistic_groups/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "stripe_accounts",
+                        "href": "https://apiv3.teamsnap.com/v3/stripe_accounts/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "suggested_assignments",
+                        "href": "https://apiv3.teamsnap.com/v3/suggested_assignments/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "team_fees",
+                        "href": "https://apiv3.teamsnap.com/v3/team_fees/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "team_logo_photo_file",
+                        "href": "https://apiv3.teamsnap.com/v3/photo_files/sport_logo/16-1612999942"
+                    },
+                    {
+                        "rel": "team_media",
+                        "href": "https://apiv3.teamsnap.com/v3/team_media/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "team_medium_comments",
+                        "href": "https://apiv3.teamsnap.com/v3/team_medium_comments/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "team_media_groups",
+                        "href": "https://apiv3.teamsnap.com/v3/team_media_groups/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "team_paypal_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/teams_paypal_preferences/CensoredAttribute"
+                    },
+                    {
+                        "rel": "team_photos",
+                        "href": "https://apiv3.teamsnap.com/v3/team_photos/search"
+                    },
+                    {
+                        "rel": "team_photo_file",
+                        "href": "https://apiv3.teamsnap.com/v3/team_photo_files/"
+                    },
+                    {
+                        "rel": "team_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/teams_preferences/CensoredAttribute"
+                    },
+                    {
+                        "rel": "team_public_site",
+                        "href": "https://apiv3.teamsnap.com/v3/team_public_sites/8013368"
+                    },
+                    {
+                        "rel": "team_results",
+                        "href": "https://apiv3.teamsnap.com/v3/teams_results/8013368"
+                    },
+                    {
+                        "rel": "team_statistics",
+                        "href": "https://apiv3.teamsnap.com/v3/team_statistics/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "tracked_item_statuses",
+                        "href": "https://apiv3.teamsnap.com/v3/tracked_item_statuses/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "tracked_items",
+                        "href": "https://apiv3.teamsnap.com/v3/tracked_items/search?team_id=8013368"
+                    },
+                    {
+                        "rel": "team_chat",
+                        "href": "CensoredAttribute"
+                    },
+                    {
+                        "rel": "wepay_accounts",
+                        "href": "https://apiv3.teamsnap.com/v3/wepay_accounts/search?team_id=8013368"
+                    }
+                ]
+            },
+            {
+                "href": "https://apiv3.teamsnap.com/v3/teams/8013369",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": 8013369,
+                        "type": "String"
+                    },
+                    {
+                        "name": "division_name",
+                        "value": "2011",
+                        "type": "String"
+                    },
+                    {
+                        "name": "division_id",
+                        "value": 636838,
+                        "type": "String"
+                    },
+                    {
+                        "name": "is_retired",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "name",
+                        "value": "2011 Maroon",
+                        "type": "String"
+                    },
+                    {
+                        "name": "season_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_description",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_iana_name",
+                        "value": "America/Denver",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_offset",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "active_payment_provider",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "default_payment_provider",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "ad_unit_hero_id",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "ad_unit_hero_template_id",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "ad_unit_inline_id",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "humanized_media_storage_used",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "is_gateway_required_for_sms",
+                        "value": null,
+                        "type": "Boolean"
+                    }
+                ],
+                "links": [
+                    {
+                        "rel": "active_season_team",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/CensoredAttribute"
+                    },
+                    {
+                        "rel": "advertisements",
+                        "href": "https://apiv3.teamsnap.com/v3/advertisements/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "assignments",
+                        "href": "https://apiv3.teamsnap.com/v3/assignments/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "availabilities",
+                        "href": "https://apiv3.teamsnap.com/v3/availabilities/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "availabilities_csv_export",
+                        "href": "https://apiv3.teamsnap.com/v3/exports/availabilities_csv?hs=vrHWrqkoSHFfyv2twT9VVvkqTWHEBw3pRcjyGhDfWwYOBfGyka9IFajtIPYpjn35VtGBFsCvzmSgbj9yqXeejA%253D%253D"
+                    },
+                    {
+                        "rel": "batch_invoices",
+                        "href": "https://apiv3.teamsnap.com/v3/batch_invoices/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "batch_invoices_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/batch_invoices_aggregates/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "broadcast_email_attachments",
+                        "href": "https://apiv3.teamsnap.com/v3/broadcast_email_attachments/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "broadcast_emails",
+                        "href": "https://apiv3.teamsnap.com/v3/broadcast_emails/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "broadcast_alerts",
+                        "href": "https://apiv3.teamsnap.com/v3/broadcast_alerts/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "calendar_http",
+                        "href": "http://ical-cdn.teamsnap.com/team_schedule/CensoredAttribute.ics"
+                    },
+                    {
+                        "rel": "calendar_http_games_only",
+                        "href": "http://ical-cdn.teamsnap.com/team_schedule/filter/games/CensoredAttribute.ics"
+                    },
+                    {
+                        "rel": "calendar_webcal",
+                        "href": "webcal://ical-cdn.teamsnap.com/team_schedule/CensoredAttribute.ics"
+                    },
+                    {
+                        "rel": "calendar_webcal_games_only",
+                        "href": "webcal://ical-cdn.teamsnap.com/team_schedule/filter/games/CensoredAttribute.ics"
+                    },
+                    {
+                        "rel": "commissioners",
+                        "href": "https://apiv3.teamsnap.com/v3/members/commissioners?team_id=8013369"
+                    },
+                    {
+                        "rel": "contact_email_addresses",
+                        "href": "https://apiv3.teamsnap.com/v3/contact_email_addresses/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "contact_phone_numbers",
+                        "href": "https://apiv3.teamsnap.com/v3/contact_phone_numbers/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "contacts",
+                        "href": "https://apiv3.teamsnap.com/v3/contacts/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "custom_data",
+                        "href": "https://apiv3.teamsnap.com/v3/custom_data/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "custom_fields",
+                        "href": "https://apiv3.teamsnap.com/v3/custom_fields/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "division_contact_email_addresses",
+                        "href": "https://apiv3.teamsnap.com/v3/division_contact_email_addresses/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "division_contact_phone_numbers",
+                        "href": "https://apiv3.teamsnap.com/v3/division_contact_phone_numbers/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "division_contacts",
+                        "href": "https://apiv3.teamsnap.com/v3/division_contacts/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "division_locations",
+                        "href": "https://apiv3.teamsnap.com/v3/division_locations/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "division_member_email_addresses",
+                        "href": "https://apiv3.teamsnap.com/v3/division_member_email_addresses/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "division_member_phone_numbers",
+                        "href": "https://apiv3.teamsnap.com/v3/division_member_phone_numbers/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "division_members",
+                        "href": "https://apiv3.teamsnap.com/v3/division_members/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "division_members_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/division_members_preferences/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "division_team_standings",
+                        "href": "https://apiv3.teamsnap.com/v3/division_team_standings/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "forum_posts",
+                        "href": "https://apiv3.teamsnap.com/v3/forum_posts/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "forum_subscriptions",
+                        "href": "https://apiv3.teamsnap.com/v3/forum_subscriptions/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "forum_topics",
+                        "href": "https://apiv3.teamsnap.com/v3/forum_topics/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "event_statistics",
+                        "href": "https://apiv3.teamsnap.com/v3/event_statistics/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "events",
+                        "href": "https://apiv3.teamsnap.com/v3/events/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "events_csv_export",
+                        "href": "https://apiv3.teamsnap.com/v3/exports/events_csv?hs=vrHWrqkoSHFfyv2twT9VVvkqTWHEBw3pRcjyGhDfWwYOBfGyka9IFajtIPYpjn35VtGBFsCvzmSgbj9yqXeejA%253D%253D"
+                    },
+                    {
+                        "rel": "events_overview",
+                        "href": "https://apiv3.teamsnap.com/v3/events/overview?team_id=8013369"
+                    },
+                    {
+                        "rel": "health_check_questionnaire_template",
+                        "href": "https://apiv3.teamsnap.com/v3/health_check_questionnaire_templates/search?division_id=CensoredAttribute"
+                    },
+                    {
+                        "rel": "invoices_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/invoices_aggregates/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "invoice_recipients_invoices_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/invoice_recipients_invoices_aggregates/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "granted_wepay_account",
+                        "href": "https://apiv3.teamsnap.com/v3/wepay_accounts/search?is_granted=true&team_id=8013369"
+                    },
+                    {
+                        "rel": "league_custom_data",
+                        "href": "https://apiv3.teamsnap.com/v3/league_custom_data/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "league_custom_fields",
+                        "href": "https://apiv3.teamsnap.com/v3/league_custom_fields/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "league_registrant_documents",
+                        "href": "https://apiv3.teamsnap.com/v3/league_registrant_documents/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "locations",
+                        "href": "https://apiv3.teamsnap.com/v3/locations/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "managers",
+                        "href": "https://apiv3.teamsnap.com/v3/members/managers?team_id=8013369"
+                    },
+                    {
+                        "rel": "member_balances",
+                        "href": "https://apiv3.teamsnap.com/v3/member_balances/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "member_email_addresses",
+                        "href": "https://apiv3.teamsnap.com/v3/member_email_addresses/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "member_files",
+                        "href": "https://apiv3.teamsnap.com/v3/member_files/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "member_links",
+                        "href": "https://apiv3.teamsnap.com/v3/member_links/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "member_payments",
+                        "href": "https://apiv3.teamsnap.com/v3/member_payments/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "member_phone_numbers",
+                        "href": "https://apiv3.teamsnap.com/v3/member_phone_numbers/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "member_photos",
+                        "href": "https://apiv3.teamsnap.com/v3/member_photos/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "member_statistics",
+                        "href": "https://apiv3.teamsnap.com/v3/member_statistics/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "members",
+                        "href": "https://apiv3.teamsnap.com/v3/members/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "members_csv_export",
+                        "href": "https://apiv3.teamsnap.com/v3/exports/members_csv?hs=vrHWrqkoSHFfyv2twT9VVvkqTWHEBw3pRcjyGhDfWwYOBfGyka9IFajtIPYpjn35VtGBFsCvzmSgbj9yqXeejA%253D%253D"
+                    },
+                    {
+                        "rel": "members_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/members_preferences/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "message_data",
+                        "href": "https://apiv3.teamsnap.com/v3/message_data/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "messages",
+                        "href": "https://apiv3.teamsnap.com/v3/messages/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "messaging_permissions",
+                        "href": "https://apiv3.teamsnap.com/v3/messaging_permissions?team_id=8013369"
+                    },
+                    {
+                        "rel": "opponents",
+                        "href": "https://apiv3.teamsnap.com/v3/opponents/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "opponents_results",
+                        "href": "https://apiv3.teamsnap.com/v3/opponents_results/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "owner",
+                        "href": "https://apiv3.teamsnap.com/v3/members/owner?team_id=8013369"
+                    },
+                    {
+                        "rel": "payment_notes",
+                        "href": "https://apiv3.teamsnap.com/v3/payment_notes/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "paypal_currency",
+                        "href": "https://apiv3.teamsnap.com/v3/paypal_currencies/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "plan",
+                        "href": "https://apiv3.teamsnap.com/v3/plans/CensoredAttribute"
+                    },
+                    {
+                        "rel": "sponsors",
+                        "href": "https://apiv3.teamsnap.com/v3/sponsors/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "sport",
+                        "href": "https://apiv3.teamsnap.com/v3/sports/CensoredAttribute"
+                    },
+                    {
+                        "rel": "sport_positions",
+                        "href": "https://apiv3.teamsnap.com/v3/sport_positions/search?sport_id=CensoredAttribute"
+                    },
+                    {
+                        "rel": "statistics",
+                        "href": "https://apiv3.teamsnap.com/v3/statistics/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "statistic_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/statistic_aggregates/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "statistic_data",
+                        "href": "https://apiv3.teamsnap.com/v3/statistic_data/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "statistic_groups",
+                        "href": "https://apiv3.teamsnap.com/v3/statistic_groups/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "stripe_accounts",
+                        "href": "https://apiv3.teamsnap.com/v3/stripe_accounts/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "suggested_assignments",
+                        "href": "https://apiv3.teamsnap.com/v3/suggested_assignments/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "team_fees",
+                        "href": "https://apiv3.teamsnap.com/v3/team_fees/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "team_logo_photo_file",
+                        "href": "https://apiv3.teamsnap.com/v3/photo_files/team_logo/8013369-1650923827"
+                    },
+                    {
+                        "rel": "team_media",
+                        "href": "https://apiv3.teamsnap.com/v3/team_media/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "team_medium_comments",
+                        "href": "https://apiv3.teamsnap.com/v3/team_medium_comments/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "team_media_groups",
+                        "href": "https://apiv3.teamsnap.com/v3/team_media_groups/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "team_paypal_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/teams_paypal_preferences/CensoredAttribute"
+                    },
+                    {
+                        "rel": "team_photos",
+                        "href": "https://apiv3.teamsnap.com/v3/team_photos/search"
+                    },
+                    {
+                        "rel": "team_photo_file",
+                        "href": "https://apiv3.teamsnap.com/v3/team_photo_files/"
+                    },
+                    {
+                        "rel": "team_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/teams_preferences/CensoredAttribute"
+                    },
+                    {
+                        "rel": "team_public_site",
+                        "href": "https://apiv3.teamsnap.com/v3/team_public_sites/8013369"
+                    },
+                    {
+                        "rel": "team_results",
+                        "href": "https://apiv3.teamsnap.com/v3/teams_results/8013369"
+                    },
+                    {
+                        "rel": "team_statistics",
+                        "href": "https://apiv3.teamsnap.com/v3/team_statistics/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "tracked_item_statuses",
+                        "href": "https://apiv3.teamsnap.com/v3/tracked_item_statuses/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "tracked_items",
+                        "href": "https://apiv3.teamsnap.com/v3/tracked_items/search?team_id=8013369"
+                    },
+                    {
+                        "rel": "team_chat",
+                        "href": "CensoredAttribute"
+                    },
+                    {
+                        "rel": "wepay_accounts",
+                        "href": "https://apiv3.teamsnap.com/v3/wepay_accounts/search?team_id=8013369"
+                    }
+                ]
+            }
+        ]
+    }
+}

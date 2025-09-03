@@ -1,3 +1,5 @@
+// Locations are matched using division_location_id and 3-get-division-locations.json.
+
 // take the division_location_id values from the events and use them to search for the corresponding division locations
 // ex: 75473872
 // https://apiv3.teamsnap.com/division_locations/search?id=75473872

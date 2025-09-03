@@ -1,6 +1,6 @@
 // https://apiv3.teamsnap.com/teams/search?team_id=83359613,8013369,83359614,8013368,90663579
 // 83359613,8013369,83359614,8013368,90663579
-
+// ex: 83359613 is the first team ID
 
 {
     "collection": {

@@ -1,3 +1,5 @@
+// Team and sport info is in 4-get-teams.json
+
 // https://apiv3.teamsnap.com/teams/search?team_id=116106664
 // send in all of the opponent_id from the events call.
 // 116106664

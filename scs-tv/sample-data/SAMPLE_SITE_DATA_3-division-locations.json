@@ -1,4 +1,9 @@
 // https://apiv3.teamsnap.com/division_locations/search?id=61110449
+// then there's a second call, but to this...              61108490
+// then to this...                                         61110627
+
+// The numbers 61110449, 61108490, and 61110627 in this JSON are all used as division_location_id values for different events. 
+// They represent unique IDs for division locations where events take place. Each event in the items array has a division_location_id field, and these numbers are the IDs assigned to those locations.
 
 {
     "collection": {

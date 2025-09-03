@@ -18,11 +18,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons/faPersonRunning";
 import DateTimeDisplay from "./components/DateTimeDisplay";
+import SportsTickerTeamSnap from "./components/SportsTickerTeamSnap";
 
 // Sheet ID: 1l-oTjaJQxTiNFWCR-RAU7nSvCvNg4Br6G36Je8bmLtU
 // https://docs.google.com/spreadsheets/d/e/2PACX-1vRfv4TOxblDhrnqwloIDae8HZsBKeusaw-ApaYqsMHXms06B9kGpZAxNgiCLYXc2G5fATyUMfugbgE4/pub?output=csv
 
 export default function Home() {
+
   return (
     <div className="flex flex-col h-screen scs-gradient overflow-hidden">
       <header className="flex justify-between items-center p-4 h-[100px] " style={{}}>
@@ -52,7 +54,7 @@ export default function Home() {
             <DateTimeDisplay />
           </div>
           <div>
-            {/* <WeatherDisplay /> */}
+            <WeatherDisplay />
           </div>
         </aside>
       </header>
@@ -62,12 +64,13 @@ export default function Home() {
           <CalendarSection />
         </aside>
         <section className="w-3/4 p-8 flex flex-col gap-16 h-full">
-          {/* <FadingGallery /> */}
+          <FadingGallery />
         </section>
       </main>
       <footer className="flex p-4 border-emerald-800 z-1">
         <section className="bg-emerald-800 text-white rounded-2xl font-bold w-full overflow-hidden">
-          <SportsTicker />
+          <SportsTickerTeamSnap />
+          {/* <SportsTicker /> */}
         </section>
       </footer>
     </div>

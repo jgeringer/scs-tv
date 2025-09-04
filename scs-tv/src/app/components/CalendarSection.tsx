@@ -139,7 +139,7 @@ export default function CalendarSection() {
   useEffect(() => {
     if (events.length === 0) return;
     itemRefs.current = new Array(events.length).fill(null);
-    let scrollStep = 1; // pixels per tick
+    const scrollStep = 1; // pixels per tick
     let scrollInterval: NodeJS.Timeout | null = null;
     let pauseTimeout: NodeJS.Timeout | null = null;
     let animatingBack = false;

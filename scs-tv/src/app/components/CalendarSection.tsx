@@ -149,10 +149,8 @@ export default function CalendarSection() {
         const li = itemRefs.current[currentIndex];
         const ol = listRef.current;
         if (li && ol) {
-          // Account for any padding or border on the OL
-          const olRect = ol.getBoundingClientRect();
-          const liRect = li.getBoundingClientRect();
-          ol.scrollTop += (liRect.top - olRect.top);
+          // Use offsetTop for maximum compatibility
+          ol.scrollTop = li.offsetTop;
         }
       }
       // Check if scrollbar is at the bottom
@@ -164,9 +162,7 @@ export default function CalendarSection() {
             const li = itemRefs.current[0];
             const ol = listRef.current;
             if (li && ol) {
-              const olRect = ol.getBoundingClientRect();
-              const liRect = li.getBoundingClientRect();
-              ol.scrollTop += (liRect.top - olRect.top);
+              ol.scrollTop = li.offsetTop;
             }
           }
           currentIndex = 0;
@@ -183,9 +179,7 @@ export default function CalendarSection() {
       const li = itemRefs.current[0];
       const ol = listRef.current;
       if (li && ol) {
-        const olRect = ol.getBoundingClientRect();
-        const liRect = li.getBoundingClientRect();
-        ol.scrollTop += (liRect.top - olRect.top);
+        ol.scrollTop = li.offsetTop;
       }
     }
     return () => {

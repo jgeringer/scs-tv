@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { REFRESH_INTERVAL } from '../utils/time';
-import { formatDateTime } from './SportsTickerTeamSnap';
+import { formatDateTime, renderSportsIcon } from './SportsTickerTeamSnap';
 
 // Define the event type based on the Google Sheets data structure
 interface CalendarEvent {
@@ -25,6 +25,7 @@ interface CalendarEvent {
   dateObject?: Date;
   timeDescription?: string;
   teamName?: string;
+  league_name?: string;
   sportType?: string;
   opponent?: string;
   result?: string;
@@ -100,13 +101,17 @@ export default function CalendarSection() {
           .map((item: any) => {
             const data = Object.fromEntries(item.data.map((d: any) => [d.name, d.value]));
             const dateObj = data.start_date ? new Date(data.start_date) : null;
+            const teamObj = divisionJson.collection.items.find((t: any) => t.data.find((d: any) => d.name === "id")?.value === data.team_id);
+            const teamName = teamObj?.data.find((d: any) => d.name === "name")?.value;
+            const leagueName = teamObj?.data.find((d: any) => d.name === "league_name")?.value;
             return {
               id: data.id,
               title: data.name || data.formatted_title || data.formatted_title_for_multi_team || 'Game',
               dateObject: dateObj,
               location: data.division_location_id ? locationMap[data.division_location_id] : '',
               opponent: data.opponent_name,
-              teamName: divisionJson.collection.items.find((t: any) => t.data.find((d: any) => d.name === "id")?.value === data.team_id)?.data.find((d: any) => d.name === "name")?.value,
+              teamName,
+              league_name: leagueName,
               result: data.formatted_results,
               pointsForTeam: data.points_for_team,
               pointsForOpponent: data.points_for_opponent,
@@ -134,19 +139,103 @@ export default function CalendarSection() {
   useEffect(() => {
     if (events.length === 0) return;
     itemRefs.current = new Array(events.length).fill(null);
-    const scrollInterval = setInterval(() => {
-      setActiveIndex((prevIndex) => {
-        const nextIndex = (prevIndex + 1) % events.length;
-        if (itemRefs.current[nextIndex] && listRef.current) {
-          itemRefs.current[nextIndex]?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center'
-          });
+    let scrollStep = 1; // pixels per tick
+    let scrollInterval: NodeJS.Timeout | null = null;
+    let pauseTimeout: NodeJS.Timeout | null = null;
+    let animatingBack = false;
+    if (listRef.current) {
+      scrollInterval = setInterval(() => {
+        if (!listRef.current) return;
+        if (!animatingBack) {
+          listRef.current.scrollTop += scrollStep;
+          // If we've reached the bottom, pause for 5 seconds
+          if (listRef.current.scrollTop + listRef.current.clientHeight >= listRef.current.scrollHeight) {
+            clearInterval(scrollInterval!);
+            pauseTimeout = setTimeout(() => {
+              // Animate scroll back to top over 2 seconds
+              animatingBack = true;
+              const totalScroll = listRef.current ? listRef.current.scrollTop : 0;
+              const duration = 2000;
+              const frameRate = 20;
+              const frames = duration / frameRate;
+              let frame = 0;
+              const animateUp = setInterval(() => {
+                frame++;
+                if (listRef.current) {
+                  listRef.current.scrollTop = totalScroll * (1 - frame / frames);
+                }
+                if (frame >= frames) {
+                  clearInterval(animateUp);
+                  if (listRef.current) {
+                    listRef.current.scrollTop = 0;
+                  }
+                  animatingBack = false;
+                  scrollInterval = setInterval(() => {
+                    if (!listRef.current) return;
+                    listRef.current.scrollTop += scrollStep;
+                    if (listRef.current.scrollTop + listRef.current.clientHeight >= listRef.current.scrollHeight) {
+                      clearInterval(scrollInterval!);
+                      pauseTimeout = setTimeout(() => {
+                        animatingBack = true;
+                        const totalScroll = listRef.current ? listRef.current.scrollTop : 0;
+                        let frame = 0;
+                        const animateUp = setInterval(() => {
+                          frame++;
+                          if (listRef.current) {
+                            listRef.current.scrollTop = totalScroll * (1 - frame / frames);
+                          }
+                          if (frame >= frames) {
+                            clearInterval(animateUp);
+                            if (listRef.current) {
+                              listRef.current.scrollTop = 0;
+                            }
+                            animatingBack = false;
+                            scrollInterval = setInterval(() => {
+                              if (!listRef.current) return;
+                              listRef.current.scrollTop += scrollStep;
+                              if (listRef.current.scrollTop + listRef.current.clientHeight >= listRef.current.scrollHeight) {
+                                clearInterval(scrollInterval!);
+                                pauseTimeout = setTimeout(() => {
+                                  animatingBack = true;
+                                  const totalScroll = listRef.current ? listRef.current.scrollTop : 0;
+                                  let frame = 0;
+                                  const animateUp = setInterval(() => {
+                                    frame++;
+                                    if (listRef.current) {
+                                      listRef.current.scrollTop = totalScroll * (1 - frame / frames);
+                                    }
+                                    if (frame >= frames) {
+                                      clearInterval(animateUp);
+                                      if (listRef.current) {
+                                        listRef.current.scrollTop = 0;
+                                      }
+                                      animatingBack = false;
+                                      scrollInterval = setInterval(() => {
+                                        if (!listRef.current) return;
+                                        listRef.current.scrollTop += scrollStep;
+                                        // ...repeat logic...
+                                      }, 50);
+                                    }
+                                  }, frameRate);
+                                }, 5000);
+                              }
+                            }, 50);
+                          }
+                        }, frameRate);
+                      }, 5000);
+                    }
+                  }, 50);
+                }
+              }, frameRate);
+            }, 5000);
+          }
         }
-        return nextIndex;
-      });
-    }, 6000);
-    return () => clearInterval(scrollInterval);
+      }, 50); // adjust for smoothness/speed
+    }
+    return () => {
+      if (scrollInterval) clearInterval(scrollInterval);
+      if (pauseTimeout) clearTimeout(pauseTimeout);
+    };
   }, [events]);
 
   return (
@@ -156,7 +245,7 @@ export default function CalendarSection() {
       ) : error ? (
         <div className="text-red-500">{error}</div>
       ) : (
-        <div className="component rounded-2xl p-8 h-[100%] bottom-gradient overflow-hidden" style={{ opacity: `var(--sidebarOpacity)` }}>
+        <div className="component rounded-2xl p-8 h-[100%] bottom-gradient overflow-hidden">
           <h2 className="text-2xl font-bold text-white tracking-wide pb-4 eyebrow"><FontAwesomeIcon icon={faCalendar} width="32" /> Upcoming athletics events</h2>
           <CalendarList
             events={events}
@@ -195,7 +284,7 @@ function CalendarList({
   }
 
   return (
-    <ol ref={listRef} className="space-y-4 max-h-[calc(100vh-400px)] overflow-y-auto pr-2">
+    <ol ref={listRef} className="space-y-4 max-h-[calc(100vh-400px)] overflow-y-auto pr-2 pb-20 pt-10">
       {upcomingEvents.map((event, index) => {
         const dateObj = event.dateObject;
         const day = dateObj ? dateObj.getDate() : '';
@@ -205,7 +294,7 @@ function CalendarList({
           <li
             key={event.id}
             ref={(el) => { itemRefs.current[index] = el; }}
-            className={`flex items-start gap-4 transition-opacity duration-500 ${index === activeIndex ? 'opacity-100' : 'opacity-50'}`}
+            className={`flex items-start gap-4 duration-500 opacity-100`}
           >
             <div className="flex-shrink-0 w-16 text-center bg-emerald-800 text-white rounded-lg p-2">
               <div className="text-2xl font-bold">{day}</div>
@@ -214,11 +303,13 @@ function CalendarList({
             </div>
             <div className="flex-1">
               <h3 className="text-gray-700 font-semibold text-lg">
+                {event.league_name && (
+                  <span className="mr-2">
+                    {renderSportsIcon(event.league_name)}
+                  </span>
+                )}
                 {event.teamName && (
                   <span className="text-gray-700 font-semibold text-lg">{event.teamName}</span>
-                )}
-                {event.sportType && (
-                  <span className="ml-2 text-gray-500 font-normal">[{event.sportType}]</span>
                 )}
               </h3>
               {event.opponent && (

@@ -14,6 +14,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { REFRESH_INTERVAL } from "../utils/time";
 
+export const renderSportsIcon = (leagueName: string) => {
+    if (!leagueName) return null;
+    const name = leagueName.toLowerCase();
+    if (name.includes("volleyball"))
+      return <FontAwesomeIcon icon={faVolleyball} className="mr-2" />;
+    if (name.includes("basketball"))
+      return <FontAwesomeIcon icon={faBasketball} className="mr-2" />;
+    if (name.includes("soccer"))
+      return <FontAwesomeIcon icon={faSoccerBall} className="mr-2" />;
+    if (name.includes("track"))
+      return <FontAwesomeIcon icon={faRunning} className="mr-2" />;
+    return null;
+  };
+
+
 // Helper function for formatting date and time
   export const formatDateTime = (date: Date) => {
     if (!date) return '';
@@ -99,12 +114,16 @@ export default function SportsTickerTeamSnap() {
         const gamesList = eventItems
           .map((item: any) => {
             const data = Object.fromEntries(item.data.map((d: any) => [d.name, d.value]));
+            const teamObj = divisionJson.collection.items.find((t: any) => t.data.find((d: any) => d.name === "id")?.value === data.team_id);
+            const teamName = teamObj?.data.find((d: any) => d.name === "name")?.value;
+            const leagueName = teamObj?.data.find((d: any) => d.name === "league_name")?.value;
             return {
               id: data.id,
               teamId: data.team_id,
               opponentId: data.opponent_id,
               opponent: data.opponent_name,
-              teamName: divisionJson.collection.items.find((t: any) => t.data.find((d: any) => d.name === "id")?.value === data.team_id)?.data.find((d: any) => d.name === "name")?.value,
+              teamName,
+              league_name: leagueName,
               date: data.start_date ? new Date(data.start_date) : null,
               time: data.start_date ? new Date(data.start_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '',
               location: data.division_location_id ? locationMap[data.division_location_id] : '',
@@ -113,14 +132,7 @@ export default function SportsTickerTeamSnap() {
               pointsForOpponent: data.points_for_opponent,
             };
           })
-          .filter((game: any) => {
-            if (!game.date) return false;
-            // Upcoming games (today or later)
-            if (game.date >= now) return true;
-            // Past games in last 2 weeks with a final result
-            if (game.date < now && game.date >= twoWeeksAgo && game.result) return true;
-            return false;
-          })
+          .filter((game: any) => game.result)
           .sort((a: any, b: any) => a.date.getTime() - b.date.getTime());
 
         setGames(gamesList);
@@ -172,19 +184,7 @@ export default function SportsTickerTeamSnap() {
 
   
 
-  const renderSportsIcon = (teamName: string) => {
-    if (!teamName) return null;
-    if (teamName.toLowerCase().includes("volleyball"))
-      return <FontAwesomeIcon icon={faVolleyball} className="mr-2" />;
-    if (teamName.toLowerCase().includes("basketball"))
-      return <FontAwesomeIcon icon={faBasketball} className="mr-2" />;
-    if (teamName.toLowerCase().includes("soccer"))
-      return <FontAwesomeIcon icon={faSoccerBall} className="mr-2" />;
-    if (teamName.toLowerCase().includes("track"))
-      return <FontAwesomeIcon icon={faRunning} className="mr-2" />;
-    return null;
-  };
-
+  
   const renderPlaceText = (place: string) => {
     if (!place) return;
     
@@ -196,12 +196,29 @@ export default function SportsTickerTeamSnap() {
     return "";
   };
 
+  console.log('currentGame:', currentGame)
+
   return (
     <div className="flex gap-8 p-4 bg-ticker">
       <section className="w-[calc(25%+5rem)] bg-emerald-800 text-white p-4 rounded-lg font-bold text-xl">
         <span>
-          {renderSportsIcon(currentGame?.teamName)}
-          {currentGame?.teamName}
+            <span className="text-sm">
+            {currentGame?.teamId &&
+              (() => {
+              const team = games.find(
+                (g) => g.teamId === currentGame.teamId
+              );
+              // Find the team in divisionJson to get league_name
+              // Since divisionJson is only available in fetchTeamSnapData, we need to store league_name in games
+              // So, update fetchTeamSnapData to include league_name in each game object
+              return team?.league_name || "";
+              })()
+            }
+            </span>
+            <div>
+              {renderSportsIcon(currentGame?.league_name)}
+              {currentGame?.teamName}
+            </div>
         </span>
       </section>
       <aside className="w-3/4 pl-4 pr-4 overflow-hidden content-center">
@@ -218,12 +235,6 @@ export default function SportsTickerTeamSnap() {
                 {currentGame.date > new Date() ? "Upcoming: " : ""}
                 {formatDateTime(currentGame.date)}
               </div>
-            )}
-            {currentGame?.location && (
-              <div className="text-2xl">{currentGame.location}</div>
-            )}
-            {currentGame?.opponent && (
-              <div className="text-2xl">vs. {currentGame.opponent}</div>
             )}
             {currentGame?.result && (
               <div className="text-2xl">Final: {currentGame.result}</div>

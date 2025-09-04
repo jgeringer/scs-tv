@@ -143,36 +143,17 @@ export default function CalendarSection() {
     let interval: NodeJS.Timeout | null = null;
     let pauseTimeout: NodeJS.Timeout | null = null;
 
-    // Animate scrollTop to target position
-    function animateScrollTo(target: number, duration = 500) {
-      if (!listRef.current) return;
-      const start = listRef.current.scrollTop;
-      const change = target - start;
-      const startTime = performance.now();
-      function animate(time: number) {
-        const elapsed = time - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        listRef.current!.scrollTop = start + change * progress;
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        }
-      }
-      requestAnimationFrame(animate);
-    }
-
     const scrollToNext = () => {
-      if (itemRefs.current[currentIndex] && listRef.current) {
-        const target = itemRefs.current[currentIndex]!.offsetTop - listRef.current.offsetTop;
-        animateScrollTo(target);
+      if (itemRefs.current[currentIndex]) {
+        itemRefs.current[currentIndex]?.scrollIntoView({ behavior: 'auto', block: 'start' });
       }
       // Check if scrollbar is at the bottom
       if (listRef.current && (listRef.current.scrollTop + listRef.current.clientHeight >= listRef.current.scrollHeight - 1)) {
         clearInterval(interval!);
         pauseTimeout = setTimeout(() => {
           // Animate scroll to top (first li)
-          if (itemRefs.current[0] && listRef.current) {
-            const target = itemRefs.current[0]!.offsetTop - listRef.current.offsetTop;
-            animateScrollTo(target);
+          if (itemRefs.current[0]) {
+            itemRefs.current[0].scrollIntoView({ behavior: 'auto', block: 'start' });
           }
           currentIndex = 0;
           interval = setInterval(scrollToNext, 5000);
@@ -184,9 +165,8 @@ export default function CalendarSection() {
 
     interval = setInterval(scrollToNext, 5000);
     // Scroll to the first item on mount
-    if (itemRefs.current[0] && listRef.current) {
-      const target = itemRefs.current[0]!.offsetTop - listRef.current.offsetTop;
-      animateScrollTo(target);
+    if (itemRefs.current[0]) {
+      itemRefs.current[0].scrollIntoView({ behavior: 'auto', block: 'start' });
     }
     return () => {
       if (interval) clearInterval(interval);

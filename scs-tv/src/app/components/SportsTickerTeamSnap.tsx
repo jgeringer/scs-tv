@@ -196,8 +196,6 @@ export default function SportsTickerTeamSnap() {
     return "";
   };
 
-  console.log('currentGame:', currentGame)
-
   return (
     <div className="flex gap-8 p-4 bg-ticker">
       <section className="w-[calc(25%+5rem)] bg-emerald-800 text-white p-4 rounded-lg font-bold text-xl">

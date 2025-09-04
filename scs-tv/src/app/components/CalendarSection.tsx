@@ -144,16 +144,30 @@ export default function CalendarSection() {
     let pauseTimeout: NodeJS.Timeout | null = null;
 
     const scrollToNext = () => {
-      if (itemRefs.current[currentIndex]) {
-        itemRefs.current[currentIndex]?.scrollIntoView({ behavior: 'auto', block: 'start' });
+      if (itemRefs.current[currentIndex] && listRef.current) {
+        // Scroll so that the next li is at the top of the list
+        const li = itemRefs.current[currentIndex];
+        const ol = listRef.current;
+        if (li && ol) {
+          // Account for any padding or border on the OL
+          const olRect = ol.getBoundingClientRect();
+          const liRect = li.getBoundingClientRect();
+          ol.scrollTop += (liRect.top - olRect.top);
+        }
       }
       // Check if scrollbar is at the bottom
       if (listRef.current && (listRef.current.scrollTop + listRef.current.clientHeight >= listRef.current.scrollHeight - 1)) {
         clearInterval(interval!);
         pauseTimeout = setTimeout(() => {
-          // Animate scroll to top (first li)
-          if (itemRefs.current[0]) {
-            itemRefs.current[0].scrollIntoView({ behavior: 'auto', block: 'start' });
+          // Jump to top (first li)
+          if (itemRefs.current[0] && listRef.current) {
+            const li = itemRefs.current[0];
+            const ol = listRef.current;
+            if (li && ol) {
+              const olRect = ol.getBoundingClientRect();
+              const liRect = li.getBoundingClientRect();
+              ol.scrollTop += (liRect.top - olRect.top);
+            }
           }
           currentIndex = 0;
           interval = setInterval(scrollToNext, 5000);
@@ -165,8 +179,14 @@ export default function CalendarSection() {
 
     interval = setInterval(scrollToNext, 5000);
     // Scroll to the first item on mount
-    if (itemRefs.current[0]) {
-      itemRefs.current[0].scrollIntoView({ behavior: 'auto', block: 'start' });
+    if (itemRefs.current[0] && listRef.current) {
+      const li = itemRefs.current[0];
+      const ol = listRef.current;
+      if (li && ol) {
+        const olRect = ol.getBoundingClientRect();
+        const liRect = li.getBoundingClientRect();
+        ol.scrollTop += (liRect.top - olRect.top);
+      }
     }
     return () => {
       if (interval) clearInterval(interval);

@@ -144,20 +144,6 @@ export default function FadingGallery() {
           </div>
         </div>
       </aside>
-      <Image
-            src="/shamrock.png"
-            width={500}
-            height={500}
-            alt="shamrock"
-            style={{
-              mixBlendMode: 'lighten',
-              filter: 'blur(10px)',
-              position: 'absolute',
-              top: 'calc(-300px + 50vh)',
-              left: 'calc(50vw)',
-              opacity: .25,
-            }}
-          />
     </div>
   );
 }

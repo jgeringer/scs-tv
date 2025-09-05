@@ -83,7 +83,7 @@ export default function SportsTicker() {
         setIsAnimating(false);
       }, 500);
     };
-    const interval = setInterval(advanceToNextGame, 10000);
+  const interval = setInterval(advanceToNextGame, 15000);
     return () => {
       clearInterval(interval);
       if (animationTimeoutRef.current)

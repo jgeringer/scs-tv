@@ -14,7 +14,7 @@ type DriveImage = {
 
 export default function FadingGallery() {
   const [images, setImages] = useState<DriveImage[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showCurrentImage, setShowCurrentImage] = useState(true);
   const [rotation, setRotation] = useState(0);
@@ -27,9 +27,9 @@ export default function FadingGallery() {
     const newRotation = Math.random() * 8 - 4; // Random number between -4 and 4
     const newScale = 0.95 + Math.random() * 0.15; // Random number between 0.95 and 1.1
     
-    // Generate random image size between 900-1100
-    const newWidth = 900 + Math.random() * 200;
-    const newHeight = 900 + Math.random() * 200;
+    // Generate random image size between 900-1200
+    const newWidth = 900 + Math.random() * 300;
+    const newHeight = 900 + Math.random() * 300;
     
     setRotation(newRotation);
     setScale(newScale);
@@ -50,28 +50,36 @@ export default function FadingGallery() {
   useEffect(() => {
     fetch('/api/drive-images')
       .then((res) => res.json())
-      .then(setImages)
+      .then((imgs) => {
+        setImages(imgs);
+        if (imgs.length > 0) {
+          setCurrentIndex(Math.floor(Math.random() * imgs.length));
+        }
+      })
       .catch(console.error);
   }, []);
 
   // Set up image rotation interval
   useEffect(() => {
-    if (images.length === 0) return;
-    
+    if (images.length === 0 || currentIndex === null) return;
+
     const interval = setInterval(() => {
-      // Start transition
       setIsTransitioning(true);
       setShowCurrentImage(false);
-      
-      // Generate new random transform values
+
       generateRandomTransform();
-      
-      // Wait for fade out to complete
+
       setTimeout(() => {
-        // Change to next image
-        setCurrentIndex((prev) => (prev + 1) % images.length);
-        
-        // Start the fade in
+        // Pick a random index different from the current one
+        setCurrentIndex((prev) => {
+          if (images.length <= 1 || prev === null) return prev ?? 0;
+          let next;
+          do {
+            next = Math.floor(Math.random() * images.length);
+          } while (next === prev);
+          return next;
+        });
+
         setTimeout(() => {
           setShowCurrentImage(true);
           setTimeout(() => {
@@ -82,9 +90,9 @@ export default function FadingGallery() {
     }, 20000); // Change image every 20 seconds
 
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, [images.length, currentIndex]);
 
-  if (images.length === 0) {
+  if (images.length === 0 || currentIndex === null) {
     return (
       <div className="flex justify-center items-center h-full">
         <div className="text-white text-xl">Loading images...</div>
@@ -95,7 +103,7 @@ export default function FadingGallery() {
   return (
     <div className="flex gap-8 justify-center items-center h-full">
       <aside 
-        className="w-full component--dim rounded-2xl p-8 transition-all duration-1500 ease-in-out" 
+        className="w-full component--dim rounded-2xl p-8 transition-all duration-1500 ease-in-out z-1" 
         style={{ 
           transform: `rotate(${rotation}deg) scale(${scale})`,
           width: 'auto',
@@ -132,9 +140,24 @@ export default function FadingGallery() {
                 />
               </div>
             </div>
+            
           </div>
         </div>
       </aside>
+      <Image
+            src="/shamrock.png"
+            width={500}
+            height={500}
+            alt="shamrock"
+            style={{
+              mixBlendMode: 'lighten',
+              filter: 'blur(10px)',
+              position: 'absolute',
+              top: 'calc(-300px + 50vh)',
+              left: 'calc(50vw)',
+              opacity: .25,
+            }}
+          />
     </div>
   );
 }

@@ -1,3 +1,5 @@
+"use client";
+
 // @ts-nocheck: just dont check this file
 import Image from "next/image";
 import { formatDate } from "./utils/date";
@@ -19,15 +21,33 @@ import {
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons/faPersonRunning";
 import DateTimeDisplay from "./components/DateTimeDisplay";
 import SportsTickerTeamSnap from "./components/SportsTickerTeamSnap";
+import { useState, useEffect } from "react";
 
 // Sheet ID: 1l-oTjaJQxTiNFWCR-RAU7nSvCvNg4Br6G36Je8bmLtU
 // https://docs.google.com/spreadsheets/d/e/2PACX-1vRfv4TOxblDhrnqwloIDae8HZsBKeusaw-ApaYqsMHXms06B9kGpZAxNgiCLYXc2G5fATyUMfugbgE4/pub?output=csv
 
 export default function Home() {
 
+  // Wrapper for SportsTickerTeamSnap to only render if no error
+  function SportsTickerTeamSnapWrapper() {
+    const [hasError, setHasError] = useState(false);
+    // Use a custom event to communicate error from child
+    useEffect(() => {
+      function handleTickerError(e: CustomEvent) {
+        setHasError(true);
+      }
+      window.addEventListener('sportsTickerError', handleTickerError as EventListener);
+      return () => window.removeEventListener('sportsTickerError', handleTickerError as EventListener);
+    }, []);
+    return hasError ? null : <SportsTickerTeamSnap onError={() => {
+      const event = new CustomEvent('sportsTickerError');
+      window.dispatchEvent(event);
+    }} />;
+  }
+
   return (
     <div className="flex flex-col h-screen scs-gradient overflow-hidden">
-      <header className="flex justify-between items-center p-4 h-[100px] " style={{}}>
+      <header className="flex justify-between items-center p-4 h-[100px] pl-8 pr-8">
         <div className="flex-1">
           <h1 className="text-4xl font-bold text-white tracking-wide flex items-center gap-4 main-text">
             <span>
@@ -69,7 +89,7 @@ export default function Home() {
       </main>
       <footer className="flex p-4 border-emerald-800 z-1">
         <section className="bg-emerald-800 text-white rounded-2xl font-bold w-full overflow-hidden">
-          <SportsTickerTeamSnap />
+          <SportsTickerTeamSnapWrapper />
           {/* <SportsTicker /> */}
         </section>
       </footer>

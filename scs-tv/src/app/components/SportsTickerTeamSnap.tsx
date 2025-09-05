@@ -44,12 +44,15 @@ export const renderSportsIcon = (leagueName: string) => {
   };
 
 export default function SportsTickerTeamSnap() {
+  // Accept onError prop for error handling
   // Locally, this happens first...
   // https://auth.teamsnap.com/oauth/authorize?client_id=Kkm7dwljALFdkxCqRsXu_1ZCqICjr6kNEx7xiEkEIoY&redirect_uri=https://localhost:3000/&response_type=token
 
   // get the access_token from the URL site.com/#access_token=RGrTMC4p-H0TGMy-Rit0Z8gxyHcv0UUp0yIqf6LhQJ4&token_type=Bearer
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  // Accept onError prop
+  const onError = typeof arguments[0] === 'object' && arguments[0]?.onError ? arguments[0].onError : undefined;
   const [currentGameIndex, setCurrentGameIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -137,8 +140,9 @@ export default function SportsTickerTeamSnap() {
 
         setGames(gamesList);
       } catch (err) {
-  setError(err instanceof Error ? err : new Error(String(err)));
+        setError(err instanceof Error ? err : new Error(String(err)));
         console.error("Error fetching TeamSnap data:", err);
+        if (onError) onError();
       } finally {
         setLoading(false);
       }
@@ -200,7 +204,7 @@ export default function SportsTickerTeamSnap() {
     <div className="flex gap-8 p-4 bg-ticker">
       <section className="w-[calc(25%+5rem)] bg-emerald-800 text-white p-4 rounded-lg font-bold text-xl">
         <span>
-            <span className="text-sm">
+            <span className="text-sm uppercase opacity-75">
             {currentGame?.teamId &&
               (() => {
               const team = games.find(

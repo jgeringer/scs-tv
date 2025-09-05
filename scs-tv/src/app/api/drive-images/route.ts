@@ -17,9 +17,26 @@ export async function GET() {
     const drive = google.drive({ version: 'v3', auth });
     const folderId = '10MCv5ELTHsK9SJfXLmn_VrIPO78GA8UZ';
 
+    // The orderBy parameter supports the following fields:
+    // - createdTime
+    // - folder
+    // - modifiedByMeTime
+    // - modifiedTime
+    // - name
+    // - quotaBytesUsed
+    // - recency
+    // - sharedWithMeTime
+    // - starred
+    // - viewedByMeTime
+
+    // You can use 'asc' or 'desc' for ascending or descending order, e.g. 'name desc'
+    // Multiple fields can be separated by commas, e.g. 'folder, name desc'
+
     const response = await drive.files.list({
       q: `'${folderId}' in parents and mimeType contains 'image/' and trashed = false`,
       fields: 'files(id, name)',
+      pageSize: 1000,
+      orderBy: 'recency desc', // Example: order by newest first
     });
 
     const files = response.data.files || [];

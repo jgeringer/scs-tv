@@ -178,7 +178,7 @@ function CalendarList({
   }
 
   return (
-    <ol ref={listRef} className="space-y-4 max-h-[calc(100vh-400px)] overflow-y-auto pr-2 pb-10 pt-5 gradient-list">
+    <ol ref={listRef} className="space-y-4 max-h-[calc(100vh-400px)] pr-2 pb-10 pt-5 gradient-list">
       {upcomingEvents.map((event, index) => {
         const dateObj = event.dateObject;
         const day = dateObj ? dateObj.getDate() : '';

@@ -149,7 +149,8 @@ export default function CalendarSection() {
         const li = itemRefs.current[currentIndex];
         const ol = listRef.current;
         if (li && ol) {
-          // Use offsetTop for maximum compatibility
+          // Force reflow before setting scrollTop for production reliability
+          void ol.offsetHeight;
           ol.scrollTop = li.offsetTop;
         }
       }
@@ -162,6 +163,7 @@ export default function CalendarSection() {
             const li = itemRefs.current[0];
             const ol = listRef.current;
             if (li && ol) {
+              void ol.offsetHeight;
               ol.scrollTop = li.offsetTop;
             }
           }
@@ -179,6 +181,7 @@ export default function CalendarSection() {
       const li = itemRefs.current[0];
       const ol = listRef.current;
       if (li && ol) {
+        void ol.offsetHeight;
         ol.scrollTop = li.offsetTop;
       }
     }

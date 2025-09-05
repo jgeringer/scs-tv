@@ -43,7 +43,7 @@ export const renderSportsIcon = (leagueName: string) => {
     return `${month}/${day} at ${hour}:${minuteStr} ${ampm}`;
   };
 
-export default function SportsTickerTeamSnap() {
+export default function SportsTickerTeamSnap({ onError }: { onError?: () => void } = {}) {
   // Accept onError prop for error handling
   // Locally, this happens first...
   // https://auth.teamsnap.com/oauth/authorize?client_id=Kkm7dwljALFdkxCqRsXu_1ZCqICjr6kNEx7xiEkEIoY&redirect_uri=https://localhost:3000/&response_type=token
@@ -51,8 +51,6 @@ export default function SportsTickerTeamSnap() {
   // get the access_token from the URL site.com/#access_token=RGrTMC4p-H0TGMy-Rit0Z8gxyHcv0UUp0yIqf6LhQJ4&token_type=Bearer
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-  // Accept onError prop using rest parameters
-  const [{ onError } = {}] = arguments;
   const [currentGameIndex, setCurrentGameIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);

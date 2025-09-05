@@ -51,8 +51,8 @@ export default function SportsTickerTeamSnap() {
   // get the access_token from the URL site.com/#access_token=RGrTMC4p-H0TGMy-Rit0Z8gxyHcv0UUp0yIqf6LhQJ4&token_type=Bearer
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-  // Accept onError prop
-  const onError = typeof arguments[0] === 'object' && arguments[0]?.onError ? arguments[0].onError : undefined;
+  // Accept onError prop using rest parameters
+  const [{ onError } = {}] = arguments;
   const [currentGameIndex, setCurrentGameIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);

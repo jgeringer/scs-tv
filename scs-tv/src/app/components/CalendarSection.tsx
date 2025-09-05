@@ -38,7 +38,6 @@ export default function CalendarSection() {
   const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
   const listRef = useRef<HTMLOListElement>(null);
   const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
 
@@ -135,76 +134,6 @@ export default function CalendarSection() {
     return () => clearInterval(interval);
   }, []);
 
-  // Auto-scroll effect
-  useEffect(() => {
-    if (events.length === 0) return;
-    itemRefs.current = new Array(events.length).fill(null);
-    const scrollStep = 2; // pixels per tick (higher for less frequent updates)
-    let scrollInterval: NodeJS.Timeout | null = null;
-    let pauseTimeout: NodeJS.Timeout | null = null;
-    let animatingBack = false;
-    // Helper for smooth scroll to top using requestAnimationFrame
-    function smoothScrollToTop(totalScroll: number, duration: number, callback: () => void) {
-      const start = performance.now();
-      function animate(now: number) {
-        const elapsed = now - start;
-        const progress = Math.min(elapsed / duration, 1);
-        if (listRef.current) {
-          listRef.current.scrollTop = totalScroll * (1 - progress);
-        }
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        } else {
-          if (listRef.current) listRef.current.scrollTop = 0;
-          callback();
-        }
-      }
-      requestAnimationFrame(animate);
-    }
-
-    if (listRef.current) {
-      scrollInterval = setInterval(() => {
-        if (!listRef.current) return;
-        if (!animatingBack) {
-          listRef.current.scrollTop += scrollStep;
-          // If we've reached the bottom, pause for 5 seconds
-          if (listRef.current.scrollTop + listRef.current.clientHeight >= listRef.current.scrollHeight) {
-            clearInterval(scrollInterval!);
-            pauseTimeout = setTimeout(() => {
-              animatingBack = true;
-              const totalScroll = listRef.current ? listRef.current.scrollTop : 0;
-              smoothScrollToTop(totalScroll, 2000, () => {
-                animatingBack = false;
-                scrollInterval = setInterval(() => {
-                  if (!listRef.current) return;
-                  listRef.current.scrollTop += scrollStep;
-                  if (listRef.current.scrollTop + listRef.current.clientHeight >= listRef.current.scrollHeight) {
-                    clearInterval(scrollInterval!);
-                    pauseTimeout = setTimeout(() => {
-                      animatingBack = true;
-                      const totalScroll = listRef.current ? listRef.current.scrollTop : 0;
-                      smoothScrollToTop(totalScroll, 2000, () => {
-                        animatingBack = false;
-                        scrollInterval = setInterval(() => {
-                          if (!listRef.current) return;
-                          listRef.current.scrollTop += scrollStep;
-                          // ...repeat logic...
-                        }, 100);
-                      });
-                    }, 5000);
-                  }
-                }, 100);
-              });
-            }, 5000);
-          }
-        }
-      }, 100); // slower interval for less frequent updates
-    }
-    return () => {
-      if (scrollInterval) clearInterval(scrollInterval);
-      if (pauseTimeout) clearTimeout(pauseTimeout);
-    };
-  }, [events]);
 
   return (
     <>
@@ -214,12 +143,11 @@ export default function CalendarSection() {
         <div className="text-red-500">{error}</div>
       ) : (
         <div className="component rounded-2xl p-8 h-[100%] bottom-gradient overflow-hidden">
-          <h2 className="text-2xl font-bold text-white tracking-wide pb-4 eyebrow"><FontAwesomeIcon icon={faCalendar} width="32" /> Upcoming athletics events</h2>
+          <h2 className="text-2xl font-bold text-white tracking-wide pb-3 eyebrow"><FontAwesomeIcon icon={faCalendar} width="32" /> Upcoming athletics events</h2>
           <CalendarList
             events={events}
             listRef={listRef as React.RefObject<HTMLOListElement>}
             itemRefs={itemRefs}
-            activeIndex={activeIndex}
           />
         </div>
       )}
@@ -234,13 +162,11 @@ const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 function CalendarList({
   events,
   listRef,
-  itemRefs,
-  activeIndex
+  itemRefs
 }: {
   events: CalendarEvent[],
   listRef: React.RefObject<HTMLOListElement>,
-  itemRefs: React.MutableRefObject<(HTMLLIElement | null)[]>,
-  activeIndex: number
+  itemRefs: React.MutableRefObject<(HTMLLIElement | null)[]>
 }) {
   // Filter for only upcoming events
   const now = new Date();
@@ -252,7 +178,7 @@ function CalendarList({
   }
 
   return (
-    <ol ref={listRef} className="space-y-4 max-h-[calc(100vh-400px)] overflow-y-auto pr-2 pb-20 pt-10">
+    <ol ref={listRef} className="space-y-4 max-h-[calc(100vh-400px)] overflow-y-auto pr-2 pb-10 pt-5 gradient-list">
       {upcomingEvents.map((event, index) => {
         const dateObj = event.dateObject;
         const day = dateObj ? dateObj.getDate() : '';
@@ -264,31 +190,34 @@ function CalendarList({
             ref={(el) => { itemRefs.current[index] = el; }}
             className={`flex items-start gap-4 duration-500 opacity-100`}
           >
-            <div className="flex-shrink-0 w-16 text-center bg-emerald-800 text-white rounded-lg p-2">
+            <div className="flex-shrink-0 w-16 text-center bg-emerald-800 text-white rounded-lg p-1">
               <div className="text-2xl font-bold">{day}</div>
               <div className="text-sm">{monthShort}</div>
               <div className="text-xs">{time}</div>
             </div>
-            <div className="flex-1">
-              <h3 className="text-gray-700 font-semibold text-lg">
+            <div className="flex-1 flex">
+              <h3 className="text-gray-700 font-semibold text-lg flex">
                 {event.league_name && (
-                  <span className="mr-2">
+                  <span className="mr-2 w-[30px]">
                     {renderSportsIcon(event.league_name)}
                   </span>
                 )}
-                {event.teamName && (
-                  <span className="text-gray-700 font-semibold text-lg">{event.teamName}</span>
-                )}
               </h3>
-              {event.opponent && (
-                <p className="text-gray-700 mt-1">vs. {event.opponent}</p>
-              )}
-              {event.location && (
-                <p className="text-gray-700 mt-1">{event.location}</p>
-              )}
-              {event.result && (
-                <p className="text-gray-700 mt-1">Final: {event.result}</p>
-              )}
+              <div className=''>
+                {event.teamName && (
+                  <span className="text-gray-700 font-semibold text-lg leading-tight">{event.teamName}</span>
+                )}
+                {event.opponent && (
+                  <p className="text-gray-700 mt-1">vs. {event.opponent}</p>
+                )}
+                {event.location && (
+                  <p className="text-gray-700 mt-1">{event.location}</p>
+                )}
+                {event.result && (
+                  <p className="text-gray-700 mt-1">Final: {event.result}</p>
+                )}
+              </div>
+              
             </div>
           </li>
         );

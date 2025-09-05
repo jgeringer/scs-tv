@@ -54,17 +54,6 @@ export default function FadingGallery() {
       .catch(console.error);
   }, []);
 
-  // run this every 1 minute so that we can update the images when more are added
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetch('/api/drive-images')
-        .then((res) => res.json())
-        .then(setImages)
-        .catch(console.error);
-    }, REFRESH_INTERVAL);
-    return () => clearInterval(interval);
-  }, []);
-
   // Set up image rotation interval
   useEffect(() => {
     if (images.length === 0) return;
@@ -90,7 +79,7 @@ export default function FadingGallery() {
           }, 300);
         }, 50);
       }, 500);
-    }, 12000); // Change image every 12 seconds
+    }, 20000); // Change image every 20 seconds
 
     return () => clearInterval(interval);
   }, [images.length]);

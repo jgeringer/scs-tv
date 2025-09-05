@@ -178,7 +178,7 @@ function CalendarList({
   }
 
   return (
-    <ol ref={listRef} className="space-y-4 max-h-[calc(100vh-400px)] pr-2 pb-10 pt-5 gradient-list">
+    <ol ref={listRef} className="space-y-4 max-h-[calc(100vh-400px)] pr-2 pb-10 pt-5 gradient-list overflow-hidden">
       {upcomingEvents.map((event, index) => {
         const dateObj = event.dateObject;
         const day = dateObj ? dateObj.getDate() : '';
@@ -198,7 +198,7 @@ function CalendarList({
             <div className="flex-1 flex">
               <h3 className="text-gray-700 font-semibold text-lg flex">
                 {event.league_name && (
-                  <span className="mr-2 w-[30px]">
+                  <span className="w-[30px]">
                     {renderSportsIcon(event.league_name)}
                   </span>
                 )}

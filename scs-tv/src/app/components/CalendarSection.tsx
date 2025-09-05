@@ -139,10 +139,29 @@ export default function CalendarSection() {
   useEffect(() => {
     if (events.length === 0) return;
     itemRefs.current = new Array(events.length).fill(null);
-    const scrollStep = 1; // pixels per tick
+    const scrollStep = 2; // pixels per tick (higher for less frequent updates)
     let scrollInterval: NodeJS.Timeout | null = null;
     let pauseTimeout: NodeJS.Timeout | null = null;
     let animatingBack = false;
+    // Helper for smooth scroll to top using requestAnimationFrame
+    function smoothScrollToTop(totalScroll: number, duration: number, callback: () => void) {
+      const start = performance.now();
+      function animate(now: number) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        if (listRef.current) {
+          listRef.current.scrollTop = totalScroll * (1 - progress);
+        }
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          if (listRef.current) listRef.current.scrollTop = 0;
+          callback();
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
     if (listRef.current) {
       scrollInterval = setInterval(() => {
         if (!listRef.current) return;
@@ -152,85 +171,34 @@ export default function CalendarSection() {
           if (listRef.current.scrollTop + listRef.current.clientHeight >= listRef.current.scrollHeight) {
             clearInterval(scrollInterval!);
             pauseTimeout = setTimeout(() => {
-              // Animate scroll back to top over 2 seconds
               animatingBack = true;
               const totalScroll = listRef.current ? listRef.current.scrollTop : 0;
-              const duration = 2000;
-              const frameRate = 20;
-              const frames = duration / frameRate;
-              let frame = 0;
-              const animateUp = setInterval(() => {
-                frame++;
-                if (listRef.current) {
-                  listRef.current.scrollTop = totalScroll * (1 - frame / frames);
-                }
-                if (frame >= frames) {
-                  clearInterval(animateUp);
-                  if (listRef.current) {
-                    listRef.current.scrollTop = 0;
+              smoothScrollToTop(totalScroll, 2000, () => {
+                animatingBack = false;
+                scrollInterval = setInterval(() => {
+                  if (!listRef.current) return;
+                  listRef.current.scrollTop += scrollStep;
+                  if (listRef.current.scrollTop + listRef.current.clientHeight >= listRef.current.scrollHeight) {
+                    clearInterval(scrollInterval!);
+                    pauseTimeout = setTimeout(() => {
+                      animatingBack = true;
+                      const totalScroll = listRef.current ? listRef.current.scrollTop : 0;
+                      smoothScrollToTop(totalScroll, 2000, () => {
+                        animatingBack = false;
+                        scrollInterval = setInterval(() => {
+                          if (!listRef.current) return;
+                          listRef.current.scrollTop += scrollStep;
+                          // ...repeat logic...
+                        }, 100);
+                      });
+                    }, 5000);
                   }
-                  animatingBack = false;
-                  scrollInterval = setInterval(() => {
-                    if (!listRef.current) return;
-                    listRef.current.scrollTop += scrollStep;
-                    if (listRef.current.scrollTop + listRef.current.clientHeight >= listRef.current.scrollHeight) {
-                      clearInterval(scrollInterval!);
-                      pauseTimeout = setTimeout(() => {
-                        animatingBack = true;
-                        const totalScroll = listRef.current ? listRef.current.scrollTop : 0;
-                        let frame = 0;
-                        const animateUp = setInterval(() => {
-                          frame++;
-                          if (listRef.current) {
-                            listRef.current.scrollTop = totalScroll * (1 - frame / frames);
-                          }
-                          if (frame >= frames) {
-                            clearInterval(animateUp);
-                            if (listRef.current) {
-                              listRef.current.scrollTop = 0;
-                            }
-                            animatingBack = false;
-                            scrollInterval = setInterval(() => {
-                              if (!listRef.current) return;
-                              listRef.current.scrollTop += scrollStep;
-                              if (listRef.current.scrollTop + listRef.current.clientHeight >= listRef.current.scrollHeight) {
-                                clearInterval(scrollInterval!);
-                                pauseTimeout = setTimeout(() => {
-                                  animatingBack = true;
-                                  const totalScroll = listRef.current ? listRef.current.scrollTop : 0;
-                                  let frame = 0;
-                                  const animateUp = setInterval(() => {
-                                    frame++;
-                                    if (listRef.current) {
-                                      listRef.current.scrollTop = totalScroll * (1 - frame / frames);
-                                    }
-                                    if (frame >= frames) {
-                                      clearInterval(animateUp);
-                                      if (listRef.current) {
-                                        listRef.current.scrollTop = 0;
-                                      }
-                                      animatingBack = false;
-                                      scrollInterval = setInterval(() => {
-                                        if (!listRef.current) return;
-                                        listRef.current.scrollTop += scrollStep;
-                                        // ...repeat logic...
-                                      }, 50);
-                                    }
-                                  }, frameRate);
-                                }, 5000);
-                              }
-                            }, 50);
-                          }
-                        }, frameRate);
-                      }, 5000);
-                    }
-                  }, 50);
-                }
-              }, frameRate);
+                }, 100);
+              });
             }, 5000);
           }
         }
-      }, 50); // adjust for smoothness/speed
+      }, 100); // slower interval for less frequent updates
     }
     return () => {
       if (scrollInterval) clearInterval(scrollInterval);

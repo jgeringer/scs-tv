@@ -1,0 +1,2967 @@
+{
+    "collection": {
+        "version": "3.867.0",
+        "href": "https://apiv3.teamsnap.com/v3/divisions",
+        "prompt": "Divisions are used to represent our leagues. They are organized into a hierarchical tree data structure and stored as nested sets. Each set is grouped by its 'root_id' which is the 'division_id' of the root node of that league tree.",
+        "rel": "divisions",
+        "template": {
+            "data": [
+                {
+                    "name": "type",
+                    "value": "division"
+                },
+                {
+                    "name": "parent_id",
+                    "value": null
+                },
+                {
+                    "name": "name",
+                    "value": null
+                },
+                {
+                    "name": "billing_address",
+                    "value": null
+                },
+                {
+                    "name": "country",
+                    "value": null
+                },
+                {
+                    "name": "postal_code",
+                    "value": null
+                },
+                {
+                    "name": "time_zone",
+                    "value": null
+                },
+                {
+                    "name": "sport_id",
+                    "value": null
+                },
+                {
+                    "name": "season_name",
+                    "value": null
+                },
+                {
+                    "name": "parent_division_name",
+                    "value": null
+                },
+                {
+                    "name": "league_name",
+                    "value": null
+                },
+                {
+                    "name": "league_url",
+                    "value": null
+                }
+            ]
+        },
+        "links": [
+            {
+                "rel": "teams",
+                "href": "https://apiv3.teamsnap.com/v3/teams"
+            },
+            {
+                "rel": "division_events",
+                "href": "https://apiv3.teamsnap.com/v3/division_events"
+            },
+            {
+                "rel": "plan",
+                "href": "https://apiv3.teamsnap.com/v3/plans"
+            },
+            {
+                "rel": "registration_forms",
+                "href": "https://apiv3.teamsnap.com/v3/registration_forms"
+            },
+            {
+                "rel": "root",
+                "href": "https://apiv3.teamsnap.com/v3/"
+            },
+            {
+                "rel": "self",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/search?organization_id=59004"
+            }
+        ],
+        "queries": [
+            {
+                "rel": "search",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/search",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": null
+                    },
+                    {
+                        "name": "organization_id",
+                        "value": null
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": null
+                    },
+                    {
+                        "name": "user_id",
+                        "value": null
+                    },
+                    {
+                        "name": "parent_id",
+                        "value": null
+                    },
+                    {
+                        "name": "is_root",
+                        "value": null
+                    },
+                    {
+                        "name": "is_trial",
+                        "value": null
+                    },
+                    {
+                        "name": "page_size",
+                        "value": null,
+                        "prompt": "The number of items to return for each page. Sending this parameter with the query will enable paging for the returned collection."
+                    },
+                    {
+                        "name": "page_number",
+                        "value": null,
+                        "prompt": "The number of the page to be returned. This requires that paging be turned on by also providing the page_size parameter."
+                    }
+                ]
+            },
+            {
+                "rel": "ancestors",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/ancestors",
+                "prompt": "Returns all the nested set ancestors of the given division.",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "descendants",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/descendants",
+                "prompt": "Returns all the nested set descendants of the given division.",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "children",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/children",
+                "prompt": "Returns all the nested set children of the given division.",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": null
+                    },
+                    {
+                        "name": "is_archived",
+                        "value": null
+                    },
+                    {
+                        "name": "is_disabled",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "leaves",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/children",
+                "prompt": "Beta: (This endpoint subject to change) Returns all the nested set leaves of the given division. A leaf is a division that has no child divisions.",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "active_trials",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/active_trials",
+                "prompt": "Finds all active trial divisions for a given user. Excludes archived and disabled divisions.",
+                "data": [
+                    {
+                        "name": "user_id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "active_divisions",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/active",
+                "prompt": "Finds all active root divisions for a given owner or commissioner. Excludes archived and disabled divisions.",
+                "data": [
+                    {
+                        "name": "user_id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "tree",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/tree",
+                "prompt": "Return the ancestors, the division and the children divisions for the id of the division, the divisions persistent_uuid, or an organization_id.",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": null
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": null
+                    },
+                    {
+                        "name": "organization_id",
+                        "value": null
+                    }
+                ]
+            }
+        ],
+        "commands": [
+            {
+                "rel": "create_root",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/create_root",
+                "prompt": "Create root divisions, this is an internal command only accessible to internal TeamSnap services.",
+                "data": [
+                    {
+                        "name": "name",
+                        "value": null
+                    },
+                    {
+                        "name": "sport_id",
+                        "value": null
+                    },
+                    {
+                        "name": "country",
+                        "value": null
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": null
+                    },
+                    {
+                        "name": "postal_code",
+                        "value": null
+                    },
+                    {
+                        "name": "teams_in_plan",
+                        "value": null
+                    },
+                    {
+                        "name": "league_owner_email",
+                        "value": null
+                    },
+                    {
+                        "name": "league_owner_phone_number",
+                        "value": null
+                    },
+                    {
+                        "name": "league_owner_first_name",
+                        "value": null
+                    },
+                    {
+                        "name": "league_owner_last_name",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "create_season",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/create_season",
+                "prompt": "Create season, this is an internal command only accessible to internal TeamSnap services.",
+                "data": [
+                    {
+                        "name": "name",
+                        "value": null
+                    },
+                    {
+                        "name": "season_name",
+                        "value": null
+                    },
+                    {
+                        "name": "organization_id",
+                        "value": null
+                    },
+                    {
+                        "name": "program_id",
+                        "value": null
+                    },
+                    {
+                        "name": "season_id",
+                        "value": null
+                    },
+                    {
+                        "name": "sport_id",
+                        "value": null
+                    },
+                    {
+                        "name": "plan_id",
+                        "value": null
+                    },
+                    {
+                        "name": "payment_provider",
+                        "value": null
+                    },
+                    {
+                        "name": "business_type",
+                        "value": null
+                    },
+                    {
+                        "name": "billing_address",
+                        "value": null
+                    },
+                    {
+                        "name": "country",
+                        "value": null
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": null
+                    },
+                    {
+                        "name": "postal_code",
+                        "value": null
+                    },
+                    {
+                        "name": "league_owner_email",
+                        "value": null
+                    },
+                    {
+                        "name": "league_owner_first_name",
+                        "value": null
+                    },
+                    {
+                        "name": "league_owner_last_name",
+                        "value": null
+                    },
+                    {
+                        "name": "user_id",
+                        "value": null
+                    },
+                    {
+                        "name": "from_division_id",
+                        "value": null
+                    },
+                    {
+                        "name": "copy_division_structure",
+                        "value": null
+                    },
+                    {
+                        "name": "copy_team_structure",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "connect_season",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/connect_season",
+                "prompt": "Connect season, this is an internal command only accessible to internal TeamSnap services.",
+                "data": [
+                    {
+                        "name": "division_id",
+                        "value": null
+                    },
+                    {
+                        "name": "organization_id",
+                        "value": null
+                    },
+                    {
+                        "name": "program_id",
+                        "value": null
+                    },
+                    {
+                        "name": "season_id",
+                        "value": null
+                    },
+                    {
+                        "name": "season_name",
+                        "value": null
+                    },
+                    {
+                        "name": "league_owner_first_name",
+                        "value": null
+                    },
+                    {
+                        "name": "league_owner_last_name",
+                        "value": null
+                    },
+                    {
+                        "name": "league_owner_email",
+                        "value": null
+                    },
+                    {
+                        "name": "league_owner_phone_number",
+                        "value": null
+                    },
+                    {
+                        "name": "user_id",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "update_plan",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/update_plan",
+                "prompt": "Update the root division's plan or number of teams (teams_in_plan). This is an internal command only accessible to internal TeamSnap services.",
+                "data": [
+                    {
+                        "name": "division_id",
+                        "value": null
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": null
+                    },
+                    {
+                        "name": "plan_id",
+                        "value": null
+                    },
+                    {
+                        "name": "teams_in_plan",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "enable",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/enable",
+                "prompt": "Enable a root division. This is an internal command only accessible to internal TeamSnap services.",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": null
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "disable",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/disable",
+                "prompt": "Disable a root division. This is an internal command only accessible to internal TeamSnap services.",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": null
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "rel": "archive",
+                "href": "https://apiv3.teamsnap.com/v3/divisions/archive",
+                "prompt": "Archive a division. This is an internal command only accessible to internal TeamSnap services.",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": null
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "href": "https://apiv3.teamsnap.com/v3/divisions/907610",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": 907610,
+                        "type": "String"
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": 4424351009535455196,
+                        "type": "String"
+                    },
+                    {
+                        "name": "formatted_persistent_uuid",
+                        "value": "4424351009535455196",
+                        "type": "String"
+                    },
+                    {
+                        "name": "type",
+                        "value": "division",
+                        "type": "String"
+                    },
+                    {
+                        "name": "parent_id",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "root_id",
+                        "value": 907610,
+                        "prompt": "Beta: This data's name and value are subject to change.",
+                        "type": "String"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Basketball - $170",
+                        "type": "String"
+                    },
+                    {
+                        "name": "billing_address",
+                        "value": "3017 N. 77th Ave.\nElmwood Park, Illinois, 60707\nUnited States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "postal_code",
+                        "value": "60707",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "sport_id",
+                        "value": 1,
+                        "type": "String"
+                    },
+                    {
+                        "name": "season_name",
+                        "value": "Fall 2025",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "business_type",
+                        "value": "non-profit",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_url",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "location_country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "is_archived",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_archived",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_disabled",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_deletable",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_publicly_accessible",
+                        "value": true,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "all_teams_count",
+                        "value": 10,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_teams_count",
+                        "value": 10,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "all_children_count",
+                        "value": 10,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_children_count",
+                        "value": 10,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_descendants_count",
+                        "value": 10,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "is_disabled",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "parent_division_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "plan_id",
+                        "value": 60,
+                        "type": "String"
+                    },
+                    {
+                        "name": "teams_in_plan",
+                        "value": null,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_description",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_iana_name",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_offset",
+                        "value": "-06:00",
+                        "type": "String"
+                    },
+                    {
+                        "name": "left_boundary",
+                        "value": 1,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the left boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "right_boundary",
+                        "value": 22,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the right boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_payment_provider",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "default_payment_provider",
+                        "value": "stripe",
+                        "type": "String"
+                    },
+                    {
+                        "name": "created_at",
+                        "value": "2024-09-04T23:06:54Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "updated_at",
+                        "value": "2025-08-26T16:28:50Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "is_internal_org",
+                        "value": false,
+                        "type": "Boolean"
+                    }
+                ],
+                "links": [
+                    {
+                        "rel": "ancestors",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/ancestors?id=907610"
+                    },
+                    {
+                        "rel": "children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=907610"
+                    },
+                    {
+                        "rel": "active_children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=907610&is_archived=false&is_disabled=false"
+                    },
+                    {
+                        "rel": "descendants",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/descendants?id=907610"
+                    },
+                    {
+                        "rel": "tree",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/tree?id=907610"
+                    },
+                    {
+                        "rel": "division_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/division_aggregates/search?division_id=907610"
+                    },
+                    {
+                        "rel": "division_events",
+                        "href": "https://apiv3.teamsnap.com/v3/division_events/search?division_id=907610"
+                    },
+                    {
+                        "rel": "division_logo_photo_file",
+                        "href": "https://apiv3.teamsnap.com/v3/photo_files/teamsnap_logo"
+                    },
+                    {
+                        "rel": "division_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions_preferences/search?division_id=907610"
+                    },
+                    {
+                        "rel": "parent",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/search?"
+                    },
+                    {
+                        "rel": "plan",
+                        "href": "https://apiv3.teamsnap.com/v3/plans/60"
+                    },
+                    {
+                        "rel": "registration_forms",
+                        "href": "https://apiv3.teamsnap.com/v3/registration_forms/search?division_id=907610"
+                    },
+                    {
+                        "rel": "teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=907610"
+                    },
+                    {
+                        "rel": "active_teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=907610&is_active=true"
+                    }
+                ],
+                "rel": "division-907610"
+            },
+            {
+                "href": "https://apiv3.teamsnap.com/v3/divisions/911665",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": 911665,
+                        "type": "String"
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": 4424351009535458944,
+                        "type": "String"
+                    },
+                    {
+                        "name": "formatted_persistent_uuid",
+                        "value": "4424351009535458944",
+                        "type": "String"
+                    },
+                    {
+                        "name": "type",
+                        "value": "division",
+                        "type": "String"
+                    },
+                    {
+                        "name": "parent_id",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "root_id",
+                        "value": 911665,
+                        "prompt": "Beta: This data's name and value are subject to change.",
+                        "type": "String"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Instructional Basketball - $60",
+                        "type": "String"
+                    },
+                    {
+                        "name": "billing_address",
+                        "value": "3017 N. 77th Ave.\nElmwood Park, Illinois, 60707\nUnited States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "postal_code",
+                        "value": "60707",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "sport_id",
+                        "value": 1,
+                        "type": "String"
+                    },
+                    {
+                        "name": "season_name",
+                        "value": "Fall 2025 - $60",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "business_type",
+                        "value": "non-profit",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_url",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "location_country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "is_archived",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_archived",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_disabled",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_deletable",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_publicly_accessible",
+                        "value": true,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "all_teams_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_teams_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "all_children_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_children_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_descendants_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "is_disabled",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "parent_division_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "plan_id",
+                        "value": 60,
+                        "type": "String"
+                    },
+                    {
+                        "name": "teams_in_plan",
+                        "value": null,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_description",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_iana_name",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_offset",
+                        "value": "-06:00",
+                        "type": "String"
+                    },
+                    {
+                        "name": "left_boundary",
+                        "value": 1,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the left boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "right_boundary",
+                        "value": 6,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the right boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_payment_provider",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "default_payment_provider",
+                        "value": "stripe",
+                        "type": "String"
+                    },
+                    {
+                        "name": "created_at",
+                        "value": "2024-09-16T14:16:57Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "updated_at",
+                        "value": "2025-08-26T16:26:58Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "is_internal_org",
+                        "value": false,
+                        "type": "Boolean"
+                    }
+                ],
+                "links": [
+                    {
+                        "rel": "ancestors",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/ancestors?id=911665"
+                    },
+                    {
+                        "rel": "children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=911665"
+                    },
+                    {
+                        "rel": "active_children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=911665&is_archived=false&is_disabled=false"
+                    },
+                    {
+                        "rel": "descendants",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/descendants?id=911665"
+                    },
+                    {
+                        "rel": "tree",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/tree?id=911665"
+                    },
+                    {
+                        "rel": "division_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/division_aggregates/search?division_id=911665"
+                    },
+                    {
+                        "rel": "division_events",
+                        "href": "https://apiv3.teamsnap.com/v3/division_events/search?division_id=911665"
+                    },
+                    {
+                        "rel": "division_logo_photo_file",
+                        "href": "https://apiv3.teamsnap.com/v3/photo_files/teamsnap_logo"
+                    },
+                    {
+                        "rel": "division_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions_preferences/search?division_id=911665"
+                    },
+                    {
+                        "rel": "parent",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/search?"
+                    },
+                    {
+                        "rel": "plan",
+                        "href": "https://apiv3.teamsnap.com/v3/plans/60"
+                    },
+                    {
+                        "rel": "registration_forms",
+                        "href": "https://apiv3.teamsnap.com/v3/registration_forms/search?division_id=911665"
+                    },
+                    {
+                        "rel": "teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=911665"
+                    },
+                    {
+                        "rel": "active_teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=911665&is_active=true"
+                    }
+                ],
+                "rel": "division-911665"
+            },
+            {
+                "href": "https://apiv3.teamsnap.com/v3/divisions/913956",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": 913956,
+                        "type": "String"
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": 4424351009535461124,
+                        "type": "String"
+                    },
+                    {
+                        "name": "formatted_persistent_uuid",
+                        "value": "4424351009535461124",
+                        "type": "String"
+                    },
+                    {
+                        "name": "type",
+                        "value": "division",
+                        "type": "String"
+                    },
+                    {
+                        "name": "parent_id",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "root_id",
+                        "value": 913956,
+                        "prompt": "Beta: This data's name and value are subject to change.",
+                        "type": "String"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Instructional Soccer - $60",
+                        "type": "String"
+                    },
+                    {
+                        "name": "billing_address",
+                        "value": "3017 N. 77th Ave.\nElmwood Park, Illinois, 60707\nUnited States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "postal_code",
+                        "value": "60707",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "sport_id",
+                        "value": 2,
+                        "type": "String"
+                    },
+                    {
+                        "name": "season_name",
+                        "value": "Instructional Soccer",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "business_type",
+                        "value": "non-profit",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_url",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "location_country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "is_archived",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_archived",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_disabled",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_deletable",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_publicly_accessible",
+                        "value": true,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "all_teams_count",
+                        "value": 0,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_teams_count",
+                        "value": 0,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "all_children_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_children_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_descendants_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "is_disabled",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "parent_division_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "plan_id",
+                        "value": 60,
+                        "type": "String"
+                    },
+                    {
+                        "name": "teams_in_plan",
+                        "value": null,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_description",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_iana_name",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_offset",
+                        "value": "-06:00",
+                        "type": "String"
+                    },
+                    {
+                        "name": "left_boundary",
+                        "value": 1,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the left boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "right_boundary",
+                        "value": 6,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the right boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_payment_provider",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "default_payment_provider",
+                        "value": "stripe",
+                        "type": "String"
+                    },
+                    {
+                        "name": "created_at",
+                        "value": "2024-09-23T12:58:42Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "updated_at",
+                        "value": "2024-09-23T13:00:22Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "is_internal_org",
+                        "value": false,
+                        "type": "Boolean"
+                    }
+                ],
+                "links": [
+                    {
+                        "rel": "ancestors",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/ancestors?id=913956"
+                    },
+                    {
+                        "rel": "children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=913956"
+                    },
+                    {
+                        "rel": "active_children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=913956&is_archived=false&is_disabled=false"
+                    },
+                    {
+                        "rel": "descendants",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/descendants?id=913956"
+                    },
+                    {
+                        "rel": "tree",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/tree?id=913956"
+                    },
+                    {
+                        "rel": "division_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/division_aggregates/search?division_id=913956"
+                    },
+                    {
+                        "rel": "division_events",
+                        "href": "https://apiv3.teamsnap.com/v3/division_events/search?division_id=913956"
+                    },
+                    {
+                        "rel": "division_logo_photo_file",
+                        "href": "https://apiv3.teamsnap.com/v3/photo_files/teamsnap_logo"
+                    },
+                    {
+                        "rel": "division_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions_preferences/search?division_id=913956"
+                    },
+                    {
+                        "rel": "parent",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/search?"
+                    },
+                    {
+                        "rel": "plan",
+                        "href": "https://apiv3.teamsnap.com/v3/plans/60"
+                    },
+                    {
+                        "rel": "registration_forms",
+                        "href": "https://apiv3.teamsnap.com/v3/registration_forms/search?division_id=913956"
+                    },
+                    {
+                        "rel": "teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=913956"
+                    },
+                    {
+                        "rel": "active_teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=913956&is_active=true"
+                    }
+                ],
+                "rel": "division-913956"
+            },
+            {
+                "href": "https://apiv3.teamsnap.com/v3/divisions/913959",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": 913959,
+                        "type": "String"
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": 4424351009535461127,
+                        "type": "String"
+                    },
+                    {
+                        "name": "formatted_persistent_uuid",
+                        "value": "4424351009535461127",
+                        "type": "String"
+                    },
+                    {
+                        "name": "type",
+                        "value": "division",
+                        "type": "String"
+                    },
+                    {
+                        "name": "parent_id",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "root_id",
+                        "value": 913959,
+                        "prompt": "Beta: This data's name and value are subject to change.",
+                        "type": "String"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Instructional Volleyball - $60",
+                        "type": "String"
+                    },
+                    {
+                        "name": "billing_address",
+                        "value": "3017 N. 77th Ave.\nElmwood Park, Illinois, 60707\nUnited States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "postal_code",
+                        "value": "60707",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "sport_id",
+                        "value": 6,
+                        "type": "String"
+                    },
+                    {
+                        "name": "season_name",
+                        "value": "Instructional Volleyball",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "business_type",
+                        "value": "non-profit",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_url",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "location_country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "is_archived",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_archived",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_disabled",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_deletable",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_publicly_accessible",
+                        "value": true,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "all_teams_count",
+                        "value": 0,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_teams_count",
+                        "value": 0,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "all_children_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_children_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_descendants_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "is_disabled",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "parent_division_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "plan_id",
+                        "value": 60,
+                        "type": "String"
+                    },
+                    {
+                        "name": "teams_in_plan",
+                        "value": null,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_description",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_iana_name",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_offset",
+                        "value": "-06:00",
+                        "type": "String"
+                    },
+                    {
+                        "name": "left_boundary",
+                        "value": 1,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the left boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "right_boundary",
+                        "value": 6,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the right boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_payment_provider",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "default_payment_provider",
+                        "value": "stripe",
+                        "type": "String"
+                    },
+                    {
+                        "name": "created_at",
+                        "value": "2024-09-23T12:59:58Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "updated_at",
+                        "value": "2024-09-23T13:00:45Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "is_internal_org",
+                        "value": false,
+                        "type": "Boolean"
+                    }
+                ],
+                "links": [
+                    {
+                        "rel": "ancestors",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/ancestors?id=913959"
+                    },
+                    {
+                        "rel": "children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=913959"
+                    },
+                    {
+                        "rel": "active_children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=913959&is_archived=false&is_disabled=false"
+                    },
+                    {
+                        "rel": "descendants",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/descendants?id=913959"
+                    },
+                    {
+                        "rel": "tree",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/tree?id=913959"
+                    },
+                    {
+                        "rel": "division_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/division_aggregates/search?division_id=913959"
+                    },
+                    {
+                        "rel": "division_events",
+                        "href": "https://apiv3.teamsnap.com/v3/division_events/search?division_id=913959"
+                    },
+                    {
+                        "rel": "division_logo_photo_file",
+                        "href": "https://apiv3.teamsnap.com/v3/photo_files/teamsnap_logo"
+                    },
+                    {
+                        "rel": "division_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions_preferences/search?division_id=913959"
+                    },
+                    {
+                        "rel": "parent",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/search?"
+                    },
+                    {
+                        "rel": "plan",
+                        "href": "https://apiv3.teamsnap.com/v3/plans/60"
+                    },
+                    {
+                        "rel": "registration_forms",
+                        "href": "https://apiv3.teamsnap.com/v3/registration_forms/search?division_id=913959"
+                    },
+                    {
+                        "rel": "teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=913959"
+                    },
+                    {
+                        "rel": "active_teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=913959&is_active=true"
+                    }
+                ],
+                "rel": "division-913959"
+            },
+            {
+                "href": "https://apiv3.teamsnap.com/v3/divisions/913970",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": 913970,
+                        "type": "String"
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": 4424351009535461138,
+                        "type": "String"
+                    },
+                    {
+                        "name": "formatted_persistent_uuid",
+                        "value": "4424351009535461138",
+                        "type": "String"
+                    },
+                    {
+                        "name": "type",
+                        "value": "division",
+                        "type": "String"
+                    },
+                    {
+                        "name": "parent_id",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "root_id",
+                        "value": 913970,
+                        "prompt": "Beta: This data's name and value are subject to change.",
+                        "type": "String"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Track & Field - Spring 2026",
+                        "type": "String"
+                    },
+                    {
+                        "name": "billing_address",
+                        "value": "3017 N. 77th Ave.\nElmwood Park, Illinois, 60707\nUnited States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "postal_code",
+                        "value": "60707",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "sport_id",
+                        "value": 58,
+                        "type": "String"
+                    },
+                    {
+                        "name": "season_name",
+                        "value": "Spring 2026",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "business_type",
+                        "value": "non-profit",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_url",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "location_country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "is_archived",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_archived",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_disabled",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_deletable",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_publicly_accessible",
+                        "value": true,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "all_teams_count",
+                        "value": 0,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_teams_count",
+                        "value": 0,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "all_children_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_children_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_descendants_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "is_disabled",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "parent_division_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "plan_id",
+                        "value": 60,
+                        "type": "String"
+                    },
+                    {
+                        "name": "teams_in_plan",
+                        "value": null,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_description",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_iana_name",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_offset",
+                        "value": "-06:00",
+                        "type": "String"
+                    },
+                    {
+                        "name": "left_boundary",
+                        "value": 1,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the left boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "right_boundary",
+                        "value": 6,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the right boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_payment_provider",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "default_payment_provider",
+                        "value": "stripe",
+                        "type": "String"
+                    },
+                    {
+                        "name": "created_at",
+                        "value": "2024-09-23T13:07:44Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "updated_at",
+                        "value": "2025-08-26T16:30:13Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "is_internal_org",
+                        "value": false,
+                        "type": "Boolean"
+                    }
+                ],
+                "links": [
+                    {
+                        "rel": "ancestors",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/ancestors?id=913970"
+                    },
+                    {
+                        "rel": "children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=913970"
+                    },
+                    {
+                        "rel": "active_children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=913970&is_archived=false&is_disabled=false"
+                    },
+                    {
+                        "rel": "descendants",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/descendants?id=913970"
+                    },
+                    {
+                        "rel": "tree",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/tree?id=913970"
+                    },
+                    {
+                        "rel": "division_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/division_aggregates/search?division_id=913970"
+                    },
+                    {
+                        "rel": "division_events",
+                        "href": "https://apiv3.teamsnap.com/v3/division_events/search?division_id=913970"
+                    },
+                    {
+                        "rel": "division_logo_photo_file",
+                        "href": "https://apiv3.teamsnap.com/v3/photo_files/teamsnap_logo"
+                    },
+                    {
+                        "rel": "division_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions_preferences/search?division_id=913970"
+                    },
+                    {
+                        "rel": "parent",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/search?"
+                    },
+                    {
+                        "rel": "plan",
+                        "href": "https://apiv3.teamsnap.com/v3/plans/60"
+                    },
+                    {
+                        "rel": "registration_forms",
+                        "href": "https://apiv3.teamsnap.com/v3/registration_forms/search?division_id=913970"
+                    },
+                    {
+                        "rel": "teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=913970"
+                    },
+                    {
+                        "rel": "active_teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=913970&is_active=true"
+                    }
+                ],
+                "rel": "division-913970"
+            },
+            {
+                "href": "https://apiv3.teamsnap.com/v3/divisions/973432",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": 973432,
+                        "type": "String"
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": 7162844000141992825,
+                        "type": "String"
+                    },
+                    {
+                        "name": "formatted_persistent_uuid",
+                        "value": "7162844000141992825",
+                        "type": "String"
+                    },
+                    {
+                        "name": "type",
+                        "value": "division",
+                        "type": "String"
+                    },
+                    {
+                        "name": "parent_id",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "root_id",
+                        "value": 973432,
+                        "prompt": "Beta: This data's name and value are subject to change.",
+                        "type": "String"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Soccer - 2025/2026 Season",
+                        "type": "String"
+                    },
+                    {
+                        "name": "billing_address",
+                        "value": "3017 N. 77th Ave.\nElmwood Park, Illinois, 60707\nUnited States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "postal_code",
+                        "value": "60707",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "sport_id",
+                        "value": 2,
+                        "type": "String"
+                    },
+                    {
+                        "name": "season_name",
+                        "value": "Fall 2025",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "business_type",
+                        "value": "non-profit",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_url",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "location_country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "is_archived",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_archived",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_disabled",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_deletable",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_publicly_accessible",
+                        "value": true,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "all_teams_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_teams_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "all_children_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_children_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_descendants_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "is_disabled",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "parent_division_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "plan_id",
+                        "value": 60,
+                        "type": "String"
+                    },
+                    {
+                        "name": "teams_in_plan",
+                        "value": 0,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_description",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_iana_name",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_offset",
+                        "value": "-06:00",
+                        "type": "String"
+                    },
+                    {
+                        "name": "left_boundary",
+                        "value": 1,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the left boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "right_boundary",
+                        "value": 6,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the right boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_payment_provider",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "default_payment_provider",
+                        "value": "stripe",
+                        "type": "String"
+                    },
+                    {
+                        "name": "created_at",
+                        "value": "2025-04-07T14:59:07Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "updated_at",
+                        "value": "2025-07-03T16:37:27Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "is_internal_org",
+                        "value": false,
+                        "type": "Boolean"
+                    }
+                ],
+                "links": [
+                    {
+                        "rel": "ancestors",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/ancestors?id=973432"
+                    },
+                    {
+                        "rel": "children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=973432"
+                    },
+                    {
+                        "rel": "active_children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=973432&is_archived=false&is_disabled=false"
+                    },
+                    {
+                        "rel": "descendants",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/descendants?id=973432"
+                    },
+                    {
+                        "rel": "tree",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/tree?id=973432"
+                    },
+                    {
+                        "rel": "division_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/division_aggregates/search?division_id=973432"
+                    },
+                    {
+                        "rel": "division_events",
+                        "href": "https://apiv3.teamsnap.com/v3/division_events/search?division_id=973432"
+                    },
+                    {
+                        "rel": "division_logo_photo_file",
+                        "href": "https://apiv3.teamsnap.com/v3/photo_files/teamsnap_logo"
+                    },
+                    {
+                        "rel": "division_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions_preferences/search?division_id=973432"
+                    },
+                    {
+                        "rel": "parent",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/search?"
+                    },
+                    {
+                        "rel": "plan",
+                        "href": "https://apiv3.teamsnap.com/v3/plans/60"
+                    },
+                    {
+                        "rel": "registration_forms",
+                        "href": "https://apiv3.teamsnap.com/v3/registration_forms/search?division_id=973432"
+                    },
+                    {
+                        "rel": "teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=973432"
+                    },
+                    {
+                        "rel": "active_teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=973432&is_active=true"
+                    }
+                ],
+                "rel": "division-973432"
+            },
+            {
+                "href": "https://apiv3.teamsnap.com/v3/divisions/973585",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": 973585,
+                        "type": "String"
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": 7162844000141992977,
+                        "type": "String"
+                    },
+                    {
+                        "name": "formatted_persistent_uuid",
+                        "value": "7162844000141992977",
+                        "type": "String"
+                    },
+                    {
+                        "name": "type",
+                        "value": "division",
+                        "type": "String"
+                    },
+                    {
+                        "name": "parent_id",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "root_id",
+                        "value": 973585,
+                        "prompt": "Beta: This data's name and value are subject to change.",
+                        "type": "String"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Fall Soccer 2025(test)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "billing_address",
+                        "value": "3017 N. 77th Ave.\nElmwood Park, Illinois, 60707\nUnited States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "postal_code",
+                        "value": "60707",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "sport_id",
+                        "value": 2,
+                        "type": "String"
+                    },
+                    {
+                        "name": "season_name",
+                        "value": "Fall 2024",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "business_type",
+                        "value": "non-profit",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_url",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "location_country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "is_archived",
+                        "value": true,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_archived",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_disabled",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_deletable",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_publicly_accessible",
+                        "value": true,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "all_teams_count",
+                        "value": 2,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_teams_count",
+                        "value": 0,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "all_children_count",
+                        "value": 0,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_children_count",
+                        "value": 0,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_descendants_count",
+                        "value": 0,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "is_disabled",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "parent_division_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "plan_id",
+                        "value": 60,
+                        "type": "String"
+                    },
+                    {
+                        "name": "teams_in_plan",
+                        "value": null,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_description",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_iana_name",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_offset",
+                        "value": "-06:00",
+                        "type": "String"
+                    },
+                    {
+                        "name": "left_boundary",
+                        "value": 1,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the left boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "right_boundary",
+                        "value": 2,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the right boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_payment_provider",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "default_payment_provider",
+                        "value": "stripe",
+                        "type": "String"
+                    },
+                    {
+                        "name": "created_at",
+                        "value": "2025-04-07T19:09:04Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "updated_at",
+                        "value": "2025-08-05T14:37:51Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "is_internal_org",
+                        "value": false,
+                        "type": "Boolean"
+                    }
+                ],
+                "links": [
+                    {
+                        "rel": "ancestors",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/ancestors?id=973585"
+                    },
+                    {
+                        "rel": "children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=973585"
+                    },
+                    {
+                        "rel": "active_children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=973585&is_archived=false&is_disabled=false"
+                    },
+                    {
+                        "rel": "descendants",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/descendants?id=973585"
+                    },
+                    {
+                        "rel": "tree",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/tree?id=973585"
+                    },
+                    {
+                        "rel": "division_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/division_aggregates/search?division_id=973585"
+                    },
+                    {
+                        "rel": "division_events",
+                        "href": "https://apiv3.teamsnap.com/v3/division_events/search?division_id=973585"
+                    },
+                    {
+                        "rel": "division_logo_photo_file",
+                        "href": "https://apiv3.teamsnap.com/v3/photo_files/teamsnap_logo"
+                    },
+                    {
+                        "rel": "division_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions_preferences/search?division_id=973585"
+                    },
+                    {
+                        "rel": "parent",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/search?"
+                    },
+                    {
+                        "rel": "plan",
+                        "href": "https://apiv3.teamsnap.com/v3/plans/60"
+                    },
+                    {
+                        "rel": "registration_forms",
+                        "href": "https://apiv3.teamsnap.com/v3/registration_forms/search?division_id=973585"
+                    },
+                    {
+                        "rel": "teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=973585"
+                    },
+                    {
+                        "rel": "active_teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=973585&is_active=true"
+                    }
+                ],
+                "rel": "division-973585"
+            },
+            {
+                "href": "https://apiv3.teamsnap.com/v3/divisions/1006476",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": 1006476,
+                        "type": "String"
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": 5938006942642366554,
+                        "type": "String"
+                    },
+                    {
+                        "name": "formatted_persistent_uuid",
+                        "value": "5938006942642366554",
+                        "type": "String"
+                    },
+                    {
+                        "name": "type",
+                        "value": "division",
+                        "type": "String"
+                    },
+                    {
+                        "name": "parent_id",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "root_id",
+                        "value": 1006476,
+                        "prompt": "Beta: This data's name and value are subject to change.",
+                        "type": "String"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Cross Country 2025",
+                        "type": "String"
+                    },
+                    {
+                        "name": "billing_address",
+                        "value": "3017 N. 77th Ave.\nElmwood Park, Illinois, 60707\nUnited States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "postal_code",
+                        "value": "60707",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "sport_id",
+                        "value": 70,
+                        "type": "String"
+                    },
+                    {
+                        "name": "season_name",
+                        "value": "Fall 2025",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "business_type",
+                        "value": "non-profit",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_url",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "location_country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "is_archived",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_archived",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_disabled",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_deletable",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_publicly_accessible",
+                        "value": true,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "all_teams_count",
+                        "value": 4,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_teams_count",
+                        "value": 4,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "all_children_count",
+                        "value": 4,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_children_count",
+                        "value": 4,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_descendants_count",
+                        "value": 4,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "is_disabled",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "parent_division_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "plan_id",
+                        "value": 60,
+                        "type": "String"
+                    },
+                    {
+                        "name": "teams_in_plan",
+                        "value": null,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_description",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_iana_name",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_offset",
+                        "value": "-06:00",
+                        "type": "String"
+                    },
+                    {
+                        "name": "left_boundary",
+                        "value": 1,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the left boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "right_boundary",
+                        "value": 10,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the right boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_payment_provider",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "default_payment_provider",
+                        "value": "stripe",
+                        "type": "String"
+                    },
+                    {
+                        "name": "created_at",
+                        "value": "2025-07-10T22:38:53Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "updated_at",
+                        "value": "2025-07-10T22:38:54Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "is_internal_org",
+                        "value": false,
+                        "type": "Boolean"
+                    }
+                ],
+                "links": [
+                    {
+                        "rel": "ancestors",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/ancestors?id=1006476"
+                    },
+                    {
+                        "rel": "children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=1006476"
+                    },
+                    {
+                        "rel": "active_children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=1006476&is_archived=false&is_disabled=false"
+                    },
+                    {
+                        "rel": "descendants",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/descendants?id=1006476"
+                    },
+                    {
+                        "rel": "tree",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/tree?id=1006476"
+                    },
+                    {
+                        "rel": "division_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/division_aggregates/search?division_id=1006476"
+                    },
+                    {
+                        "rel": "division_events",
+                        "href": "https://apiv3.teamsnap.com/v3/division_events/search?division_id=1006476"
+                    },
+                    {
+                        "rel": "division_logo_photo_file",
+                        "href": "https://apiv3.teamsnap.com/v3/photo_files/teamsnap_logo"
+                    },
+                    {
+                        "rel": "division_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions_preferences/search?division_id=1006476"
+                    },
+                    {
+                        "rel": "parent",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/search?"
+                    },
+                    {
+                        "rel": "plan",
+                        "href": "https://apiv3.teamsnap.com/v3/plans/60"
+                    },
+                    {
+                        "rel": "registration_forms",
+                        "href": "https://apiv3.teamsnap.com/v3/registration_forms/search?division_id=1006476"
+                    },
+                    {
+                        "rel": "teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=1006476"
+                    },
+                    {
+                        "rel": "active_teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=1006476&is_active=true"
+                    }
+                ],
+                "rel": "division-1006476"
+            },
+            {
+                "href": "https://apiv3.teamsnap.com/v3/divisions/1025375",
+                "data": [
+                    {
+                        "name": "id",
+                        "value": 1025375,
+                        "type": "String"
+                    },
+                    {
+                        "name": "persistent_uuid",
+                        "value": 12567459122032680256,
+                        "type": "String"
+                    },
+                    {
+                        "name": "formatted_persistent_uuid",
+                        "value": "12567459122032680256",
+                        "type": "String"
+                    },
+                    {
+                        "name": "type",
+                        "value": "division",
+                        "type": "String"
+                    },
+                    {
+                        "name": "parent_id",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "root_id",
+                        "value": 1025375,
+                        "prompt": "Beta: This data's name and value are subject to change.",
+                        "type": "String"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Volleyball - 2026",
+                        "type": "String"
+                    },
+                    {
+                        "name": "billing_address",
+                        "value": "3017 N. 77th Ave.\nElmwood Park, Illinois, 60707\nUnited States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "postal_code",
+                        "value": "60707",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "sport_id",
+                        "value": 6,
+                        "type": "String"
+                    },
+                    {
+                        "name": "season_name",
+                        "value": "2025/2026",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "business_type",
+                        "value": "non-profit",
+                        "type": "String"
+                    },
+                    {
+                        "name": "league_url",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "location_country",
+                        "value": "United States",
+                        "type": "String"
+                    },
+                    {
+                        "name": "is_archived",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_archived",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_ancestor_disabled",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_deletable",
+                        "value": false,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "is_publicly_accessible",
+                        "value": true,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "all_teams_count",
+                        "value": 10,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_teams_count",
+                        "value": 10,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "all_children_count",
+                        "value": 10,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_children_count",
+                        "value": 10,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_descendants_count",
+                        "value": 10,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "is_disabled",
+                        "value": null,
+                        "type": "Boolean"
+                    },
+                    {
+                        "name": "parent_division_name",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "plan_id",
+                        "value": 60,
+                        "type": "String"
+                    },
+                    {
+                        "name": "teams_in_plan",
+                        "value": null,
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "time_zone",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_description",
+                        "value": "Central Time (US & Canada)",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_iana_name",
+                        "value": "America/Chicago",
+                        "type": "String"
+                    },
+                    {
+                        "name": "time_zone_offset",
+                        "value": "-06:00",
+                        "type": "String"
+                    },
+                    {
+                        "name": "left_boundary",
+                        "value": 1,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the left boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "right_boundary",
+                        "value": 22,
+                        "prompt": "Beta: (This attribute is subject to change or sudden removal) Used in constructing the tree of divisions, this is the right boundary of this division in the nested set of divisions under the root_id",
+                        "type": "Integer"
+                    },
+                    {
+                        "name": "active_payment_provider",
+                        "value": null,
+                        "type": "String"
+                    },
+                    {
+                        "name": "default_payment_provider",
+                        "value": "stripe",
+                        "type": "String"
+                    },
+                    {
+                        "name": "created_at",
+                        "value": "2025-08-26T16:31:26Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "updated_at",
+                        "value": "2025-08-26T16:31:26Z",
+                        "type": "DateTime"
+                    },
+                    {
+                        "name": "is_internal_org",
+                        "value": false,
+                        "type": "Boolean"
+                    }
+                ],
+                "links": [
+                    {
+                        "rel": "ancestors",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/ancestors?id=1025375"
+                    },
+                    {
+                        "rel": "children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=1025375"
+                    },
+                    {
+                        "rel": "active_children",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/children?id=1025375&is_archived=false&is_disabled=false"
+                    },
+                    {
+                        "rel": "descendants",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/descendants?id=1025375"
+                    },
+                    {
+                        "rel": "tree",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/tree?id=1025375"
+                    },
+                    {
+                        "rel": "division_aggregates",
+                        "href": "https://apiv3.teamsnap.com/v3/division_aggregates/search?division_id=1025375"
+                    },
+                    {
+                        "rel": "division_events",
+                        "href": "https://apiv3.teamsnap.com/v3/division_events/search?division_id=1025375"
+                    },
+                    {
+                        "rel": "division_logo_photo_file",
+                        "href": "https://apiv3.teamsnap.com/v3/photo_files/teamsnap_logo"
+                    },
+                    {
+                        "rel": "division_preferences",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions_preferences/search?division_id=1025375"
+                    },
+                    {
+                        "rel": "parent",
+                        "href": "https://apiv3.teamsnap.com/v3/divisions/search?"
+                    },
+                    {
+                        "rel": "plan",
+                        "href": "https://apiv3.teamsnap.com/v3/plans/60"
+                    },
+                    {
+                        "rel": "registration_forms",
+                        "href": "https://apiv3.teamsnap.com/v3/registration_forms/search?division_id=1025375"
+                    },
+                    {
+                        "rel": "teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=1025375"
+                    },
+                    {
+                        "rel": "active_teams",
+                        "href": "https://apiv3.teamsnap.com/v3/teams/search?division_id=1025375&is_active=true"
+                    }
+                ],
+                "rel": "division-1025375"
+            }
+        ]
+    }
+}

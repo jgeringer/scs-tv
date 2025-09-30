@@ -49,18 +49,61 @@ export default function CalendarSection() {
         const token = params.get('access_token');
         if (!token) return;
 
-        // 1. Get division (teams)
-        const divisionRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-division/?token=${token}`, {
+        // 1. Get organization, so that we can get all of the divisions.
+        const organizationRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-organization/?token=${token}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
         });
-        const divisionJson = await divisionRes.json();
-        const teamIds = divisionJson.collection.items.map((item: any) => {
+
+        // extract all of the division IDs
+        const organizationJson = await organizationRes.json();
+        const divisionIds = organizationJson.collection.items.map((item: any) => {
           return item.data.find((d: any) => d.name === "id")?.value;
         }).filter((id: any) => id !== undefined).join(',');
+
+        console.log('💥💥💥 Division IDs::::', divisionIds); // 907610,911665,913956,913959,913970,973432,973585,1006476,1025375
+
+        // 1. Get division (teams). First call
+        // Updated this to make a separate get-division call for each division ID, then combine the results.
+        // Update this to make a call for each division ID, then combine the results.
+        const divisionIdArr = divisionIds.split(',');
+        const divisionResults = [];
+        for (const divisionId of divisionIdArr) {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-division/?token=${token}&division_ids=${divisionId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+          });
+          const json = await res.json();
+          console.log('💥💥💥 Division JSON for division ID ' + divisionId + '::::', json);
+          if (json.collection?.items) {
+            divisionResults.push(...json.collection.items);
+          }
+        }
+        const combinedDivisionJson = { collection: { items: divisionResults } };
+        
+        // const divisionRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-division/?token=${token}&division_ids=${divisionIds}`, {
+        //   method: 'GET',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'Authorization': `Bearer ${token}`
+        //   },
+        // });
+        // const divisionJson = await divisionRes.json();
+        // console.log('💥💥💥 Division JSON::::', divisionJson);
+        console.log('💥💥💥 combinedDivisionJson JSON::::', combinedDivisionJson);
+
+        const teamIds = combinedDivisionJson.collection.items.map((item: any) => {
+          return item.data.find((d: any) => d.name === "id")?.value;
+        }).filter((id: any) => id !== undefined).join(',');
+
+
+        console.log('💥💥💥 Team IDs::::', teamIds);
 
         // 2. Get events
         const eventsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-events/?token=${token}&team_id=${teamIds}`, {
@@ -72,11 +115,15 @@ export default function CalendarSection() {
         });
         const eventsJson = await eventsRes.json();
         const eventItems = eventsJson.collection.items;
+        console.log('💥💥💥 Event Items::::', eventItems);
 
         // 3. Get division locations
         const divisionLocationIds = eventItems.map((item: any) => {
-          return item.data.find((d: any) => d.name === "division_location_id")?.value;
-        }).filter((id: any) => id !== null).join(',');
+  return item.data.find((d: any) => d.name === "division_location_id")?.value;
+}).filter((id: any) => id !== null).join(',');
+
+        console.log('💥💥💥 Division Location IDs::::', divisionLocationIds);
+
         const divisionLocationsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-division-locations/?token=${token}&divisionLocations=${divisionLocationIds}`, {
           method: 'GET',
           headers: {
@@ -85,11 +132,13 @@ export default function CalendarSection() {
           },
         });
         const divisionLocationsJson = await divisionLocationsRes.json();
+        console.log('💥💥💥 Division Locations JSON - ::::', divisionLocationsJson);
         const locationMap: Record<string, any> = {};
-        divisionLocationsJson.collection.items.forEach((item: any) => {
+        divisionLocationsJson.collection.items?.forEach((item: any) => {
           const id = item.data.find((d: any) => d.name === "id")?.value;
           locationMap[id] = item.data.find((d: any) => d.name === "name")?.value;
         });
+        console.log('💥💥💥 Location Map::::', locationMap);
 
         // Combine event data
         const now = new Date();
@@ -100,7 +149,8 @@ export default function CalendarSection() {
           .map((item: any) => {
             const data = Object.fromEntries(item.data.map((d: any) => [d.name, d.value]));
             const dateObj = data.start_date ? new Date(data.start_date) : null;
-            const teamObj = divisionJson.collection.items.find((t: any) => t.data.find((d: any) => d.name === "id")?.value === data.team_id);
+            // Find the team object from combinedDivisionJson, which contains team data
+            const teamObj = combinedDivisionJson.collection.items.find((t: any) => t.data.find((d: any) => d.name === "id")?.value === data.team_id);
             const teamName = teamObj?.data.find((d: any) => d.name === "name")?.value;
             const leagueName = teamObj?.data.find((d: any) => d.name === "league_name")?.value;
             return {

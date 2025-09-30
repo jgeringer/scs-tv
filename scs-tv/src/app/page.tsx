@@ -90,7 +90,6 @@ export default function Home() {
       <footer className="flex p-4 border-emerald-800 z-1">
         <section className="bg-emerald-800 text-white rounded-2xl font-bold w-full overflow-hidden">
           <SportsTickerTeamSnapWrapper />
-          {/* <SportsTicker /> */}
         </section>
       </footer>
     </div>

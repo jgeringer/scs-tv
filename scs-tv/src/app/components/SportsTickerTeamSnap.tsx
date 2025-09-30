@@ -64,16 +64,39 @@ export default function SportsTickerTeamSnap({ onError }: { onError?: () => void
         const token = params.get('access_token');
         if (!token) return;
 
-        // 1. Get division (teams)
-        const divisionRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-division/?token=${token}`, {
+        // 1a. Get organization to extract division IDs
+        const organizationRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-organization/?token=${token}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
         });
-        const divisionJson = await divisionRes.json();
-        const teamIds = divisionJson.collection.items.map((item: any) => {
+
+        // extract all of the division IDs
+        const organizationJson = await organizationRes.json();
+        const divisionIds = organizationJson.collection.items.map((item: any) => {
+          return item.data.find((d: any) => d.name === "id")?.value;
+        }).filter((id: any) => id !== undefined).join(',');
+
+        // 1. Get division (teams)
+        const divisionIdArr = divisionIds.split(',');
+        const divisionResults = [];
+        for (const divisionId of divisionIdArr) {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-division/?token=${token}&division_ids=${divisionId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+          });
+          const json = await res.json();
+          if (json.collection?.items) {
+            divisionResults.push(...json.collection.items);
+          }
+        }
+        const combinedDivisionJson = { collection: { items: divisionResults } };
+        const teamIds = combinedDivisionJson.collection.items.map((item: any) => {
           return item.data.find((d: any) => d.name === "id")?.value;
         }).filter((id: any) => id !== undefined).join(',');
 
@@ -115,7 +138,7 @@ export default function SportsTickerTeamSnap({ onError }: { onError?: () => void
         const gamesList = eventItems
           .map((item: any) => {
             const data = Object.fromEntries(item.data.map((d: any) => [d.name, d.value]));
-            const teamObj = divisionJson.collection.items.find((t: any) => t.data.find((d: any) => d.name === "id")?.value === data.team_id);
+            const teamObj = combinedDivisionJson.collection.items.find((t: any) => t.data.find((d: any) => d.name === "id")?.value === data.team_id);
             const teamName = teamObj?.data.find((d: any) => d.name === "name")?.value;
             const leagueName = teamObj?.data.find((d: any) => d.name === "league_name")?.value;
             return {

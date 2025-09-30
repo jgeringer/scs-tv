@@ -39,7 +39,7 @@ export async function GET() {
       orderBy: 'recency desc', // Example: order by newest first
     });
 
-    const files = response.data.files || [];
+    const files = (response.data.files || []).filter(file => file.name && file.name.toLowerCase().endsWith('.jpg'));
 
     const imageUrls = await Promise.all(files.map(async (file) => {
       if (!file.id) {
@@ -49,9 +49,7 @@ export async function GET() {
           url: '',
         };
       }
-      
       const directUrl = `https://drive.usercontent.google.com/download?&id=${file.id}&export=view`;
-
       return {
         name: file.name,
         id: file.id,

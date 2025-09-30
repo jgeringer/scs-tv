@@ -53,7 +53,7 @@ export default function FadingGallery() {
       .then((imgs) => {
         setImages(imgs);
         if (imgs.length > 0) {
-          setCurrentIndex(Math.floor(Math.random() * imgs.length));
+          setCurrentIndex(0);
         }
       })
       .catch(console.error);
@@ -70,14 +70,10 @@ export default function FadingGallery() {
       generateRandomTransform();
 
       setTimeout(() => {
-        // Pick a random index different from the current one
+        // Increment index in order
         setCurrentIndex((prev) => {
           if (images.length <= 1 || prev === null) return prev ?? 0;
-          let next;
-          do {
-            next = Math.floor(Math.random() * images.length);
-          } while (next === prev);
-          return next;
+          return (prev + 1) % images.length;
         });
 
         setTimeout(() => {

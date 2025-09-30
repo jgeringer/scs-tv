@@ -39,7 +39,11 @@ export async function GET() {
       orderBy: 'recency desc', // Example: order by newest first
     });
 
-    const files = (response.data.files || []).filter(file => file.name && file.name.toLowerCase().endsWith('.jpg'));
+    const files = (response.data.files || []).filter(file => {
+      if (!file.name) return false;
+      const name = file.name.toLowerCase();
+      return name.endsWith('.jpg') || name.endsWith('.jpeg');
+    });
 
     const imageUrls = await Promise.all(files.map(async (file) => {
       if (!file.id) {

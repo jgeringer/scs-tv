@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { faBasketball } from '@fortawesome/free-solid-svg-icons';
+// import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import { REFRESH_INTERVAL } from '../utils/time';
 
 type DriveImage = {
@@ -111,7 +112,8 @@ export default function FadingGallery() {
           <div className="flex-1">
             <div className="relative w-full">
               <h2 className="text-3xl font-bold text-white tracking-wide eyebrow--dim gallery-heading">
-                <FontAwesomeIcon icon={faCamera} width="32" /> Shamrock Snapshots
+                {/* <FontAwesomeIcon icon={faCamera} width="32" /> Shamrock Snapshots */}
+                <FontAwesomeIcon icon={faBasketball} width="32" /> Congrats Celtics Basketball Class of 2026!
               </h2>
               
               <div

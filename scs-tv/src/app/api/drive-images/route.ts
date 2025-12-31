@@ -15,8 +15,8 @@ export async function GET() {
     });
 
     const drive = google.drive({ version: 'v3', auth });
-    // const folderId = '10MCv5ELTHsK9SJfXLmn_VrIPO78GA8UZ'; // This is the root folder ID as seen in the URL
-    const folderId = '13HOZ3UPq7V7GjI2x2VybnKTi8PZlIQgR'; // This is the 8th Grade Basketball Night folder ID as seen in the URL
+    const folderId = '10MCv5ELTHsK9SJfXLmn_VrIPO78GA8UZ'; // This is the root folder ID as seen in the URL
+    // const folderId = '13HOZ3UPq7V7GjI2x2VybnKTi8PZlIQgR'; // This is the 8th Grade Basketball Night folder ID as seen in the URL
 
     // The orderBy parameter supports the following fields:
     // - createdTime

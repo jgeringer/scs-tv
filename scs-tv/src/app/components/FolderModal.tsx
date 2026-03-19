@@ -12,7 +12,7 @@ type Folder = {
 interface FolderModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSelectFolder: (folderId: string | null, folderName: string) => void;
+  onSelectFolder: (folderId: string | null, folderName: string, temporaryMessage?: string) => void;
   selectedFolderId?: string | null;
   folderExpiry?: number | null;
 }
@@ -22,6 +22,8 @@ export default function FolderModal({ isOpen, onClose, onSelectFolder, selectedF
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [timeRemaining, setTimeRemaining] = useState<string | null>(null);
+  const [temporaryMessage, setTemporaryMessage] = useState('');
+  const [pendingFolderId, setPendingFolderId] = useState<string | null>(null);
 
   // Update timer every second
   useEffect(() => {
@@ -55,6 +57,16 @@ export default function FolderModal({ isOpen, onClose, onSelectFolder, selectedF
     setLoading(true);
     setError(null);
     
+    // If a folder is already selected, load its message
+    if (selectedFolderId) {
+      const storedMessage = localStorage.getItem('temporaryMessage') || '';
+      setTemporaryMessage(storedMessage);
+      setPendingFolderId(selectedFolderId);
+    } else {
+      setTemporaryMessage('');
+      setPendingFolderId(null);
+    }
+    
     fetch('/api/drive-folders')
       .then((res) => res.json())
       .then((data) => {
@@ -69,7 +81,7 @@ export default function FolderModal({ isOpen, onClose, onSelectFolder, selectedF
         setError('Failed to load folders');
       })
       .finally(() => setLoading(false));
-  }, [isOpen]);
+  }, [isOpen, selectedFolderId]);
 
   if (!isOpen) return null;
 
@@ -77,9 +89,15 @@ export default function FolderModal({ isOpen, onClose, onSelectFolder, selectedF
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-lg max-w-md w-full mx-4 overflow-hidden">
         <div className="flex justify-between items-center p-6 border-b border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-800">Select a Folder</h2>
+          <h2 className="text-2xl font-bold text-gray-800">
+            {pendingFolderId ? 'Update Message' : 'Select a Folder'}
+          </h2>
           <button
-            onClick={onClose}
+            onClick={() => {
+              onClose();
+              setPendingFolderId(null);
+              setTemporaryMessage('');
+            }}
             className="text-gray-500 hover:text-gray-700"
           >
             <FontAwesomeIcon icon={faTimes} width="24" />
@@ -105,7 +123,9 @@ export default function FolderModal({ isOpen, onClose, onSelectFolder, selectedF
             <div className="space-y-2">
               <button
                 onClick={() => {
-                  onSelectFolder(null, 'All Pictures (except ones in folders)');
+                  onSelectFolder(null, 'All Pictures (except ones in folders)', '');
+                  // Dispatch custom event to notify ThemeSwitcher
+                  window.dispatchEvent(new CustomEvent('temporaryMessageChanged'));
                   onClose();
                 }}
                 className={`w-full text-left px-4 py-3 rounded-lg transition-colors font-semibold border-2 ${
@@ -131,8 +151,8 @@ export default function FolderModal({ isOpen, onClose, onSelectFolder, selectedF
                     <button
                       key={folder.id}
                       onClick={() => {
-                        onSelectFolder(folder.id, folder.name);
-                        onClose();
+                        setPendingFolderId(folder.id);
+                        setTemporaryMessage('');
                       }}
                       className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
                         selectedFolderId === folder.id
@@ -152,14 +172,68 @@ export default function FolderModal({ isOpen, onClose, onSelectFolder, selectedF
           )}
         </div>
 
-        <div className="p-4 border-t border-gray-200">
-          <button
-            onClick={onClose}
-            className="w-full px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-lg transition-colors"
-          >
-            Cancel
-          </button>
-        </div>
+        {pendingFolderId !== null && (
+          <div className="p-6 border-t border-gray-200 bg-gray-50">
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Temporary Message (optional)
+              </label>
+              <input
+                type="text"
+                value={temporaryMessage}
+                onChange={(e) => setTemporaryMessage(e.target.value)}
+                placeholder="e.g., 8th Grade Night, Homecoming, etc."
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                maxLength={50}
+              />
+              <p className="text-xs text-gray-500 mt-1">This message will display instead of "Shamrock Snapshots" while this folder is active.</p>
+            </div>
+            <button
+              onClick={() => {
+                onSelectFolder(pendingFolderId, 'Selected Folder', temporaryMessage);
+                setPendingFolderId(null);
+                setTemporaryMessage('');
+                // Dispatch custom event to notify ThemeSwitcher
+                window.dispatchEvent(new CustomEvent('temporaryMessageChanged'));
+                onClose();
+              }}
+              className="w-full px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition-colors mb-2"
+            >
+              Confirm
+            </button>
+            <button
+              onClick={() => setPendingFolderId(null)}
+              className="w-full px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-lg transition-colors mb-2"
+            >
+              Back
+            </button>
+            <button
+              onClick={() => {
+                onClose();
+                setPendingFolderId(null);
+                setTemporaryMessage('');
+              }}
+              className="w-full px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg transition-colors"
+            >
+              Cancel Without Saving
+            </button>
+          </div>
+        )}
+
+        {selectedFolderId === null && pendingFolderId === null && (
+          <div className="p-4 border-t border-gray-200">
+            <button
+              onClick={() => {
+                onClose();
+                setPendingFolderId(null);
+                setTemporaryMessage('');
+              }}
+              className="w-full px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-lg transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

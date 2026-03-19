@@ -31,12 +31,14 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
   const [folderExpiry, setFolderExpiry] = useState<number | null>(null);
+  const [temporaryMessage, setTemporaryMessage] = useState<string>('');
 
   // Check if selected folder has expired on mount and on an interval
   useEffect(() => {
     const checkExpiry = () => {
       const storedExpiry = localStorage.getItem('folderExpiry');
       const storedFolderId = localStorage.getItem('selectedFolderId');
+      const storedMessage = localStorage.getItem('temporaryMessage') || '';
       
       if (storedExpiry && storedFolderId) {
         const expiryTime = parseInt(storedExpiry, 10);
@@ -46,12 +48,15 @@ export default function Home() {
           // Folder selection has expired
           localStorage.removeItem('selectedFolderId');
           localStorage.removeItem('folderExpiry');
+          localStorage.removeItem('temporaryMessage');
           setSelectedFolderId(null);
           setFolderExpiry(null);
+          setTemporaryMessage('');
         } else {
           // Folder selection is still valid
           setSelectedFolderId(storedFolderId);
           setFolderExpiry(expiryTime);
+          setTemporaryMessage(storedMessage);
         }
       }
     };
@@ -71,30 +76,36 @@ export default function Home() {
       // Clear the invalid folder selection
       localStorage.removeItem('selectedFolderId');
       localStorage.removeItem('folderExpiry');
+      localStorage.removeItem('temporaryMessage');
       setSelectedFolderId(null);
       setFolderExpiry(null);
+      setTemporaryMessage('');
     }
 
     window.addEventListener('folderInvalid', handleFolderInvalid as EventListener);
     return () => window.removeEventListener('folderInvalid', handleFolderInvalid as EventListener);
   }, []);
 
-  const handleSelectFolder = (folderId: string | null, folderName: string) => {
+  const handleSelectFolder = (folderId: string | null, folderName: string, temporaryMessageInput: string = '') => {
     if (folderId === null) {
       // Clear folder selection to show all pictures (root folder)
       localStorage.removeItem('selectedFolderId');
       localStorage.removeItem('folderExpiry');
+      localStorage.removeItem('temporaryMessage');
       setSelectedFolderId(null);
       setFolderExpiry(null);
+      setTemporaryMessage('');
     } else {
       // Set expiry time to 48 hours from now
       const expiryTime = Date.now() + 48 * 60 * 60 * 1000;
       
       localStorage.setItem('selectedFolderId', folderId);
       localStorage.setItem('folderExpiry', expiryTime.toString());
+      localStorage.setItem('temporaryMessage', temporaryMessageInput);
       
       setSelectedFolderId(folderId);
       setFolderExpiry(expiryTime);
+      setTemporaryMessage(temporaryMessageInput);
     }
   };
 
@@ -115,6 +126,7 @@ export default function Home() {
               onClick={() => setIsModalOpen(true)}
               className="cursor-pointer hover:opacity-80 transition-opacity"
               title="Click to change photo folder for 48 hours (useful for events like 8th grade night)"
+              style={temporaryMessage ? { filter: 'drop-shadow(0px 0px 10px gold)' } : undefined}
             >
               <Image
                 src="/shamrock.png"
@@ -149,7 +161,7 @@ export default function Home() {
           <CalendarSection />
         </aside>
         <section className="w-3/4 p-8 flex flex-col gap-16 h-full">
-          <FadingGallery key={selectedFolderId || 'root'} selectedFolderId={selectedFolderId} />
+          <FadingGallery key={selectedFolderId || 'root'} selectedFolderId={selectedFolderId} temporaryMessage={temporaryMessage} />
         </section>
       </main>
       <footer className="flex p-4 border-emerald-800 z-1">

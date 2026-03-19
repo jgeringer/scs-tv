@@ -14,9 +14,10 @@ type DriveImage = {
 
 interface FadingGalleryProps {
   selectedFolderId?: string | null;
+  temporaryMessage?: string;
 }
 
-export default function FadingGallery({ selectedFolderId }: FadingGalleryProps) {
+export default function FadingGallery({ selectedFolderId, temporaryMessage }: FadingGalleryProps) {
   const [images, setImages] = useState<DriveImage[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -119,6 +120,9 @@ export default function FadingGallery({ selectedFolderId }: FadingGalleryProps) 
     );
   }
 
+  const defaultMessage = "Shamrock Snapshots";
+  const displayMessage = selectedFolderId && temporaryMessage ? temporaryMessage : defaultMessage;
+
   return (
     <div className="flex gap-8 justify-center items-center h-full">
       <aside 
@@ -134,8 +138,7 @@ export default function FadingGallery({ selectedFolderId }: FadingGalleryProps) 
           <div className="flex-1">
             <div className="relative w-full">
               <h2 className="text-3xl font-bold text-white tracking-wide eyebrow--dim gallery-heading">
-                <FontAwesomeIcon icon={faCamera} width="32" /> Shamrock Snapshots
-                {/* <FontAwesomeIcon icon={faBasketball} width="32" /> Congrats Celtics Graduating Class! */}
+                <FontAwesomeIcon icon={faCamera} width="32" /> {displayMessage}
               </h2>
               
               <div

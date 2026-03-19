@@ -126,7 +126,6 @@ export default function Home() {
               onClick={() => setIsModalOpen(true)}
               className="cursor-pointer hover:opacity-80 transition-opacity"
               title="Click to change photo folder for 48 hours (useful for events like 8th grade night)"
-              style={temporaryMessage ? { filter: 'drop-shadow(0px 0px 10px gold)' } : undefined}
             >
               <Image
                 src="/shamrock.png"

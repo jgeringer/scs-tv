@@ -137,7 +137,7 @@ export default function FadingGallery({ selectedFolderId, temporaryMessage }: Fa
         <div className="flex flex-col">
           <div className="flex-1">
             <div className="relative w-full">
-              <h2 className="text-3xl font-bold text-white tracking-wide eyebrow--dim gallery-heading">
+              <h2 className="text-3xl font-bold text-white tracking-wide eyebrow--dim gallery-heading" style={temporaryMessage ? { color: '#388e4a' } : undefined}>
                 <FontAwesomeIcon icon={faCamera} width="32" /> {displayMessage}
               </h2>
               

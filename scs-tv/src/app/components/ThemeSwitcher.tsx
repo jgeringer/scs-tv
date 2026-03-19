@@ -33,7 +33,7 @@ const colorThemes = [
 const temporaryMessageTheme =
 // custom message theme. make the background a gold/green gradient and the text a dark green
 {
-    background: "linear-gradient(215deg, #FFD700, #006400)",
+    background: "linear-gradient(355deg, #FFD700, #006400)",
     foreground: "#006400",
     accent: "transparent",
     dateTime: "#ffffff",

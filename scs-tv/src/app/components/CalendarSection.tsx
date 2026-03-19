@@ -143,8 +143,6 @@ export default function CalendarSection() {
         // Combine event data
         const now = new Date();
         now.setHours(0, 0, 0, 0);
-        const tomorrow = new Date(now);
-        tomorrow.setDate(now.getDate() + 1);
         const eventsList = eventItems
           .map((item: any) => {
             const data = Object.fromEntries(item.data.map((d: any) => [d.name, d.value]));
@@ -167,7 +165,7 @@ export default function CalendarSection() {
               time: dateObj ? formatDateTime(dateObj) : '',
             };
           })
-          .filter((event: any) => event && event.dateObject && event.dateObject >= tomorrow)
+          .filter((event: any) => event && event.dateObject && event.dateObject >= now)
           .sort((a: any, b: any) => a.dateObject.getTime() - b.dateObject.getTime());
 
         setEvents(eventsList);
@@ -218,60 +216,126 @@ function CalendarList({
   listRef: React.RefObject<HTMLOListElement>,
   itemRefs: React.MutableRefObject<(HTMLLIElement | null)[]>
 }) {
+  const [isResetAnimating, setIsResetAnimating] = useState(false);
+  
   // Filter for only upcoming events
   const now = new Date();
   now.setHours(0, 0, 0, 0);
   const upcomingEvents = events.filter(e => e.dateObject && e.dateObject >= now);
+
+  // Continuous slow scroll with pause at bottom
+  useEffect(() => {
+    if (upcomingEvents.length === 0 || !listRef.current) return;
+
+    const scrollSpeed = 1; // pixels per interval
+    const scrollInterval = 50; // milliseconds between scroll increments
+    const pauseDuration = 10000; // 10 seconds at bottom
+    const resetAnimationDuration = 3000; // 3 seconds to scroll back to top
+    
+    let animationFrameId: NodeJS.Timeout;
+    let isAtBottom = false;
+    let resetStartTime = 0;
+    let resetStartScrollTop = 0;
+    
+    const scroll = () => {
+      const ol = listRef.current;
+      if (!ol) return;
+      
+      // If we're animating back to top, do that instead
+      if (isResetAnimating) {
+        const now = Date.now();
+        const elapsed = now - resetStartTime;
+        const progress = Math.min(elapsed / resetAnimationDuration, 1);
+        const distance = resetStartScrollTop - 0;
+        
+        ol.scrollTop = resetStartScrollTop - (distance * progress);
+        
+        if (progress >= 1) {
+          ol.scrollTop = 0;
+          setIsResetAnimating(false);
+          isAtBottom = false;
+          animationFrameId = setTimeout(scroll, scrollInterval);
+        } else {
+          animationFrameId = setTimeout(scroll, 16); // ~60fps
+        }
+        return;
+      }
+      
+      // Scroll down by 1 pixel
+      ol.scrollTop += scrollSpeed;
+      
+      // Check if we've reached the bottom
+      if (ol.scrollTop >= ol.scrollHeight - ol.clientHeight && !isAtBottom) {
+        isAtBottom = true;
+        // Pause for 10 seconds before animating back to top
+        animationFrameId = setTimeout(() => {
+          resetStartTime = Date.now();
+          resetStartScrollTop = ol.scrollTop;
+          setIsResetAnimating(true);
+        }, pauseDuration);
+        return;
+      }
+      
+      animationFrameId = setTimeout(scroll, scrollInterval);
+    };
+    
+    animationFrameId = setTimeout(scroll, scrollInterval);
+    
+    return () => clearTimeout(animationFrameId);
+  }, [upcomingEvents.length, isResetAnimating]);
 
   if (upcomingEvents.length === 0) {
     return <div className="text-gray-500">No upcoming events</div>;
   }
 
   return (
-    <ol ref={listRef} className="space-y-4 max-h-[calc(100vh-400px)] pr-2 pb-10 pt-5 gradient-list overflow-hidden">
-      {upcomingEvents.map((event, index) => {
-        const dateObj = event.dateObject;
-        const day = dateObj ? dateObj.getDate() : '';
-        const monthShort = dateObj ? months[dateObj.getMonth()] : '';
-        const time = event.time || '';
-        return (
-          <li
-            key={event.id}
-            ref={(el) => { itemRefs.current[index] = el; }}
-            className={`flex items-start gap-4 duration-500 opacity-100`}
-          >
-            <div className="flex-shrink-0 w-16 text-center bg-emerald-800 text-white rounded-lg p-1">
-              <div className="text-2xl font-bold">{day}</div>
-              <div className="text-sm">{monthShort}</div>
-              <div className="text-xs">{time}</div>
-            </div>
-            <div className="flex-1 flex">
-              <h3 className="text-gray-700 font-semibold text-lg flex">
-                {event.league_name && (
-                  <span className="w-[30px]">
-                    {renderSportsIcon(event.league_name)}
-                  </span>
-                )}
-              </h3>
-              <div className=''>
-                {event.teamName && (
-                  <span className="text-gray-700 font-semibold text-lg leading-tight">{event.teamName}</span>
-                )}
-                {event.opponent && (
-                  <p className="text-gray-700 mt-1">vs. {event.opponent}</p>
-                )}
-                {event.location && (
-                  <p className="text-gray-700 mt-1">{event.location}</p>
-                )}
-                {event.result && (
-                  <p className="text-gray-700 mt-1">Final: {event.result}</p>
-                )}
+    <div className="relative">
+      <ol ref={listRef} className="space-y-4 max-h-[calc(100vh-400px)] pr-2 pb-10 pt-5 overflow-y-auto hide-scrollbar">
+        {upcomingEvents.map((event, index) => {
+          const dateObj = event.dateObject;
+          const day = dateObj ? dateObj.getDate() : '';
+          const monthShort = dateObj ? months[dateObj.getMonth()] : '';
+          const time = event.time || '';
+          return (
+            <li
+              key={event.id}
+              ref={(el) => { itemRefs.current[index] = el; }}
+              className={`flex items-start gap-4 duration-500 opacity-100`}
+            >
+              <div className="flex-shrink-0 w-16 text-center bg-emerald-800 text-white rounded-lg p-1">
+                <div className="text-2xl font-bold">{day}</div>
+                <div className="text-sm">{monthShort}</div>
+                <div className="text-xs">{time}</div>
               </div>
-              
-            </div>
-          </li>
-        );
-      })}
-    </ol>
+              <div className="flex-1 flex">
+                <h3 className="text-gray-700 font-semibold text-lg flex">
+                  {event.league_name && (
+                    <span className="w-[30px]">
+                      {renderSportsIcon(event.league_name)}
+                    </span>
+                  )}
+                </h3>
+                <div className=''>
+                  {event.teamName && (
+                    <span className="text-gray-700 font-semibold text-lg leading-tight">{event.teamName}</span>
+                  )}
+                  {event.opponent && (
+                    <p className="text-gray-700 mt-1">vs. {event.opponent}</p>
+                  )}
+                  {event.location && (
+                    <p className="text-gray-700 mt-1">{event.location}</p>
+                  )}
+                  {event.result && (
+                    <p className="text-gray-700 mt-1">Final: {event.result}</p>
+                  )}
+                </div>
+                
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+      <div className="gradient-list absolute bottom-0 left-0 right-0 pointer-events-none"></div>
+    </div>
   );
 }

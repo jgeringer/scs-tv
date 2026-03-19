@@ -1,7 +1,7 @@
 import { google } from 'googleapis';
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     const keyFile = process.env.GOOGLE_CREDENTIALS_JSON;
     if (!keyFile) {
@@ -15,23 +15,37 @@ export async function GET() {
     });
 
     const drive = google.drive({ version: 'v3', auth });
-    const folderId = '10MCv5ELTHsK9SJfXLmn_VrIPO78GA8UZ'; // This is the root folder ID as seen in the URL
-    // const folderId = '13HOZ3UPq7V7GjI2x2VybnKTi8PZlIQgR'; // This is the 8th Grade Basketball Night folder ID as seen in the URL
+    
+    // Get folderId from query params, default to root folder
+    const searchParams = new URL(req.url).searchParams;
+    const requestedFolderId = searchParams.get('folderId');
+    const folderId = requestedFolderId || '10MCv5ELTHsK9SJfXLmn_VrIPO78GA8UZ'; // This is the root folder ID as seen in the URL
+    const rootFolderId = '10MCv5ELTHsK9SJfXLmn_VrIPO78GA8UZ';
 
-    // The orderBy parameter supports the following fields:
-    // - createdTime
-    // - folder
-    // - modifiedByMeTime
-    // - modifiedTime
-    // - name
-    // - quotaBytesUsed
-    // - recency
-    // - sharedWithMeTime
-    // - starred
-    // - viewedByMeTime
+    // If a specific folder was requested, validate that it exists
+    if (requestedFolderId && requestedFolderId !== rootFolderId) {
+      try {
+        const folderCheck = await drive.files.get({
+          fileId: requestedFolderId,
+          fields: 'id, name, mimeType',
+        });
 
-    // You can use 'asc' or 'desc' for ascending or descending order, e.g. 'name desc'
-    // Multiple fields can be separated by commas, e.g. 'folder, name desc'
+        // Verify it's actually a folder
+        if (folderCheck.data.mimeType !== 'application/vnd.google-apps.folder') {
+          return NextResponse.json(
+            { error: 'Selected item is not a folder', folderInvalid: true },
+            { status: 400 }
+          );
+        }
+      } catch (err) {
+        // Folder doesn't exist or is inaccessible
+        console.error('Folder validation error:', err);
+        return NextResponse.json(
+          { error: 'Selected folder no longer exists or is inaccessible', folderInvalid: true },
+          { status: 400 }
+        );
+      }
+    }
 
     const response = await drive.files.list({
       q: `'${folderId}' in parents and mimeType contains 'image/' and trashed = false`,

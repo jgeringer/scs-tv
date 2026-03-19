@@ -12,7 +12,11 @@ type DriveImage = {
   url: string;
 };
 
-export default function FadingGallery() {
+interface FadingGalleryProps {
+  selectedFolderId?: string | null;
+}
+
+export default function FadingGallery({ selectedFolderId }: FadingGalleryProps) {
   const [images, setImages] = useState<DriveImage[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -46,18 +50,37 @@ export default function FadingGallery() {
     setIsImageLoaded(false);
   }, [currentIndex]);
 
-  // Fetch images on component mount
+  // Fetch images on component mount and when selectedFolderId changes
   useEffect(() => {
-    fetch('/api/drive-images')
+    setIsTransitioning(false);
+    setShowCurrentImage(true);
+    setIsImageLoaded(false);
+    setCurrentIndex(null);
+    
+    const url = selectedFolderId 
+      ? `/api/drive-images?folderId=${selectedFolderId}`
+      : '/api/drive-images';
+    
+    fetch(url)
       .then((res) => res.json())
-      .then((imgs) => {
-        setImages(imgs);
-        if (imgs.length > 0) {
-          setCurrentIndex(0);
+      .then((data) => {
+        // Check if this is an error response indicating invalid folder
+        if (data.error && data.folderInvalid) {
+          // Dispatch custom event to notify parent that folder is invalid
+          const event = new CustomEvent('folderInvalid', { detail: { folderId: selectedFolderId } });
+          window.dispatchEvent(event);
+          return;
+        }
+        
+        if (Array.isArray(data)) {
+          setImages(data);
+          if (data.length > 0) {
+            setCurrentIndex(0);
+          }
         }
       })
       .catch(console.error);
-  }, []);
+  }, [selectedFolderId]);
 
   // Set up image rotation interval
   useEffect(() => {

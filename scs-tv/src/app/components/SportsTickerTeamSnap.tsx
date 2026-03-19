@@ -9,6 +9,7 @@ import {
   faBasketball,
   faRunning,
   faSoccerBall,
+  faFootball,
   faTrophy,
   faVolleyball,
 } from "@fortawesome/free-solid-svg-icons";
@@ -25,6 +26,8 @@ export const renderSportsIcon = (leagueName: string) => {
       return <FontAwesomeIcon icon={faSoccerBall} className="mr-2" />;
     if (name.includes("track"))
       return <FontAwesomeIcon icon={faRunning} className="mr-2" />;
+    if (name.includes("football"))
+      return <FontAwesomeIcon icon={faFootball} className="mr-2" />;
     return null;
   };
 
@@ -131,9 +134,15 @@ export default function SportsTickerTeamSnap({ onError }: { onError?: () => void
 
         // Combine event data
         const now = new Date();
-        now.setHours(0, 0, 0, 0);
-        const twoWeeksAgo = new Date(now);
-        twoWeeksAgo.setDate(now.getDate() - 14);
+        
+        // Calculate current school year (July 1 - June 30)
+        let schoolYearStart = new Date(now.getFullYear(), 6, 1); // July 1 of current year
+        if (now < schoolYearStart) {
+          // If we're before July 1, the school year started last year
+          schoolYearStart = new Date(now.getFullYear() - 1, 6, 1);
+        }
+        
+        const schoolYearEnd = new Date(schoolYearStart.getFullYear() + 1, 5, 30); // June 30 of next year
 
         const gamesList = eventItems
           .map((item: any) => {
@@ -156,7 +165,7 @@ export default function SportsTickerTeamSnap({ onError }: { onError?: () => void
               pointsForOpponent: data.points_for_opponent,
             };
           })
-          .filter((game: any) => game.result)
+          .filter((game: any) => game.result && game.date >= schoolYearStart && game.date <= schoolYearEnd)
           .sort((a: any, b: any) => a.date.getTime() - b.date.getTime());
 
         setGames(gamesList);

@@ -49,8 +49,8 @@ export default function CalendarSection() {
         const token = params.get('access_token');
         if (!token) return;
 
-        // 1. Get organization, so that we can get all of the divisions.
-        const organizationRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-organization/?token=${token}`, {
+        // 1. Get programs from TeamSnap One v2 API
+        const programsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-programs/?token=${token}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -58,116 +58,91 @@ export default function CalendarSection() {
           },
         });
 
-        // extract all of the division IDs
-        const organizationJson = await organizationRes.json();
-        const divisionIds = organizationJson.collection.items.map((item: any) => {
-          return item.data.find((d: any) => d.name === "id")?.value;
-        }).filter((id: any) => id !== undefined).join(',');
+        const programsData = await programsRes.json();
+        const programs = programsData.programs || [];
+        console.log('📱 Programs fetched:', programs.length);
 
-        console.log('💥💥💥 Division IDs::::', divisionIds); // 907610,911665,913956,913959,913970,973432,973585,1006476,1025375
-
-        // 1. Get division (teams). First call
-        // Updated this to make a separate get-division call for each division ID, then combine the results.
-        // Update this to make a call for each division ID, then combine the results.
-        const divisionIdArr = divisionIds.split(',');
-        const divisionResults = [];
-        for (const divisionId of divisionIdArr) {
-          const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-division/?token=${token}&division_ids=${divisionId}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-          });
-          const json = await res.json();
-          console.log('💥💥💥 Division JSON for division ID ' + divisionId + '::::', json);
-          if (json.collection?.items) {
-            divisionResults.push(...json.collection.items);
+        // 2. Fetch schedules for all programs
+        const allScheduleItems: any[] = [];
+        for (const program of programs) {
+          try {
+            const scheduleRes = await fetch(
+              `${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-schedule/?token=${token}&program_season_id=${program.id}`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+                },
+              }
+            );
+            if (scheduleRes.ok) {
+              const scheduleData = await scheduleRes.json();
+              if (scheduleData.scheduleItems) {
+                // Add program info to each schedule item
+                const itemsWithProgram = scheduleData.scheduleItems.map((item: any) => ({
+                  ...item,
+                  program_name: program.name,
+                  sport_name: program.sportName
+                }));
+                allScheduleItems.push(...itemsWithProgram);
+                console.log(`📅 Program ${program.name} (${program.sportName}): ${scheduleData.scheduleItems.length} schedule items`);
+              }
+            }
+          } catch (err) {
+            console.error(`Error fetching schedule for program ${program.name}:`, err);
           }
         }
-        const combinedDivisionJson = { collection: { items: divisionResults } };
-        
-        // const divisionRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-division/?token=${token}&division_ids=${divisionIds}`, {
-        //   method: 'GET',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //     'Authorization': `Bearer ${token}`
-        //   },
-        // });
-        // const divisionJson = await divisionRes.json();
-        // console.log('💥💥💥 Division JSON::::', divisionJson);
-        console.log('💥💥💥 combinedDivisionJson JSON::::', combinedDivisionJson);
 
-        const teamIds = combinedDivisionJson.collection.items.map((item: any) => {
-          return item.data.find((d: any) => d.name === "id")?.value;
-        }).filter((id: any) => id !== undefined).join(',');
-
-
-        console.log('💥💥💥 Team IDs::::', teamIds);
-
-        // 2. Get events
-        const eventsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-events/?token=${token}&team_id=${teamIds}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-        });
-        const eventsJson = await eventsRes.json();
-        const eventItems = eventsJson.collection.items;
-        console.log('💥💥💥 Event Items::::', eventItems);
-
-        // 3. Get division locations
-        const divisionLocationIds = eventItems.map((item: any) => {
-  return item.data.find((d: any) => d.name === "division_location_id")?.value;
-}).filter((id: any) => id !== null).join(',');
-
-        console.log('💥💥💥 Division Location IDs::::', divisionLocationIds);
-
-        const divisionLocationsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-division-locations/?token=${token}&divisionLocations=${divisionLocationIds}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-        });
-        const divisionLocationsJson = await divisionLocationsRes.json();
-        console.log('💥💥💥 Division Locations JSON - ::::', divisionLocationsJson);
-        const locationMap: Record<string, any> = {};
-        divisionLocationsJson.collection.items?.forEach((item: any) => {
-          const id = item.data.find((d: any) => d.name === "id")?.value;
-          locationMap[id] = item.data.find((d: any) => d.name === "name")?.value;
-        });
-        console.log('💥💥💥 Location Map::::', locationMap);
-
-        // Combine event data
+        // 3. Transform schedule items to event format
         const now = new Date();
         now.setHours(0, 0, 0, 0);
-        const eventsList = eventItems
+        
+        const eventsList = allScheduleItems
           .map((item: any) => {
-            const data = Object.fromEntries(item.data.map((d: any) => [d.name, d.value]));
-            const dateObj = data.start_date ? new Date(data.start_date) : null;
-            // Find the team object from combinedDivisionJson, which contains team data
-            const teamObj = combinedDivisionJson.collection.items.find((t: any) => t.data.find((d: any) => d.name === "id")?.value === data.team_id);
-            const teamName = teamObj?.data.find((d: any) => d.name === "name")?.value;
-            const leagueName = teamObj?.data.find((d: any) => d.name === "league_name")?.value;
+            // Parse date and time from API
+            // Prefer startDateTime (ISO format) over startDate + startTime
+            let startDate: Date | null = null;
+            
+            if (item.startDateTime) {
+              // startDateTime is ISO 8601 format: "2026-08-26T18:00:00Z" or similar
+              // Parse it as UTC and then convert to local time
+              const isoDate = new Date(item.startDateTime);
+              // Create a date in local timezone with the UTC values
+              startDate = new Date(isoDate.getTime());
+            } else if (item.startDate) {
+              // Fallback: if only startDate is available, use it
+              // Try to extract time from startTime if available
+              let hour = 0, minute = 0;
+              if (item.startTime) {
+                // startTime might be "18:00" or similar
+                const timeParts = item.startTime.split(':');
+                if (timeParts.length >= 1) hour = parseInt(timeParts[0], 10);
+                if (timeParts.length >= 2) minute = parseInt(timeParts[1], 10);
+              }
+              const [year, month, day] = item.startDate.split('-').map(Number);
+              startDate = new Date(year, month - 1, day, hour, minute, 0, 0);
+            }
+            
             return {
-              id: data.id,
-              title: data.name || data.formatted_title || data.formatted_title_for_multi_team || 'Game',
-              dateObject: dateObj,
-              location: data.division_location_id ? locationMap[data.division_location_id] : '',
-              opponent: data.opponent_name,
-              teamName,
-              league_name: leagueName,
-              result: data.formatted_results,
-              pointsForTeam: data.points_for_team,
-              pointsForOpponent: data.points_for_opponent,
-              time: dateObj ? formatDateTime(dateObj) : '',
+              id: item.id,
+              title: item.name || (item.type === 'practice' ? 'Practice' : 'Game'),
+              start: {
+                dateTime: item.startDateTime,
+                date: item.startDate,
+              },
+              dateObject: startDate,
+              location: item.venueName || '',
+              time: formatDateTime(startDate),
+              sport_name: item.sport_name,
+              event_type: item.type || 'event',
+              program_name: item.program_name,
             };
           })
-          .filter((event: any) => event && event.dateObject && event.dateObject >= now)
+          .filter((event: any) => event.dateObject && event.dateObject >= now)
           .sort((a: any, b: any) => a.dateObject.getTime() - b.dateObject.getTime());
 
+        console.log('🎉 Final events count:', eventsList.length);
         setEvents(eventsList);
         setLoading(false);
       } catch (err) {
@@ -178,7 +153,7 @@ export default function CalendarSection() {
     }
 
     fetchTeamSnapEvents();
-    const interval = setInterval(fetchTeamSnapEvents, REFRESH_INTERVAL); // REFRESH_INTERVAL
+    const interval = setInterval(fetchTeamSnapEvents, REFRESH_INTERVAL);
     return () => clearInterval(interval);
   }, []);
 
@@ -316,6 +291,22 @@ function CalendarList({
                   )}
                 </h3>
                 <div className=''>
+                  {event.sport_name && (
+                    <div className="text-gray-700 font-bold text-sm uppercase tracking-wide">
+                      {event.sport_name}
+                      {event.event_type && (
+                        <span className="ml-2 text-xs font-normal capitalize">({event.event_type})</span>
+                      )}
+                    </div>
+                  )}
+                  {event.program_name && !event.sport_name && (
+                    <div className="text-gray-700 font-bold text-sm uppercase tracking-wide">
+                      {event.program_name}
+                      {event.event_type && (
+                        <span className="ml-2 text-xs font-normal capitalize">({event.event_type})</span>
+                      )}
+                    </div>
+                  )}
                   {event.teamName && (
                     <span className="text-gray-700 font-semibold text-lg leading-tight">{event.teamName}</span>
                   )}

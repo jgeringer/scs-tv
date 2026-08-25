@@ -67,8 +67,8 @@ export default function SportsTickerTeamSnap({ onError }: { onError?: () => void
         const token = params.get('access_token');
         if (!token) return;
 
-        // 1a. Get organization to extract division IDs
-        const organizationRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-organization/?token=${token}`, {
+        // 1. Get programs from TeamSnap One v2 API
+        const programsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-programs/?token=${token}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -76,96 +76,107 @@ export default function SportsTickerTeamSnap({ onError }: { onError?: () => void
           },
         });
 
-        // extract all of the division IDs
-        const organizationJson = await organizationRes.json();
-        const divisionIds = organizationJson.collection.items.map((item: any) => {
-          return item.data.find((d: any) => d.name === "id")?.value;
-        }).filter((id: any) => id !== undefined).join(',');
+        const programsData = await programsRes.json();
+        const programs = programsData.programs || [];
+        console.log('📱 Programs fetched:', programs.length);
 
-        // 1. Get division (teams)
-        const divisionIdArr = divisionIds.split(',');
-        const divisionResults = [];
-        for (const divisionId of divisionIdArr) {
-          const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-division/?token=${token}&division_ids=${divisionId}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-          });
-          const json = await res.json();
-          if (json.collection?.items) {
-            divisionResults.push(...json.collection.items);
+        // 2. Fetch schedules for all programs
+        const allScheduleItems: any[] = [];
+        for (const program of programs) {
+          try {
+            const scheduleRes = await fetch(
+              `${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-schedule/?token=${token}&program_season_id=${program.id}`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+                },
+              }
+            );
+            if (scheduleRes.ok) {
+              const scheduleData = await scheduleRes.json();
+              if (scheduleData.scheduleItems) {
+                // Add program info to each schedule item
+                const itemsWithProgram = scheduleData.scheduleItems.map((item: any) => ({
+                  ...item,
+                  program_name: program.name,
+                  sport_name: program.sportName
+                }));
+                allScheduleItems.push(...itemsWithProgram);
+              }
+            }
+          } catch (err) {
+            console.error(`Error fetching schedule for program ${program.name}:`, err);
           }
         }
-        const combinedDivisionJson = { collection: { items: divisionResults } };
-        const teamIds = combinedDivisionJson.collection.items.map((item: any) => {
-          return item.data.find((d: any) => d.name === "id")?.value;
-        }).filter((id: any) => id !== undefined).join(',');
 
-        // 2. Get events
-        const eventsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-events/?token=${token}&team_id=${teamIds}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-        });
-        const eventsJson = await eventsRes.json();
-        const eventItems = eventsJson.collection.items;
-
-        // 3. Get division locations
-        const divisionLocationIds = eventItems.map((item: any) => {
-          return item.data.find((d: any) => d.name === "division_location_id")?.value;
-        }).filter((id: any) => id !== null).join(',');
-        const divisionLocationsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/teamsnap/get-division-locations/?token=${token}&divisionLocations=${divisionLocationIds}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-        });
-        const divisionLocationsJson = await divisionLocationsRes.json();
-        const locationMap: Record<string, any> = {};
-        divisionLocationsJson.collection.items.forEach((item: any) => {
-          const id = item.data.find((d: any) => d.name === "id")?.value;
-          locationMap[id] = item.data.find((d: any) => d.name === "name")?.value;
-        });
-
-        // Combine event data
+        // 3. Transform schedule items to game format - filter for games with scores
         const now = new Date();
         
         // Calculate current school year (July 1 - June 30)
-        let schoolYearStart = new Date(now.getFullYear(), 6, 1); // July 1 of current year
+        let schoolYearStart = new Date(now.getFullYear(), 6, 1);
         if (now < schoolYearStart) {
-          // If we're before July 1, the school year started last year
           schoolYearStart = new Date(now.getFullYear() - 1, 6, 1);
         }
-        
-        const schoolYearEnd = new Date(schoolYearStart.getFullYear() + 1, 5, 30); // June 30 of next year
+        const schoolYearEnd = new Date(schoolYearStart.getFullYear() + 1, 5, 30);
 
-        const gamesList = eventItems
+        const gamesList = allScheduleItems
+          .filter((item: any) => item.type === 'game') // Only games, not practices
           .map((item: any) => {
-            const data = Object.fromEntries(item.data.map((d: any) => [d.name, d.value]));
-            const teamObj = combinedDivisionJson.collection.items.find((t: any) => t.data.find((d: any) => d.name === "id")?.value === data.team_id);
-            const teamName = teamObj?.data.find((d: any) => d.name === "name")?.value;
-            const leagueName = teamObj?.data.find((d: any) => d.name === "league_name")?.value;
+            // Parse date with time
+            let startDate: Date | null = null;
+            if (item.startDateTime) {
+              startDate = new Date(item.startDateTime);
+            } else if (item.startDate) {
+              let hour = 0, minute = 0;
+              if (item.startTime) {
+                const timeParts = item.startTime.split(':');
+                if (timeParts.length >= 1) hour = parseInt(timeParts[0], 10);
+                if (timeParts.length >= 2) minute = parseInt(timeParts[1], 10);
+              }
+              const [year, month, day] = item.startDate.split('-').map(Number);
+              startDate = new Date(year, month - 1, day, hour, minute, 0, 0);
+            }
+
+            // Extract team names from the game name
+            // Example: "SPC Blue vs JUNIOR VARSITY - GREEN" or "Practice" or "Meet Name"
+            let teamName = '';
+            let opponent = '';
+            if (item.name) {
+              const nameParts = item.name.split(' vs ');
+              if (nameParts.length === 2) {
+                teamName = nameParts[0].trim();
+                opponent = nameParts[1].trim();
+              } else {
+                // If there's no "vs", use the full name as teamName
+                teamName = item.name;
+              }
+            } else if (item.teams && item.teams.length > 0) {
+              // Try to get team names from teams array if available
+              teamName = item.teams[0]?.name || item.program_name || '';
+              if (item.teams.length > 1) {
+                opponent = item.teams[1]?.name || '';
+              }
+            } else {
+              teamName = item.program_name || '';
+            }
+
             return {
-              id: data.id,
-              teamId: data.team_id,
-              opponentId: data.opponent_id,
-              opponent: data.opponent_name,
-              teamName,
-              league_name: leagueName,
-              date: data.start_date ? new Date(data.start_date) : null,
-              time: data.start_date ? new Date(data.start_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '',
-              location: data.division_location_id ? locationMap[data.division_location_id] : '',
-              result: data.formatted_results,
-              pointsForTeam: data.points_for_team,
-              pointsForOpponent: data.points_for_opponent,
+              id: item.id,
+              teamName: teamName,
+              opponent: opponent,
+              league_name: item.sport_name,
+              date: startDate,
+              time: startDate ? formatDateTime(startDate) : '',
+              location: item.venueName || '',
+              // v2 API may have score information
+              result: item.result || null,
+              pointsForTeam: item.scoreForTeam || null,
+              pointsForOpponent: item.scoreAgainstTeam || null,
             };
           })
-          .filter((game: any) => game.result && game.date >= schoolYearStart && game.date <= schoolYearEnd)
+          .filter((game: any) => game.date && game.date >= schoolYearStart && game.date <= schoolYearEnd)
           .sort((a: any, b: any) => a.date.getTime() - b.date.getTime());
 
         setGames(gamesList);
@@ -235,21 +246,16 @@ export default function SportsTickerTeamSnap({ onError }: { onError?: () => void
       <section className="w-[calc(25%+5rem)] bg-emerald-800 text-white p-4 rounded-lg font-bold text-xl">
         <span>
             <span className="text-sm uppercase opacity-75">
-            {currentGame?.teamId &&
-              (() => {
-              const team = games.find(
-                (g) => g.teamId === currentGame.teamId
-              );
-              // Find the team in divisionJson to get league_name
-              // Since divisionJson is only available in fetchTeamSnapData, we need to store league_name in games
-              // So, update fetchTeamSnapData to include league_name in each game object
-              return team?.league_name || "";
-              })()
-            }
+              Game
             </span>
-            <div>
+            <div className="flex items-center gap-2">
               {renderSportsIcon(currentGame?.league_name)}
-              {currentGame?.teamName}
+              <div className="flex flex-col">
+                <span>{currentGame?.league_name || 'Upcoming'}</span>
+                {currentGame?.opponent && (
+                  <span className="text-sm">vs {currentGame?.opponent}</span>
+                )}
+              </div>
             </div>
         </span>
       </section>

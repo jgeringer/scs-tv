@@ -32,6 +32,9 @@ interface CalendarEvent {
   pointsForTeam?: number;
   pointsForOpponent?: number;
   time?: string;
+  sport_name?: string;
+  event_type?: string;
+  program_name?: string;
 }
 
 export default function CalendarSection() {
@@ -133,7 +136,7 @@ export default function CalendarSection() {
               },
               dateObject: startDate,
               location: item.venueName || '',
-              time: formatDateTime(startDate),
+              time: startDate ? formatDateTime(startDate) : '',
               sport_name: item.sport_name,
               event_type: item.type || 'event',
               program_name: item.program_name,

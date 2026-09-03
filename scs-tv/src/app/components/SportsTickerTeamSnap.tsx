@@ -13,7 +13,6 @@ import {
   faTrophy,
   faVolleyball,
 } from "@fortawesome/free-solid-svg-icons";
-import { REFRESH_INTERVAL } from "../utils/time";
 
 export const renderSportsIcon = (leagueName: string) => {
     if (!leagueName) return null;
@@ -75,6 +74,10 @@ export default function SportsTickerTeamSnap({ onError }: { onError?: () => void
             'Authorization': `Bearer ${token}`
           },
         });
+
+        if (!programsRes.ok) {
+          throw new Error(`Failed to fetch programs: ${programsRes.status}`);
+        }
 
         const programsData = await programsRes.json();
         const programs = programsData.programs || [];
@@ -180,6 +183,7 @@ export default function SportsTickerTeamSnap({ onError }: { onError?: () => void
           .sort((a: any, b: any) => a.date.getTime() - b.date.getTime());
 
         setGames(gamesList);
+        setError(null);
       } catch (err) {
         setError(err instanceof Error ? err : new Error(String(err)));
         console.error("Error fetching TeamSnap data:", err);
@@ -189,8 +193,6 @@ export default function SportsTickerTeamSnap({ onError }: { onError?: () => void
       }
     }
     fetchTeamSnapData();
-    const interval = setInterval(fetchTeamSnapData, REFRESH_INTERVAL);
-    return () => clearInterval(interval);
   }, []);
 
   const currentGame = games[currentGameIndex];
@@ -215,7 +217,7 @@ export default function SportsTickerTeamSnap({ onError }: { onError?: () => void
   }, [games.length]);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error && games.length === 0) return <div>Error: {error.message}</div>;
   if (!games || games.length === 0) {
     return (
       <div className="flex gap-8 p-4 bg-gray-200">

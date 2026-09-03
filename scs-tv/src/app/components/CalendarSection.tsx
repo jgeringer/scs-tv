@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { REFRESH_INTERVAL } from '../utils/time';
 import { formatDateTime, renderSportsIcon } from './SportsTickerTeamSnap';
 
 // Define the event type based on the Google Sheets data structure
@@ -60,6 +59,10 @@ export default function CalendarSection() {
             'Authorization': `Bearer ${token}`
           },
         });
+
+        if (!programsRes.ok) {
+          throw new Error(`Failed to fetch programs: ${programsRes.status}`);
+        }
 
         const programsData = await programsRes.json();
         const programs = programsData.programs || [];
@@ -147,6 +150,7 @@ export default function CalendarSection() {
 
         console.log('🎉 Final events count:', eventsList.length);
         setEvents(eventsList);
+        setError(null);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching events:', err);
@@ -156,8 +160,6 @@ export default function CalendarSection() {
     }
 
     fetchTeamSnapEvents();
-    const interval = setInterval(fetchTeamSnapEvents, REFRESH_INTERVAL);
-    return () => clearInterval(interval);
   }, []);
 
 
@@ -165,7 +167,7 @@ export default function CalendarSection() {
     <>
       {loading ? (
         <div>Loading events...</div>
-      ) : error ? (
+      ) : error && events.length === 0 ? (
         <div className="text-red-500">{error}</div>
       ) : (
         <div className="component rounded-2xl p-8 h-[100%] bottom-gradient overflow-hidden">

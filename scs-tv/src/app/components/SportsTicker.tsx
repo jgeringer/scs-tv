@@ -12,7 +12,6 @@ import {
   faTrophy,
   faVolleyball,
 } from "@fortawesome/free-solid-svg-icons";
-import { REFRESH_INTERVAL } from "../utils/time";
 
 export default function SportsTicker() {
   const [allSheetsData, setAllSheetsData] = useState({});
@@ -40,12 +39,6 @@ export default function SportsTicker() {
       }
     }
     fetchData();
-
-    // run this every 1 minute so that we can update the data when more is added
-    const interval = setInterval(() => {
-      fetchData();
-    }, REFRESH_INTERVAL);
-    return () => clearInterval(interval);
   }, []);
 
   // Flatten all games from all sheets
